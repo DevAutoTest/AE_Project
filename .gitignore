@@ -20,6 +20,8 @@ out/
 !**/src/main/**/out/
 !**/src/test/**/out/
 
+
+
 ### Eclipse ###
 .apt_generated
 .classpath
@@ -44,3 +46,6 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+
+### Resources ###
+src/test/resources/properties/auth.properties
