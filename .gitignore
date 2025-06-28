@@ -48,4 +48,5 @@ bin/
 .DS_Store
 
 ### Resources ###
+###exclude file###
 src/test/resources/properties/auth.properties
