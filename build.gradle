@@ -21,7 +21,10 @@ dependencies {
     testAnnotationProcessor "org.projectlombok:lombok:1.18.38"
     implementation("com.fasterxml.jackson.core:jackson-databind:2.19.1")
     implementation("com.opencsv:opencsv:5.11.2")
-
+    implementation("com.aayushatharva.brotli4j:brotli4j:1.18.0")
+    implementation("org.aeonbits.owner:owner:1.0.12") //загружает параметры из проперти файла
+    implementation("io.qameta.allure:allure-rest-assured:2.29.1") //интеграционный фильтр из библиотеки Allure, который добавляет логирование HTTP-запросов и ответов в отчёт Allure при использовании Rest Assured.
+    implementation("org.assertj:assertj-core:4.0.0-M1") //assertThat
 }
 
 test {

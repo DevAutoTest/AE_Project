@@ -1,20 +1,16 @@
 package api.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-
 import java.util.List;
 
-
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Data
-@AllArgsConstructor
 public class CartResponse {
     private CartData data;
 
-
+    @JsonIgnoreProperties(ignoreUnknown = true)
     @Data
-    @AllArgsConstructor
     public static class CartData {
         public String id;
         public String currencyCode;
@@ -27,8 +23,8 @@ public class CartResponse {
     }
 
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     @Data
-    @AllArgsConstructor
     public static class ItemResponse {
         private String itemId;
         private String productId;
@@ -42,9 +38,9 @@ public class CartResponse {
     }
 
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     @Data
-    @AllArgsConstructor
-    public class Summary {
+    public static class Summary {
         public String id;
         public float shipping;
         public float shippingTax;
