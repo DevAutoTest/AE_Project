@@ -1,52 +1,48 @@
 package api.controllers.bag;
-
 import api.dto.AddItemRequest;
 import api.dto.CartResponse;
 import api.config.TestPropertiesConfig;
 import api.dto.DeleteItemRequest;
 import api.dto.UpdateItemRequest;
 import api.support.GuestTokenProvider;
+import api.utils.CookieUtils;
 import api.utils.CsvReader;
+import api.utils.RestLog;
 import io.qameta.allure.Step;
-import io.restassured.filter.log.LogDetail;
-import io.restassured.filter.log.RequestLoggingFilter;
-import io.restassured.filter.log.ResponseLoggingFilter;
+
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.aeonbits.owner.ConfigFactory;
 import java.util.List;
+
+import static api.utils.CookieUtils.buildCookies;
 import static io.restassured.RestAssured.given;
+import static io.restassured.http.ContentType.JSON;
 import static org.hamcrest.Matchers.notNullValue;
 
 public class CartController {
 
-    /* ───────── endpoints ───────── */
-    private static final String BAG_ENDPOINT        = "/ugp-api/bag/v1";
-    private static final String ITEMS_ENDPOINT      = "/ugp-api/bag/v1/items";
+    private static final String BAG_ENDPOINT   = "/ugp-api/bag/v1";
+    private static final String ITEMS_ENDPOINT = "/ugp-api/bag/v1/items";
 
     private static final TestPropertiesConfig cfg =
-            ConfigFactory.create(TestPropertiesConfig.class, System.getProperties());
+            ConfigFactory.create(TestPropertiesConfig.class);
 
-    /* ───────── common spec ─────── */
-    private final RequestSpecification spec() {
-        var box = GuestTokenProvider.current();          // {token,cookie}
+    /* ---------- общий spec ---------- */
+    private RequestSpecification spec() {
+
+        GuestTokenProvider.Box antiBot = GuestTokenProvider.current();
+        String allCookies = CookieUtils.buildCookies(antiBot.cookie());
 
         return given()
+                .filter(RestLog.rq()).filter(RestLog.rs())
                 .baseUri(cfg.getApiBaseUrl())
-                .contentType("application/json")
-                .accept("application/vnd.oracle.resource+json,*/*;q=0.01")
-                .header("authorization", "Bearer " + box.token())
-                .header("x-access-token", box.token())
-                .header("aesite", "AEO_US")
-                .header("aelang", "en_US")
-                .header("aecountry", "US")
-                .header("cookie", box.cookie())          // _abck; ak_bmsc; bm_sz
-                .header("user-agent",
-                        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-                                + "AppleWebKit/537.36 (KHTML, like Gecko) "
-                                + "Chrome/138.0.0.0 Safari/537.36")
-                .filter(new RequestLoggingFilter(LogDetail.ALL))
-                .filter(new ResponseLoggingFilter(LogDetail.ALL));
+                .accept(JSON)
+                .contentType(JSON)
+                .header("authorization",  "Bearer " + antiBot.token())
+                .header("x-access-token", antiBot.token())
+                .header("aesite", "AEO_US");
+               // .header("cookie",        allCookies);
     }
 
     /* --------------- API --------------- */
@@ -66,8 +62,9 @@ public class CartController {
 
         return spec()
                 .body(body)
-                .when().post(ITEMS_ENDPOINT)
-                .then().statusCode(202)
+                .when()
+                .post(ITEMS_ENDPOINT)
+                .then()
                 .extract().response();
     }
 

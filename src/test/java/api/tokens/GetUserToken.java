@@ -1,27 +1,59 @@
 package api.tokens;
-
 import api.config.TestPropertiesConfig;
 import api.controllers.authentification.POST_v4_getAccessToken;
-import api.enums.UserRoles;
 import api.support.GuestTokenProvider;
+import api.utils.JwtUtils;
 import org.aeonbits.owner.ConfigFactory;
 
-public class GetUserToken {
-    static TestPropertiesConfig configProperties = ConfigFactory.create(TestPropertiesConfig.class, System.getProperties());
+/**
+ * Отдаёт JWT-токен:
+ * <ul>
+ *   <li>если заданы username / password — получает и кеширует auth-token;</li>
+ *   <li>иначе — возвращает guest-token.</li>
+ * </ul>
+ */
+public final class GetUserToken {
 
-    private GetUserToken() {/* util-class */}
+    private static final TestPropertiesConfig cfg =
+            ConfigFactory.create(TestPropertiesConfig.class);
 
-    /** Режим, заданный в <code>auth.properties</code> (GUEST / AUTH). */
-    private static UserRoles mode() {
-        // лишний trim() спасёт от случайных пробелов в файле
-        return UserRoles.valueOf(configProperties.getUserMode());
+
+    private static boolean guestMode() {
+        return "GUEST".equalsIgnoreCase(cfg.getUserMode());
     }
 
-    /** Всегда возвращает валидный токен. */
+    /** кешируем JWT, пока он жив */
+    private static volatile String cached;
+
+    private GetUserToken() { /* util-class */ }
+
+    /** Главная точка получения токена. */
     public static String token() {
-        return switch (mode()) {
-            case GUEST -> GuestTokenProvider.current().token();          // x-access-token
-            case AUTH  -> POST_v4_getAccessToken.getAuthToken(); // Bearer ***…
-        };
+
+        // если уже есть и не протух — сразу отдаём
+        if (cached != null && !JwtUtils.isExpired(cached)) {
+            return cached;
+        }
+        /* guest-режим принудительно */
+        if (guestMode()) {
+            return cached = GuestTokenProvider.current().token();
+        }
+
+
+        /* авторизация только если есть логин-пароль */
+        if (haveCreds()) {
+            cached = POST_v4_getAccessToken.getAuthToken();
+        } else {
+            cached = GuestTokenProvider.current().token();
+        }
+        return cached;
+    }
+
+    /* ---------- helpers ---------- */
+
+    /** выбирает guest или auth пользователь*/
+    private static boolean haveCreds() {
+        return cfg.getUserName() != null && !cfg.getUserName().isBlank()
+                && cfg.getPassword() != null && !cfg.getPassword().isBlank();
     }
 }

@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id("io.qameta.allure") version "2.12.0"
 }
 
 group = 'Danilova'
@@ -25,9 +26,11 @@ dependencies {
     implementation("org.aeonbits.owner:owner:1.0.12") //загружает параметры из проперти файла
     implementation("io.qameta.allure:allure-rest-assured:2.29.1") //интеграционный фильтр из библиотеки Allure, который добавляет логирование HTTP-запросов и ответов в отчёт Allure при использовании Rest Assured.
     implementation("org.assertj:assertj-core:4.0.0-M1") //assertThat
+    implementation("io.github.bonigarcia:webdrivermanager:6.1.0") //для получения куки с сайта для тестов на API
+    implementation("org.seleniumhq.selenium:selenium-java:4.34.0")
+    implementation("io.qameta.allure:allure-junit5:2.29.1")
 }
 
 test {
     useJUnitPlatform()
-    systemProperties(System.getProperties())
 }

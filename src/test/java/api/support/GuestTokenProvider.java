@@ -1,122 +1,56 @@
 package api.support;
 
 import api.config.TestPropertiesConfig;
+import api.utils.JwtUtils;
+import api.utils.RestLog;
 import io.restassured.response.Response;
 import org.aeonbits.owner.ConfigFactory;
-import java.time.Instant;
+
 import static io.restassured.RestAssured.given;
 
-/**
- * ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
- *  GuestTokenProvider
- *  ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
- *  Утилитный класс-«синглтон»:
- *  • получает guest-token для UGP-API («grant_type=client_credentials»)
- *  • вытягивает вместе с токеном три анти-бот cookies (_abck, ak_bmsc,
- *    bm_sz) – без них Akamai / BotManager вернёт 403 на любые POST/PUT
- *  • кеширует связку {token, cookie} до истечения срока действия токена
- *  • выдаёт всегда «свежую» пару через статические методы current()/token()
- *
- *  Использование
- *  ────────────
- *      var box = GuestTokenProvider.current();          // {token,cookie}
- *      request.header("authorization", "Bearer " + box.token());
- *      request.header("x-access-token", box.token());   // AEO-конвенция
- *      request.header("cookie",         box.cookie()); // три anti-bot
- *
- *  Thread-safe?  ✔
- *  Здесь достаточно обычного (не synchronized) поля, т.к. мизерные риски
- *  гонки во время first-call приводят лишь к лишнему запросу /token –
- *  сервис корректно вернёт два независимых guest-tokens.
- * ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
- */
 
-
-
-/** Получает и кеширует guest-token + анти-бот куки. */
 public final class GuestTokenProvider {
 
+    private static final String ENDPOINT = "/ugp-api/auth/oauth/v5/token";
     private static final TestPropertiesConfig cfg =
-            ConfigFactory.create(TestPropertiesConfig.class, System.getProperties());
+            ConfigFactory.create(TestPropertiesConfig.class);
+    /* ---------- вот сюда! ---------- */
+    /** Единый User-Agent — им пользуемся в *любых* запросах к AEO-API. */
+    public static final String UA =
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                    + "AppleWebKit/537.36 (KHTML, like Gecko) "
+                    + "Chrome/138.0.0.0 Safari/537.36";
 
-    /**
-     /* ------------------------------------------------------------------ */
-    /*  1. Immutable-футляр с данными о токене                            */
-    /* ------------------------------------------------------------------ */
-    /** пара {токен, cookie, expiry}
-     * Начиная с Java 16 появился record — «компактный неизменяемый POJO».
-     * Компилятор генерирует:
-     *   • private final поля token/cookie/expiresAt
-     *   • public конструктор
-     *   • геттер-компоненты token(), cookie(), expiresAt()
-     *   • equals()/hashCode()/toString().
-     * Писать «ручной» класс ради трёх полей больше не нужно.
-     */
+    public record Box(String token, String cookie, long exp) {}
 
+    private static volatile Box cache;
 
-    public record Box(String token, String cookie, Instant expiresAt) {}
-
-    /** Единственный кеш (static) – живёт столько, сколько живёт JVM. */
-    private static Box cached;   // кеш на время жизни guest-токена
-
-    /* ------------------------------------------------------------------ */
-    /*  2. Публичный API                                                  */
-    /* ------------------------------------------------------------------ */
-
-    /** Возвращает «гарантированно свежую» связку {token,cookie}. */
     public static Box current() {
-        if (cached == null || cached.expiresAt.isBefore(Instant.now())) {
-            cached = fetchFresh();
-        }
-        return cached;
-    }
 
-    /** Только сам guest-token (без cookie). */
-    public static String token() {
-        return current().token();      // берём токен из Box
-    }
-    /** Cookie-строка вида "_abck=…; ak_bmsc=…; bm_sz=…" */
-    public static String cookie() {
-        return current().cookie();
-    }
+        if (cache != null && cache.exp > System.currentTimeMillis()) return cache;
 
-    /* ------------------------------------------------------------------ */
-    /*  3. Внутренний метод: запрос к /auth/oauth/v5/token                */
-    /* ------------------------------------------------------------------ */
-    private static Box fetchFresh() {
-        /* ==========  HTTP POST /token  ========== */
-        Response r = given()
+        Response resp = given()
+                .filter(RestLog.rq())          // ➊
+                .filter(RestLog.rs())
                 .baseUri(cfg.getApiBaseUrl())
+                .contentType("application/x-www-form-urlencoded")
                 .header("authorization", cfg.getBasicAuth())
+                .header("aesite",  "AEO_US")
+                .header("aelang",  "en_US")
+                .header("aecountry","US")
                 .formParam("grant_type", "client_credentials")
-                .post("/ugp-api/auth/oauth/v5/token")
-                .then().statusCode(200).extract().response();
+                .post(ENDPOINT)
+                .then().statusCode(200)
+                .extract().response();
 
-        /* ----------- парсим JSON и cookies ----------- */
-        String token   = r.jsonPath().getString("access_token");
-        int    ttl     = r.jsonPath().getInt("expires_in");   // секунд
+        String jwt    = resp.jsonPath().getString("access_token");
+        String cookie = String.join("; ",
+                resp.getCookies().entrySet().stream()
+                        .filter(e -> e.getKey().matches("_abck|ak_bmsc|bm_sz"))
+                        .map(e -> e.getKey() + '=' + e.getValue())
+                        .toList());
 
-        /* Собираем строку cookie: три anti-bot куки нужны ВСЕГДА. */
-        String cookie  = String.join("; ",
-                "_abck="   + r.getCookie("_abck"),
-                "ak_bmsc=" + r.getCookie("ak_bmsc"),
-                "bm_sz="   + r.getCookie("bm_sz"));
-
-        /* Уменьшаем TTL на 30 с – чтобы не попасть на «крайний кадр». */
-        Instant exp = Instant.now().plusSeconds(ttl - 30);
-        return new Box(token, cookie, exp);
+        long expMs = JwtUtils.expirationMillis(jwt);     // см. утилиту ниже
+        return cache = new Box(jwt, cookie, expMs - 5_000);   // 5 сек. зазор
     }
-
-    /* ------------------------------------------------------------------ */
-    /*  4. Закрытый конструктор-заглушка                                  */
-    /* ------------------------------------------------------------------ */
-    /**
-     * Утилитным классам запрещают создавать экземпляры:
-     *   new GuestTokenProvider();  // так НЕ даём сделать
-     *
-     * private-конструктор помечается как «unused»,
-     * IDE можно успокоить аннотацией @SuppressWarnings("unused").
-     */
-    @SuppressWarnings("unused")
-    private GuestTokenProvider() {/* no-instance */}
-  }
+}

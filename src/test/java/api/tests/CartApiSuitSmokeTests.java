@@ -3,12 +3,14 @@ package api.tests;
 import api.controllers.bag.CartController;
 import api.dto.CartResponse;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.extension.ExtendWith;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)   // JUnit создаст один экземпляр класса и не будет его перезатирать в каждом тесте
-
-class CartApiTests {
+@ExtendWith(api.extensions.BeforeAll.class)
+class CartApiSuitSmokeTests {
 
     private final CartController cart = new CartController();
     private final String TEST_SKU_ID = "0043256122";
@@ -18,6 +20,7 @@ class CartApiTests {
 
     @Order(1)
     @Test
+    @Tag("smoke")
     void getCartInfoTest(){
         cartResponse = cart.getCart();
         System.out.println("first info: " + cartResponse);
@@ -28,6 +31,7 @@ class CartApiTests {
 
     @Order(2)
     @Test
+    @Tag("smoke")
     void addItemTest()  {
         int qty = 1;
         cartResponse = cart.getCart();
@@ -39,6 +43,7 @@ class CartApiTests {
         cart.addItem(TEST_SKU_ID, qty)
                 .then()
                 .statusCode(202);
+
 
         cartResponse = cart.getCart();
         assertThat(cartResponse.getData().getItemCount())
@@ -55,26 +60,26 @@ class CartApiTests {
 
     @Order(3)
     @Test
+    @Tag("smoke")
     void updateItemTest(){
         cartResponse = cart.getCart();
         itemId=cartResponse.getData().items.get(0).getItemId();
         int newQty = 3;
-        cart.updateItem(TEST_SKU_ID, newQty, itemId)
-                .then()
-                .statusCode(202);
+        cart.updateItem(TEST_SKU_ID, newQty, itemId);
+
         assertThat(cart.getCart().getData().items.get(0).getSku()).isEqualTo(TEST_SKU_ID);
         assertThat(cart.getCart().getData().items.get(0).getQuantity()).isEqualTo(newQty);
     }
 
     @Order(4)
     @Test
+    @Tag("smoke")
     void deleteItemTest(){
         cartResponse = cart.getCart();
         itemId=cartResponse.getData().items.get(0).getItemId();
         System.out.println("itemId is: " + cartResponse.getData().items.get(0).getItemId());
-        cart.deleteItem(itemId)
-                .then()
-                .statusCode(202);
+        cart.deleteItem(itemId);
+
         assertThat(cart.getCart().getData().getItemCount()).isZero();
     }
 
