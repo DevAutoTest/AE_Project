@@ -1,7 +1,9 @@
 package ui.pages;
 
 import Danilova.PageObjects.HomePage;
+import io.qameta.allure.Description;
 import io.qameta.allure.Feature;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -12,6 +14,8 @@ public class HomePageTests extends PrepareDriverTest {
     static final String HOME_PAGE_URL = "https://www.ae.com/us/en";
 
     @Test
+    @Description("Open home page")
+    @Tag("smoke")
     void openHomePageTest() {
         HomePage homePage = new HomePage(driver);
         String currentUrl = homePage.getCurrentUrl();
