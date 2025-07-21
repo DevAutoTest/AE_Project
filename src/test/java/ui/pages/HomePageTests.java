@@ -21,7 +21,4 @@ public class HomePageTests extends PrepareDriverTest {
         String currentUrl = homePage.getCurrentUrl();
         assertEquals(HOME_PAGE_URL, currentUrl);
     }
-
-
-
 }

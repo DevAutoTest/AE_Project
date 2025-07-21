@@ -165,7 +165,7 @@ public class ShoppingBagPageTests extends  PrepareDriverTest{
     @Tag("critical")
     @Description("Add random count if items to bag")
     void addRandomCountOfItemsToBag() throws InterruptedException {
-        int iterations = 2;
+        int iterations = 5;
         HomePage home = new HomePage(driver);
 
         //из России с 19 июля не работает
@@ -191,7 +191,6 @@ public class ShoppingBagPageTests extends  PrepareDriverTest{
             if(home.rewardBox.isBannerDisplayed()){
                 home.rewardBox.closeBanner();
             }
-
             dropPage.clickRandomColorResult();
             dropPage.clickRandomSizeResult();
             dropPage.clickAddToBagRandomCountOfItems();
@@ -221,6 +220,10 @@ public class ShoppingBagPageTests extends  PrepareDriverTest{
         int globalCount = Integer.parseInt(bag.getGlobalQty());
         int sumResult = bag.sumItemsQty();
         Assertions.assertEquals(globalCount,sumResult);
+
+        bag.goBack();
+        int bagIconCount = home.header.getBagCount();
+        Assertions.assertEquals(globalCount,bagIconCount);
 
     }
 }

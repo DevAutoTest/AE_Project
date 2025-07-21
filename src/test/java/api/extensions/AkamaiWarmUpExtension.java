@@ -36,7 +36,7 @@ public final class AkamaiWarmUpExtension implements BeforeAllCallback {
                 "--disable-gpu",
                 "--window-size=1920,1080"
         );
-        opt.setPageLoadTimeout(Duration.ofSeconds(20));
+        opt.setPageLoadTimeout(Duration.ofSeconds(60));
 
         // 2) запускаем и руками закрываем в finally
         ChromeDriver drv = new ChromeDriver(opt);

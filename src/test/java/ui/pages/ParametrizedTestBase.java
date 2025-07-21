@@ -1,33 +1,31 @@
 package ui.pages;
 
-import io.qameta.allure.Feature;
-import lombok.Getter;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import ui.extensions.AllureExtension;
+
 import java.time.Duration;
 
-@Feature("preparing driver")
 @ExtendWith(AllureExtension.class)
+public class ParametrizedTestBase {
 
-public class PrepareDriverTest {
+    protected static WebDriver driver;
 
-    @Getter
-    static WebDriver driver;
-
-    @BeforeEach
-    void setup() {
+    @BeforeAll
+    public static void setUp() {
         driver = new ChromeDriver();
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
     }
 
-    @AfterEach
-    void tearDown() {
-        driver.quit();
+    @AfterAll
+    public static void tearDown() {
+        if (driver != null) {
+            driver.quit();
+        }
     }
 
 }

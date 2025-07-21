@@ -6,6 +6,7 @@ import org.openqa.selenium.WebDriver;
 
 public class SearchSideBarPage extends BasePage {
 
+    public final static String SEARCH_RESULT_URL = "https://www.ae.com/us/en/s/";
     public SearchSideBarPage(WebDriver driver) {
         super(driver);
     }
@@ -20,10 +21,6 @@ public class SearchSideBarPage extends BasePage {
        return driver.findElement(searchTitle).getText();
     }
 
-    @Step("Get search input")
-    public By getSearchInput(){
-        return searchInput;
-    }
 
     @Step("Get search input text")
     public String getSearchText(){
@@ -39,6 +36,11 @@ public class SearchSideBarPage extends BasePage {
     @Step("click search button")
     public void clickSerchButton(){
         driver.findElement(searchButton).click();
+    }
+
+    @Step("enter for search")
+    public void enterSearchInput(String text){
+        driver.findElement(searchInput).sendKeys(text);
     }
 
 

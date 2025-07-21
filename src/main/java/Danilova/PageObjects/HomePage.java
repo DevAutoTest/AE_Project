@@ -2,7 +2,11 @@ package Danilova.PageObjects;
 
 import io.qameta.allure.Step;
 import lombok.Getter;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 
 /** Сюда пишем методы общие для сайта
@@ -15,6 +19,7 @@ public class HomePage  extends BasePage {
     public static final String AERIE_URL = "https://www.ae.com/us/en/c/aerie/cat4840006?pagetype=clp";
 
     public final HeaderComponent header;
+    public final MenuComponent menu;
     public final FastMenuComponent fastMenu;
     public final DialogBoxComponent dialogBox;
     public final BonusOfferShadowRootComponent offerBox;
@@ -24,6 +29,7 @@ public class HomePage  extends BasePage {
     public HomePage(WebDriver driver) {
         super(driver);
         this.header = new HeaderComponent(driver);
+        this.menu = new MenuComponent(driver);
         this.fastMenu = new FastMenuComponent(driver);
         this.dialogBox = new DialogBoxComponent(driver);
         this.offerBox = new BonusOfferShadowRootComponent(driver);
@@ -31,16 +37,13 @@ public class HomePage  extends BasePage {
         open();
     }
 
-    //locators
-
-    //actions
     @Step("Get header component")
     public HeaderComponent header() {
         return header;
     }
 
     @Step("Open AMERICAN EAGLE by URL")
-    private void open() {
+    public void open() {
         driver.get(HOME_PAGE_URL);
     }
 
@@ -48,6 +51,9 @@ public class HomePage  extends BasePage {
     private void openAerie() {
         driver.get(AERIE_URL);
     }
+
+
+
 
 
 }

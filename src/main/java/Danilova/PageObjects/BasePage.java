@@ -23,5 +23,10 @@ public class BasePage {
         return driver.getCurrentUrl();
     }
 
+    @Step("Go back button")
+        public void goBack() {
+        driver.navigate().back();
+
+    }
 
 }

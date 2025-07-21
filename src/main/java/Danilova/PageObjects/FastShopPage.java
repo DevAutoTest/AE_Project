@@ -5,11 +5,9 @@ import lombok.Getter;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 import java.time.Duration;
 import java.util.List;
 import java.util.Random;
-
 import static Danilova.utils.RandomUtils.randomIntInclusive;
 
 public class FastShopPage extends BasePage {
@@ -59,15 +57,12 @@ public class FastShopPage extends BasePage {
 
     @Step("Return list of available colors")
     private List<WebElement> getAllColors() {
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
         wait.until(
-                // ExpectedConditions.visibilityOfAllElementsLocatedBy(PRODUCT_LIST)
                 ExpectedConditions.visibilityOfAllElements(
                         driver.findElement(By.xpath("//div[@data-test-extras='colors']//div[@role='button']//img"))));
         return driver.findElements(By.xpath("//div[@data-test-extras='colors']//div[@role='button']//img"));
-
-
     }
-
 
     @Step("Click random color")
     public void clickRandomColorResult() {
@@ -117,7 +112,7 @@ public class FastShopPage extends BasePage {
                 // ExpectedConditions.visibilityOfAllElementsLocatedBy(PRODUCT_LIST)
                 ExpectedConditions.visibilityOfAllElementsLocatedBy(  By.xpath("//div[@data-test-select-custom='size']//a[@role='menuitem']")));
 
-        return driver.findElements(By.xpath("//div[@data-test-select-custom='size']//a[@role='menuitem']"));
+        return driver.findElements(By.xpath("//div[@data-test-select-custom='size']//a[@role='menuitem' and not(.//small)]"));
          }
 
     @Step("Click random size")
@@ -139,12 +134,8 @@ public class FastShopPage extends BasePage {
             try {
                 WebElement tile = tiles.get(idx);
                 System.out.println("попытка = " + attempts);
-
-
                 // Сохраняем выбранный размер
                 this.selectedSize = tile.getText();
-
-
                 // скроллим к нему, чтобы не было off-screen
                 ((JavascriptExecutor) driver)
                         .executeScript("arguments[0].scrollIntoView({block:'center', inline:'center'});", tile);
@@ -172,7 +163,7 @@ public class FastShopPage extends BasePage {
      */
     @Step("Click Add To Bag button random times (1-10)")
     public void clickAddToBagRandomCountOfItems() {
-        int clickCount = random.nextInt(10) + 1; // Случайное число от 1 до 10
+        int clickCount = random.nextInt(9); // Случайное число от 0 до 9
         System.out.println("Will perform " + clickCount + " clicks on Add To Bag button");
 
         this.selectedQuantity = clickCount + 1;
@@ -197,13 +188,5 @@ public class FastShopPage extends BasePage {
                 break;
             }
         }
-
-
     }
-    @Step("Go back in browser")
-    public void goBack(){
-        driver.navigate().back();
-    }
-
-
 }

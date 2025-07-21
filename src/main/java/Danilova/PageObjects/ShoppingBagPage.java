@@ -1,10 +1,8 @@
 package Danilova.PageObjects;
 
-import lombok.Getter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-
 import java.util.List;
 
 public class ShoppingBagPage extends BasePage {
@@ -23,9 +21,6 @@ public class ShoppingBagPage extends BasePage {
         super(driver);
     }
 
-   public void openBag(){
-        driver.get(CART_URL);
-   }
 
    public int getCountOfBagItems(){
         return listBagItems.size();
@@ -66,8 +61,4 @@ public class ShoppingBagPage extends BasePage {
         }
         return resultCount;
     }
-
-
-
-
 }

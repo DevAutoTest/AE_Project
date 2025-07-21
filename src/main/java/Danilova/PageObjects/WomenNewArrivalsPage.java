@@ -1,23 +1,18 @@
 package Danilova.PageObjects;
 
 import io.qameta.allure.Step;
+import org.junit.jupiter.api.Disabled;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 import java.time.Duration;
 import java.util.List;
-
 import static Danilova.utils.RandomUtils.randomIntInclusive;
 
 public class WomenNewArrivalsPage extends BasePage {
 
     public final static String WOMEN_NEW_ARRIVALS_URL = "https://www.ae.com/us/en/c/women/new-arrivals/11gj7jfZ1266xyj-filtered?pagetype=plp";
-
     public final static String PAGE_TITLE = "New Arrivals | Women's Clothes & Apparel | American Eagle";
- List<WebElement> allNewArrivals = driver.findElements(By.xpath("//div[contains(@class,'product-tile')]"));
-
-    private static final By PRODUCT_LIST = By.xpath("//div[@class='results-list qa-results-list']");
 
     private WebDriverWait wait;
 
@@ -25,7 +20,6 @@ public class WomenNewArrivalsPage extends BasePage {
         super(driver);
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
-
 
     /**
      * Возвращает список актуальных плиток на странице
@@ -76,6 +70,8 @@ public class WomenNewArrivalsPage extends BasePage {
                         .executeScript("arguments[0].scrollIntoView({block:'center', inline:'center'});", tile);
                 // ждём, пока станет кликабельным
                 wait.until(ExpectedConditions.elementToBeClickable(tile)).click();
+                driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
+
                 return;  // успех — выходим
             } catch (StaleElementReferenceException | ElementClickInterceptedException e) {
                 attempts++;
@@ -88,6 +84,7 @@ public class WomenNewArrivalsPage extends BasePage {
     }
 
     @Step("Add random items to bag from New Arrivals (1 to max available)")
+    @Disabled("Need time to improve")
     public void addRandomItemsToBagWithPossibleDuplicates() {
         List<WebElement> tiles = getAllNewArrivals();
         int totalItems = tiles.size();
@@ -134,26 +131,6 @@ public class WomenNewArrivalsPage extends BasePage {
                     attempts++;
                     System.out.println("Timeout, retrying. Attempt: " + attempts);
                 }
-//
-//                // Небольшая пауза между попытками
-//                try {
-//                    Thread.sleep(500);
-//                } catch (InterruptedException e) {
-//                    Thread.currentThread().interrupt();
-//                }
-//            }
-//
-//            if (!success) {
-//                throw new WebDriverException("Failed to add item #" + (i+1) + " to bag after 3 attempts");
-//            }
-//
-//            // Пауза между добавлением разных товаров
-//            if (i < itemsToAdd - 1) {
-//                try {
-//                    Thread.sleep(1000);
-//                } catch (InterruptedException e) {
-//                    Thread.currentThread().interrupt();
-//                }
             }
         }
     }
