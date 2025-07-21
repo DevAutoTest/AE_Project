@@ -21,8 +21,6 @@ public class HeaderComponent {
     By logoAE_Header = By.xpath("//a[@data-testid='ae-logo']");
 
     //Locator menu Logo AE_Menu
-    By logo_AE_Menu = By.xpath("//a[@data-testid='aerie-logo']");
-
 
     By headerSearchButton = By.xpath("//button[@data-test-btn='search-cta']");
     By headerAccountButton = By.xpath("//a[@class='clickable qa-show-sidetray-account sidetray-account']");

@@ -53,8 +53,8 @@ public class ShoppingBagPage extends BasePage {
     public int sumItemsQty(){
        int items =  listOfItemsQty.size();
        int resultCount = 0;
-        for (int i = 0; i < items; i++) {
-            String fullText = listOfItemsQty.get(i).getText().trim();
+        for (WebElement webElement : listOfItemsQty) {
+            String fullText = webElement.getText().trim();
             String[] parts = fullText.split(": ");
             String result = parts.length > 1 ? parts[1] : "";
             resultCount += Integer.parseInt(result);

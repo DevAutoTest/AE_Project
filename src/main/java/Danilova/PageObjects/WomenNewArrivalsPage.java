@@ -33,7 +33,9 @@ public class WomenNewArrivalsPage extends BasePage {
 
                 List<WebElement> elements = driver.findElements(
                         By.xpath("//div[contains(@class,'product-tile')]"));
-
+                ((JavascriptExecutor) driver)
+                        .executeScript("arguments[0].scrollIntoView({block:'center', inline:'center'});", elements.get(0));
+                driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
                 // Проверяем, что элементы действительно доступны
                 if (!elements.isEmpty() && elements.get(0).isDisplayed()) {
                     return elements;
@@ -70,6 +72,7 @@ public class WomenNewArrivalsPage extends BasePage {
                         .executeScript("arguments[0].scrollIntoView({block:'center', inline:'center'});", tile);
                 // ждём, пока станет кликабельным
                 wait.until(ExpectedConditions.elementToBeClickable(tile)).click();
+                System.out.println("Кликаем по выбранному элементу");
                 driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
 
                 return;  // успех — выходим

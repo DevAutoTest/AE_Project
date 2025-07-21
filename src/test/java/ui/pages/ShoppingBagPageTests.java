@@ -158,7 +158,6 @@ public class ShoppingBagPageTests extends  PrepareDriverTest{
         int expectedQty = dropPage.getSelectedQuantity();
         System.out.println(expectedQty);
         Assertions.assertEquals(expectedQty, currentQty);
-
     }
 
     @Test

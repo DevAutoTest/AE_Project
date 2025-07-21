@@ -4,15 +4,11 @@ import Danilova.PageObjects.HomePage;
 import Danilova.PageObjects.SearchSideBarPage;
 import io.qameta.allure.Description;
 import io.qameta.allure.Feature;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 import java.time.Duration;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 

@@ -20,18 +20,14 @@ public class FastShopPage extends BasePage {
     @Getter
     private int selectedQuantity;
 
-    @Getter
+
     String firstPrice = driver.findElement(By.xpath("//div[@data-testid='list-price']")).getText();
-    @Getter
+
     String currentPrice = driver.findElement(By.xpath("//div[@data-testid='sale-price']")).getText();
-    @Getter
+
     String discount = driver.findElement(By.xpath("//div[contains(@class,'_sale-tag')]")).getText();
 
     By addToBagButton = By.xpath("//button[@data-test-btn='addToBag']");
-    List<WebElement> colorButtonsList = driver.findElements(By.xpath("//div[@data-test-extras='colors']//div[@role='button']"));
-    By sizeButton = By.xpath("//div[@aria-label='Size']");
-    List<WebElement> sizesList = driver.findElements(By.xpath("//div[@data-test-select-custom='size']//a[@role='menuitem']"));
-
     By increaseCountButton = By.xpath("//button[@aria-label='increase']");
 
     public FastShopPage(WebDriver driver) {

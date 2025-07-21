@@ -2,11 +2,8 @@ package Danilova.PageObjects;
 
 import io.qameta.allure.Step;
 import lombok.Getter;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.time.Duration;
 
 
 /** Сюда пишем методы общие для сайта

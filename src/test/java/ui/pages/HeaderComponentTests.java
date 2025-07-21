@@ -55,7 +55,6 @@ public class HeaderComponentTests extends PrepareDriverTest  {
     @Tag("smoke")
     @Description("Open Account icon is present in header component, clickable and closable")
     void openHdrAcntBttnTest(){
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         HomePage home = new HomePage(driver);
         AccountSideBarPage asbp = new AccountSideBarPage(driver);
         driver.findElement(home.header.getAcntBttn()).click();
