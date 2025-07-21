@@ -1,5 +1,6 @@
 package ui.pages;
 
+import io.qameta.allure.Allure;
 import io.qameta.allure.Feature;
 import lombok.Getter;
 import org.junit.jupiter.api.AfterEach;
@@ -7,8 +8,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import ui.extensions.AllureExtension;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.time.Duration;
+import java.util.Map;
 
 @Feature("preparing driver")
 @ExtendWith(AllureExtension.class)
