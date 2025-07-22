@@ -9,6 +9,7 @@ import api.support.GuestTokenProvider;
 import api.utils.CookieUtils;
 import api.utils.CsvReader;
 import api.utils.RestLog;
+import io.qameta.allure.Description;
 import io.qameta.allure.Step;
 
 import io.restassured.response.Response;
@@ -33,7 +34,6 @@ public class CartController {
     private RequestSpecification spec() {
 
         GuestTokenProvider.Box antiBot = GuestTokenProvider.current();
-        String allCookies = CookieUtils.buildCookies(antiBot.cookie());
 
         return given()
                 .filter(RestLog.rq()).filter(RestLog.rs())
@@ -70,6 +70,7 @@ public class CartController {
     }
 
     @Step("Add items to cart from csv")
+    @Description("Need ToDo")
     public Response addItemsToCartFromCsv() {
         List<AddItemRequest.Item> items = CsvReader.readItemsFromCsv("testData/addCartItems.csv");
         AddItemRequest requestBody = new AddItemRequest(items);

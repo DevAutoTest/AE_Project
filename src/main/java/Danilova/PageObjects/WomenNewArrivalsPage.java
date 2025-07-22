@@ -14,7 +14,7 @@ public class WomenNewArrivalsPage extends BasePage {
     public final static String WOMEN_NEW_ARRIVALS_URL = "https://www.ae.com/us/en/c/women/new-arrivals/11gj7jfZ1266xyj-filtered?pagetype=plp";
     public final static String PAGE_TITLE = "New Arrivals | Women's Clothes & Apparel | American Eagle";
 
-    private WebDriverWait wait;
+    private final WebDriverWait wait;
 
     public WomenNewArrivalsPage(WebDriver driver) {
         super(driver);

@@ -11,12 +11,11 @@ public class SearchSideBarTests {
 
     private final GET_cstr_v1_search search = new GET_cstr_v1_search();
     SearchResponse searchResp;
-    SearchResponse.Example searchByBrand;
 
     @Test
     void getSearchResultTest() {
-        int countResponse = 0;
-        int totalNum = 0;
+        int countResponse;
+        int totalNum;
         searchResp = search.getAllSearchResponse();
         countResponse = searchResp.getData().relationships.products.data.size();
         totalNum = searchResp.getData().attributes.totalNumResults;
@@ -31,8 +30,8 @@ public class SearchSideBarTests {
         int size = searchItemsResult.size();
 
 
-        for (int i = 0; i < size; i++) {
-            assertThat(searchItemsResult.get(i).attributes.brandName)
+        for (SearchResponse.Included included : searchItemsResult) {
+            assertThat(included.attributes.brandName)
                     .isEqualTo("AE");
         }
     }
@@ -55,7 +54,6 @@ public class SearchSideBarTests {
     void checkSearchResultFilteredByBrandTest() {
         searchResp = search.getResponseFilterWasCheckedByBrand();
         System.out.println(searchResp);
-        String expectedBrand = "Aerie";
 
         Optional<SearchResponse.Filter> brandFilterOpt =
                 searchResp.getData().getAttributes().getFilters().stream()

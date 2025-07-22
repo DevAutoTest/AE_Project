@@ -26,7 +26,7 @@ public class MenuComponentTests extends ParametrizedTestBase {
 
     @ParameterizedTest
     @CsvFileSource(resources = "/testData/MenuCategories.csv", numLinesToSkip = 0)
-    public void testWomenMenuLinksAndCategoriesText(String expectedCategory, String expectedUrl) throws IOException {
+    public void testWomenMenuLinksAndCategoriesText(String expectedCategory, String expectedUrl)  {
 
         // 1. Получаем актуальные ссылки из меню
         List<String> actualLinks = homePage.menu.getWomenMenuLinks();
@@ -44,7 +44,7 @@ public class MenuComponentTests extends ParametrizedTestBase {
     @ParameterizedTest
     @Disabled("Need to do")
     @CsvFileSource(resources = "/testData/MenuCategories.csv", numLinesToSkip = 0)
-    public void testOpenWomenMenuLinks(String expectedCategory, String expectedUrl) throws IOException {
+    public void testOpenWomenMenuLinks(String expectedCategory, String expectedUrl)  {
 
         // 1. Получаем актуальные ссылки из меню
         List<String> actualLinks = homePage.menu.getWomenMenuLinks();

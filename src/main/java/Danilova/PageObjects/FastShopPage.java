@@ -11,7 +11,7 @@ import java.util.Random;
 import static Danilova.utils.RandomUtils.randomIntInclusive;
 
 public class FastShopPage extends BasePage {
-    private WebDriverWait wait;
+    private final WebDriverWait wait;
     private final Random random = new Random();
     @Getter
     private String selectedColor;
@@ -21,11 +21,11 @@ public class FastShopPage extends BasePage {
     private int selectedQuantity;
 
 
-    String firstPrice = driver.findElement(By.xpath("//div[@data-testid='list-price']")).getText();
-
-    String currentPrice = driver.findElement(By.xpath("//div[@data-testid='sale-price']")).getText();
-
-    String discount = driver.findElement(By.xpath("//div[contains(@class,'_sale-tag')]")).getText();
+//    String firstPrice = driver.findElement(By.xpath("//div[@data-testid='list-price']")).getText();
+//
+//    String currentPrice = driver.findElement(By.xpath("//div[@data-testid='sale-price']")).getText();
+//
+//    String discount = driver.findElement(By.xpath("//div[contains(@class,'_sale-tag')]")).getText();
 
     By addToBagButton = By.xpath("//button[@data-test-btn='addToBag']");
     By increaseCountButton = By.xpath("//button[@aria-label='increase']");

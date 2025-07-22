@@ -1,16 +1,11 @@
 package Danilova.PageObjects;
 
-import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import lombok.Getter;
 import org.openqa.selenium.*;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.FluentWait;
-import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.io.ByteArrayInputStream;
 import java.time.Duration;
 
 @Getter
@@ -29,65 +24,57 @@ public class FastMenuComponent {
     By menAE = By.xpath("//a[@href='/us/en/c/men/activewear/cat1100008?pagetype=plp']");
 
 
-
-    public FastMenuComponent(WebDriver driver){
+    public FastMenuComponent(WebDriver driver) {
         this.driver = driver;
-        this.wait   = new WebDriverWait(driver, Duration.ofSeconds(10));
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
-
 
 
     @Step("Open fast women menu")
     public void openWomenMenu() throws InterruptedException {
 
         // 1) Ждём, пока элемент появится в DOM
-        WebElement link = wait.until(
-                ExpectedConditions.presenceOfElementLocated(womenNew)
-        );
+        WebElement link = wait.until(ExpectedConditions.presenceOfElementLocated(womenNew));
 
         // 2) Скроллим его в центр по горизонтали и вертикали
-        ((JavascriptExecutor) driver).executeScript(
-                "arguments[0].scrollIntoView({block:'center'});", link
-        );
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block:'center'});", link);
 
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
         link.click();
     }
 
     @Step("Open fast women tops menu")
-    public void openWomenTopsMenu(){
+    public void openWomenTopsMenu() {
         driver.findElement(womenTops).click();
     }
 
     @Step("Open fast women jeans menu")
-    public void openWomenJeansMenu(){
+    public void openWomenJeansMenu() {
         driver.findElement(womenJeans).click();
     }
 
     @Step("Open fast women dresses menu")
-    public void openWomenDressesMenu(){
+    public void openWomenDressesMenu() {
         driver.findElement(womenDress).click();
     }
 
     @Step("Open fast men menu")
-    public void openMenMenu(){
+    public void openMenMenu() {
         driver.findElement(menNew).click();
     }
 
     @Step("Open fast men tops menu")
-    public void openMenTopsMenu(){
+    public void openMenTopsMenu() {
         driver.findElement(menTops).click();
     }
 
     @Step("Open fast men jeans menu")
-    public void openMenJeansMenu(){
+    public void openMenJeansMenu() {
         driver.findElement(menJeans).click();
     }
 
     @Step("Open fast men AE menu")
-    public void openMenAEMenu(){
+    public void openMenAEMenu() {
         driver.findElement(menAE).click();
     }
-
-
 }
