@@ -24,20 +24,33 @@ import java.util.Objects;
 public class PrepareDriverTest {
 
     @Getter
-    static WebDriver driver;
+    private static WebDriver driver;
 
     @BeforeEach
     void setup() {
-        initDriver();
-
-        driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
+        try {
+            initDriver();
+            if (driver != null) {
+                driver.manage().window().maximize();
+                driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
+            } else {
+                Allure.addAttachment("Driver initialization", "Failed to initialize driver");
+            }
+        } catch (Exception e) {
+            Allure.addAttachment("Setup error", e.getMessage());
+            throw e;
+        }
     }
 
     @AfterEach
     void tearDown() {
-        if (driver != null) {
-            driver.quit();
+        try {
+            if (driver != null) {
+                driver.quit();
+                driver = null; // Очищаем статическую переменную
+            }
+        } catch (Exception e) {
+            Allure.addAttachment("Teardown error", e.getMessage());
         }
     }
 

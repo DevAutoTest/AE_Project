@@ -103,10 +103,21 @@ jobs:
         # Шаг: Запуск тестов
       - name: Run tests
         env:
-          # URL для подключения к Selenium
           SELENIUM_REMOTE_URL: http://localhost:4444/wd/hub
-        # Запускаем тесты через Gradle с параметром режима
-        run: ./gradlew clean test -Dmode=${{ matrix.mode }}
+          # Добавляем переменные для ChromeDriver
+          CHROMEWEBDRIVER: /usr/local/bin/chromedriver
+          CHROME_BIN: /usr/bin/google-chrome
+        run: |
+          # Устанавливаем Chrome и ChromeDriver
+          sudo apt-get update
+          sudo apt-get install -y google-chrome-stable
+          wget https://chromedriver.storage.googleapis.com/114.0.5735.90/chromedriver_linux64.zip
+          unzip chromedriver_linux64.zip
+          sudo mv chromedriver /usr/local/bin/
+          sudo chmod +x /usr/local/bin/chromedriver
+
+          # Запускаем тесты
+          ./gradlew clean test -Dmode=${{ matrix.mode }}
 
       - name: Copy History
         uses: actions/checkout@v2
