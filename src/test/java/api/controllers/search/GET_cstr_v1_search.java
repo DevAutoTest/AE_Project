@@ -27,9 +27,9 @@ public class GET_cstr_v1_search {
         return given()
                 .filter(RestLog.rq()).filter(RestLog.rs())
                 .baseUri(cfg.getApiBaseUrl())
-                .header("authorization",  "Bearer " + antiBot.token())
+                .header("authorization", "Bearer " + antiBot.token())
                 .header("x-access-token", antiBot.token())
-                .header("cookie",        allCookies);
+                .header("cookie", allCookies);
     }
 
     /* --------------- API --------------- */
@@ -38,8 +38,8 @@ public class GET_cstr_v1_search {
     public SearchResponse getAllSearchResponse() {
         return spec()
                 .queryParam("query", "colorful socks")
-                .queryParam("resultsPerPage",   60)
-                .queryParam("us",   "ae")
+                .queryParam("resultsPerPage", 60)
+                .queryParam("us", "ae")
                 .when()
                 .get(SEARCH_ENDPOINT)
                 .then()
@@ -50,41 +50,41 @@ public class GET_cstr_v1_search {
     @Step("Get search colorful socks filtered by AE brand ")
     public SearchResponse.Example getResponseFilteredByBrand() {
         SearchResponse.Example example;
-        return example=
+        return example =
 
                 given()
                         .spec(spec())
-                .queryParam("query", "colorful socks")
-                .queryParam("brand",   "AE")
-                .queryParam("resultsPerPage",   60)
-                .queryParam("us",   "ae")
-                .when()
-                .get(SEARCH_ENDPOINT)
-                .then()
-                .statusCode(200)
-                .extract().as(SearchResponse.Example.class);
+                        .queryParam("query", "colorful socks")
+                        .queryParam("brand", "AE")
+                        .queryParam("resultsPerPage", 60)
+                        .queryParam("us", "ae")
+                        .when()
+                        .get(SEARCH_ENDPOINT)
+                        .then()
+                        .statusCode(200)
+                        .extract().as(SearchResponse.Example.class);
     }
 
     @Step("Get search colorful socks filtered by gender ")
     public SearchResponse getResponseFilteredByGender() {
-            return spec()
-                    .queryParam("query", "colorful socks")
-                    .queryParam("gender",   "Men")
-                    .queryParam("us",   "ae")
-                    .when()
-                    .get(SEARCH_ENDPOINT)
-                    .then()
-                    .statusCode(200)
-                    .extract().as(SearchResponse.class);
+        return spec()
+                .queryParam("query", "colorful socks")
+                .queryParam("gender", "Men")
+                .queryParam("us", "ae")
+                .when()
+                .get(SEARCH_ENDPOINT)
+                .then()
+                .statusCode(200)
+                .extract().as(SearchResponse.class);
     }
 
     @Step("Check filter was selected by Brand")
     public SearchResponse getResponseFilterWasCheckedByBrand() {
         return spec()
                 .queryParam("query", "colorful socks")
-                .queryParam("brand",   "Aerie")
-                .queryParam("resultsPerPage",   60)
-                .queryParam("us",   "ae")
+                .queryParam("brand", "Aerie")
+                .queryParam("resultsPerPage", 60)
+                .queryParam("us", "ae")
                 .when()
                 .get(SEARCH_ENDPOINT)
                 .then()
@@ -96,20 +96,14 @@ public class GET_cstr_v1_search {
     public SearchResponse getZeroResults() {
         return spec()
                 .queryParam("query", "123123")
-                .queryParam("resultsPerPage",   60)
-                .queryParam("us",   "ae")
+                .queryParam("resultsPerPage", 60)
+                .queryParam("us", "ae")
                 .when()
                 .get(SEARCH_ENDPOINT)
                 .then()
                 .statusCode(200)
                 .extract().as(SearchResponse.class);
     }
-
-
-
-
-
-
 
 
 }

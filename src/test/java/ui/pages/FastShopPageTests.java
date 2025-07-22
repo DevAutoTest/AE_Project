@@ -10,7 +10,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
-public class FastShopPageTests extends PrepareDriverTest{
+public class FastShopPageTests extends PrepareDriverTest {
 
     @Test
     @Tag("smoke")
@@ -19,11 +19,11 @@ public class FastShopPageTests extends PrepareDriverTest{
         HomePage home = new HomePage(driver);
 
         //из России с 19 июля не работает
-        if(home.dialogBox.isPresent()){
+        if (home.dialogBox.isPresent()) {
             home.dialogBox.closeDialogBox();
         }
         //из России с 19 июля не работает
-        if(home.offerBox.isPresent()){
+        if (home.offerBox.isPresent()) {
             home.offerBox.closeOfferBox();
         }
 
@@ -34,11 +34,11 @@ public class FastShopPageTests extends PrepareDriverTest{
 
         FastShopPage dropPage = new FastShopPage(driver);
 
-        if(home.rewardBox.isBannerDisplayed()){
+        if (home.rewardBox.isBannerDisplayed()) {
             home.rewardBox.closeBanner();
         }
 
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
 
         dropPage.clickRandomColorResult();
         dropPage.clickRandomSizeResult();
@@ -50,16 +50,13 @@ public class FastShopPageTests extends PrepareDriverTest{
         String expectedText = AddedToBagSideBar.ADDED_SUCCESS;
         String currentText = bar.getText();
 
-        Assertions.assertEquals(expectedText,currentText);
+        Assertions.assertEquals(expectedText, currentText);
 
         bar.clickViewBag();
 
         wait.until(ExpectedConditions.urlContains("cart"));
         String currentUrl = driver.getCurrentUrl();
         String expectedUrl = ShoppingBagPage.CART_URL;
-        Assertions.assertEquals(expectedUrl,currentUrl);
- }
-
-
-
+        Assertions.assertEquals(expectedUrl, currentUrl);
+    }
 }

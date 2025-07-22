@@ -3,10 +3,8 @@ package api.tests;
 import api.controllers.search.GET_cstr_v1_search;
 import api.dto.SearchResponse;
 import org.junit.jupiter.api.Test;
-
 import java.util.List;
 import java.util.Optional;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class SearchSideBarTests {
@@ -39,23 +37,19 @@ public class SearchSideBarTests {
         }
     }
 
-
     @Test
     void getSearchResultByGenderTest() {
 
         searchResp = search.getResponseFilteredByGender();
         System.out.println(searchResp);
         String expectedGender = "Men";
-
         List<String> filteredRslts = searchResp.getData().attributes.request.filters.getGender();
-
 
         assertThat(searchResp).isNotNull();
         assertThat(filteredRslts.contains(expectedGender))
                 .as("Filtered results contain «%s»", expectedGender)
                 .isTrue();
     }
-
 
     @Test
     void checkSearchResultFilteredByBrandTest() {
@@ -84,9 +78,6 @@ public class SearchSideBarTests {
         int actualNum = searchResp.getData().attributes.totalNumResults;
         int expNum = 0;
         assertThat(actualNum).isEqualTo(expNum);
-
     }
-
-
 }
 

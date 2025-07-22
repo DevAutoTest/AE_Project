@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
+
 import java.io.IOException;
 import java.time.Duration;
 import java.util.List;
@@ -22,7 +23,6 @@ public class MenuComponentTests extends ParametrizedTestBase {
         //important hoverOver to load elements!
         homePage.menu.hoverOverWomen();
     }
-
 
     @ParameterizedTest
     @CsvFileSource(resources = "/testData/MenuCategories.csv", numLinesToSkip = 0)
@@ -55,6 +55,5 @@ public class MenuComponentTests extends ParametrizedTestBase {
             Assertions.assertEquals(expectedUrl, driver.getCurrentUrl());
             homePage.goBack();
         }
-
     }
 }

@@ -12,17 +12,17 @@ import java.time.Duration;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-
-/** Открывает ae.com в два этапа real-browser’ом,
-        * ждёт, пока Akamai JS-сенсор положит cookie, и сохраняет их в {@link AkamaiCookieHolder}.
-        */
+/**
+ * Открывает ae.com в два этапа real-browser’ом,
+ * ждёт, пока Akamai JS-сенсор положит cookie, и сохраняет их в {@link AkamaiCookieHolder}.
+ */
 public final class AkamaiWarmUpExtension implements BeforeAllCallback {
 
-    private static final String ROOT       = "https://www.ae.com/";
+    private static final String ROOT = "https://www.ae.com/";
     private static final String STOREFRONT = ROOT + "us/en/";
-    private static final int    MAX_MS      = 5_000;
-    private static final int    STEP_MS     =   300;
-    private static final String RX_NAME     = "_abck|bm_sz|ak_bmsc|bm_mi";
+    private static final int MAX_MS = 5_000;
+    private static final int STEP_MS = 300;
+    private static final String RX_NAME = "_abck|bm_sz|ak_bmsc|bm_mi";
 
     @Override
     public void beforeAll(ExtensionContext ctx) throws Exception {
@@ -45,7 +45,7 @@ public final class AkamaiWarmUpExtension implements BeforeAllCallback {
             // 2. повторный GET на тот же STOREFRONT — здесь Akamai JS-сенсор допишет ak_bmsc + bm_mi
             drv.get(STOREFRONT);
 
-            Map<String,String> akamai = waitForCookies(drv);
+            Map<String, String> akamai = waitForCookies(drv);
             if (akamai.size() < 4) {
                 System.err.printf(
                         "⚠ За %d мс получили только %d из 4 Akamai-cookie: %s%n",
@@ -59,12 +59,14 @@ public final class AkamaiWarmUpExtension implements BeforeAllCallback {
         }
     }
 
-    /** Ждём появления нужных Akamai-cookie, опрашивая каждые STEP_MS, но не более MAX_MS. */
-    private static Map<String,String> waitForCookies(ChromeDriver drv)
+    /**
+     * Ждём появления нужных Akamai-cookie, опрашивая каждые STEP_MS, но не более MAX_MS.
+     */
+    private static Map<String, String> waitForCookies(ChromeDriver drv)
             throws InterruptedException {
 
         long deadline = System.currentTimeMillis() + MAX_MS;
-        Map<String,String> curr;
+        Map<String, String> curr;
 
         do {
             curr = drv.manage().getCookies().stream()

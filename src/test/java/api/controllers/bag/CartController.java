@@ -1,4 +1,5 @@
 package api.controllers.bag;
+
 import api.dto.AddItemRequest;
 import api.dto.CartResponse;
 import api.config.TestPropertiesConfig;
@@ -13,16 +14,16 @@ import io.qameta.allure.Step;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.aeonbits.owner.ConfigFactory;
+
 import java.util.List;
 
-import static api.utils.CookieUtils.buildCookies;
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
 import static org.hamcrest.Matchers.notNullValue;
 
 public class CartController {
 
-    private static final String BAG_ENDPOINT   = "/ugp-api/bag/v1";
+    private static final String BAG_ENDPOINT = "/ugp-api/bag/v1";
     private static final String ITEMS_ENDPOINT = "/ugp-api/bag/v1/items";
 
     private static final TestPropertiesConfig cfg =
@@ -39,10 +40,10 @@ public class CartController {
                 .baseUri(cfg.getApiBaseUrl())
                 .accept(JSON)
                 .contentType(JSON)
-                .header("authorization",  "Bearer " + antiBot.token())
+                .header("authorization", "Bearer " + antiBot.token())
                 .header("x-access-token", antiBot.token())
                 .header("aesite", "AEO_US");
-               // .header("cookie",        allCookies);
+        // .header("cookie",        allCookies);
     }
 
     /* --------------- API --------------- */
@@ -58,7 +59,7 @@ public class CartController {
     @Step("Add item to cart")
     public Response addItem(String skuId, int quantity) {
         AddItemRequest.Item item = new AddItemRequest.Item(skuId, quantity);
-        AddItemRequest body     = new AddItemRequest(List.of(item));
+        AddItemRequest body = new AddItemRequest(List.of(item));
 
         return spec()
                 .body(body)
@@ -69,7 +70,7 @@ public class CartController {
     }
 
     @Step("Add items to cart from csv")
-    public Response  addItemsToCartFromCsv()  {
+    public Response addItemsToCartFromCsv() {
         List<AddItemRequest.Item> items = CsvReader.readItemsFromCsv("testData/addCartItems.csv");
         AddItemRequest requestBody = new AddItemRequest(items);
         System.out.println(requestBody);
@@ -85,7 +86,7 @@ public class CartController {
     }
 
     @Step("Update item count")
-    public Response updateItem(String skuId, int quantity, String itemId)  {
+    public Response updateItem(String skuId, int quantity, String itemId) {
         UpdateItemRequest.Item item = new UpdateItemRequest.Item(skuId, quantity, itemId);
         UpdateItemRequest requestBody = new UpdateItemRequest(List.of(item));
 
@@ -97,14 +98,14 @@ public class CartController {
     }
 
     @Step("Delete item")
-    public Response deleteItem(String itemIds)  {
+    public Response deleteItem(String itemIds) {
         DeleteItemRequest.Item item = new DeleteItemRequest.Item(itemIds);
         DeleteItemRequest requestBody = new DeleteItemRequest(List.of(item));
 
         return spec()
                 .body(requestBody)
                 .when()
-                .delete(ITEMS_ENDPOINT+ "?itemIds=" + itemIds)
+                .delete(ITEMS_ENDPOINT + "?itemIds=" + itemIds)
                 .andReturn();
     }
 }

@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-public class SignInPageTests  extends PrepareDriverTest{
+public class SignInPageTests extends PrepareDriverTest {
 
     @Test
     @Tag("critical")
@@ -29,7 +29,4 @@ public class SignInPageTests  extends PrepareDriverTest{
         String expectedTitle = UsersAccountSideBarPage.ACCOUNT_MESSAGE;
         Assertions.assertEquals(expectedTitle, actualTitle);
     }
-
-
-
 }

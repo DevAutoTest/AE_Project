@@ -6,15 +6,18 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public final class CookieUtils {
-    private CookieUtils() {}
+    private CookieUtils() {
+    }
 
-    /** Склеивает 4 Akamai + «гостевые» куки в одну строку. */
+    /**
+     * Склеивает 4 Akamai + «гостевые» куки в одну строку.
+     */
     public static String buildCookies(String guestRawCookies) {
 
-        Stream<Map.Entry<String,String>> akamai =
+        Stream<Map.Entry<String, String>> akamai =
                 api.utils.AkamaiCookieHolder.get().entrySet().stream();
 
-        Stream<Map.Entry<String,String>> guest =
+        Stream<Map.Entry<String, String>> guest =
                 Arrays.stream(guestRawCookies.split(";"))
                         .map(String::trim)
                         .filter(s -> !s.isEmpty())

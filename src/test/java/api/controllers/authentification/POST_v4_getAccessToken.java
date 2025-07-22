@@ -5,6 +5,7 @@ import api.config.TestPropertiesConfig;
 import api.utils.RestLog;
 import io.qameta.allure.Step;
 import org.aeonbits.owner.ConfigFactory;
+
 import java.util.Arrays;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -22,17 +23,18 @@ public final class POST_v4_getAccessToken {
     private static final TestPropertiesConfig cfg =
             ConfigFactory.create(TestPropertiesConfig.class);
 
-    private POST_v4_getAccessToken() {}
+    private POST_v4_getAccessToken() {
+    }
 
     @Step("Get AUTH token (grant_type=password)")
     public static String getAuthToken() {
 
         GuestTokenProvider.Box antiBot = GuestTokenProvider.current();
-        Map<String,String> warm       = api.utils.AkamaiCookieHolder.get();   // ← уже готовы
+        Map<String, String> warm = api.utils.AkamaiCookieHolder.get();   // ← уже готовы
 
         /* 1) Akamai + 2) guest → одна строка */
-        Stream<Map.Entry<String,String>> akamai = warm.entrySet().stream();
-        Stream<Map.Entry<String,String>> guest  =
+        Stream<Map.Entry<String, String>> akamai = warm.entrySet().stream();
+        Stream<Map.Entry<String, String>> guest =
                 Arrays.stream(antiBot.cookie().split(";"))
                         .map(String::trim)
                         .filter(s -> !s.isEmpty())
@@ -49,16 +51,16 @@ public final class POST_v4_getAccessToken {
                 .filter(RestLog.rq()).filter(RestLog.rs())
                 .baseUri(cfg.getApiBaseUrl())
                 .contentType("application/x-www-form-urlencoded")
-                .header("User-Agent",       GuestTokenProvider.UA)
-                .header("authorization",    cfg.getBasicAuth())
-                .header("aesite",   "AEO_US")
-                .header("aelang",   "en_US")
-                .header("aecountry","US")
+                .header("User-Agent", GuestTokenProvider.UA)
+                .header("authorization", cfg.getBasicAuth())
+                .header("aesite", "AEO_US")
+                .header("aelang", "en_US")
+                .header("aecountry", "US")
                 .header("x-access-token", antiBot.token())
-                .header("cookie",  allCookies)
+                .header("cookie", allCookies)
                 .formParam("grant_type", "password")
-                .formParam("username",   cfg.getUserName())
-                .formParam("password",   cfg.getPassword())
+                .formParam("username", cfg.getUserName())
+                .formParam("password", cfg.getPassword())
                 .post(ENDPOINT)
                 .then().statusCode(200)
                 .extract().jsonPath().getString("access_token");

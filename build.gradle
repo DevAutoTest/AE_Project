@@ -35,3 +35,18 @@ test {
     useJUnitPlatform()
     systemProperties(System.getProperties())
 }
+
+// Регистрируем отдельные задачи для UI и API тестов
+tasks.register('uiTest', Test) {
+    useJUnitPlatform {
+        include '**/ui/**'
+    }
+    systemProperties(System.getProperties())
+}
+
+tasks.register('apiTest', Test) {
+    useJUnitPlatform {
+        include '**/api/**'
+    }
+    systemProperties(System.getProperties())
+}

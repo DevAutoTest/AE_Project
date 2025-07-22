@@ -40,8 +40,6 @@ public class FastMenuComponent {
     @Step("Open fast women menu")
     public void openWomenMenu() throws InterruptedException {
 
-
-
         // 1) Ждём, пока элемент появится в DOM
         WebElement link = wait.until(
                 ExpectedConditions.presenceOfElementLocated(womenNew)
@@ -51,9 +49,9 @@ public class FastMenuComponent {
         ((JavascriptExecutor) driver).executeScript(
                 "arguments[0].scrollIntoView({block:'center'});", link
         );
+
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
         link.click();
-
-
     }
 
     @Step("Open fast women tops menu")

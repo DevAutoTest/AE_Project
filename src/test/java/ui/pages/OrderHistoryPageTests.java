@@ -7,12 +7,12 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-public class OrderHistoryPageTests extends PrepareDriverTest{
+public class OrderHistoryPageTests extends PrepareDriverTest {
 
     @Test
     @Tag("critical")
     @Disabled("antibot Akamai is working")
-    void checkOrdersOfNewUserTest(){
+    void checkOrdersOfNewUserTest() {
         HomePage home = new HomePage(driver);
         home.header().clckHdrAcntBttn();
         AccountSideBarPage asbp = new AccountSideBarPage(driver);
@@ -22,7 +22,7 @@ public class OrderHistoryPageTests extends PrepareDriverTest{
         page.fillSignInForm(UsersFactory.CREATED_WITHOUT_ORDERS_USER);
         page.clickSignIn();
 
-        
+
         UsersAccountSideBarPage sideBar = new UsersAccountSideBarPage(driver);
         sideBar.clickOrderHistoryLink();
 
@@ -30,11 +30,8 @@ public class OrderHistoryPageTests extends PrepareDriverTest{
 
 
         String expectedCount = "0";
-        String actualCount = historyPage.getCountByYear("2025").substring(0,0);
+        String actualCount = historyPage.getCountByYear("2025").substring(0, 0);
 
-        Assertions.assertEquals(expectedCount,actualCount);
-
-
-
+        Assertions.assertEquals(expectedCount, actualCount);
     }
 }

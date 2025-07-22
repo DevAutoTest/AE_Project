@@ -10,7 +10,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
-public class ShoppingBagPageTests extends  PrepareDriverTest{
+public class ShoppingBagPageTests extends PrepareDriverTest {
     @Test
     @Tag("critical")
     @Description("Check color of random item in bag")
@@ -18,11 +18,11 @@ public class ShoppingBagPageTests extends  PrepareDriverTest{
         HomePage home = new HomePage(driver);
 
         //из России с 19 июля не работает
-        if(home.dialogBox.isPresent()){
+        if (home.dialogBox.isPresent()) {
             home.dialogBox.closeDialogBox();
         }
         //из России с 19 июля не работает
-        if(home.offerBox.isPresent()){
+        if (home.offerBox.isPresent()) {
             home.offerBox.closeOfferBox();
         }
 
@@ -33,7 +33,7 @@ public class ShoppingBagPageTests extends  PrepareDriverTest{
 
         FastShopPage dropPage = new FastShopPage(driver);
 
-        if(home.rewardBox.isBannerDisplayed()){
+        if (home.rewardBox.isBannerDisplayed()) {
             home.rewardBox.closeBanner();
         }
 
@@ -56,7 +56,7 @@ public class ShoppingBagPageTests extends  PrepareDriverTest{
         Assertions.assertEquals(expectedCount, currentCount);
         String expectedColor = dropPage.getSelectedColor();
         String currentColor = bag.getColor();
-        Assertions.assertEquals(expectedColor,currentColor);
+        Assertions.assertEquals(expectedColor, currentColor);
     }
 
     @Test
@@ -66,11 +66,11 @@ public class ShoppingBagPageTests extends  PrepareDriverTest{
         HomePage home = new HomePage(driver);
 
         //из России с 19 июля не работает
-        if(home.dialogBox.isPresent()){
+        if (home.dialogBox.isPresent()) {
             home.dialogBox.closeDialogBox();
         }
         //из России с 19 июля не работает
-        if(home.offerBox.isPresent()){
+        if (home.offerBox.isPresent()) {
             home.offerBox.closeOfferBox();
         }
 
@@ -81,7 +81,7 @@ public class ShoppingBagPageTests extends  PrepareDriverTest{
 
         FastShopPage dropPage = new FastShopPage(driver);
 
-        if(home.rewardBox.isBannerDisplayed()){
+        if (home.rewardBox.isBannerDisplayed()) {
             home.rewardBox.closeBanner();
         }
 
@@ -116,11 +116,11 @@ public class ShoppingBagPageTests extends  PrepareDriverTest{
         HomePage home = new HomePage(driver);
 
         //из России с 19 июля не работает
-        if(home.dialogBox.isPresent()){
+        if (home.dialogBox.isPresent()) {
             home.dialogBox.closeDialogBox();
         }
         //из России с 19 июля не работает
-        if(home.offerBox.isPresent()){
+        if (home.offerBox.isPresent()) {
             home.offerBox.closeOfferBox();
         }
 
@@ -131,7 +131,7 @@ public class ShoppingBagPageTests extends  PrepareDriverTest{
 
         FastShopPage dropPage = new FastShopPage(driver);
 
-        if(home.rewardBox.isBannerDisplayed()){
+        if (home.rewardBox.isBannerDisplayed()) {
             home.rewardBox.closeBanner();
         }
 
@@ -168,11 +168,11 @@ public class ShoppingBagPageTests extends  PrepareDriverTest{
         HomePage home = new HomePage(driver);
 
         //из России с 19 июля не работает
-        if(home.dialogBox.isPresent()){
+        if (home.dialogBox.isPresent()) {
             home.dialogBox.closeDialogBox();
         }
         //из России с 19 июля не работает
-        if(home.offerBox.isPresent()){
+        if (home.offerBox.isPresent()) {
             home.offerBox.closeOfferBox();
         }
         home.fastMenu.openWomenMenu();
@@ -181,13 +181,13 @@ public class ShoppingBagPageTests extends  PrepareDriverTest{
 
         // Добавляем несколько товаров
         for (int i = 0; i < iterations; i++) {
-            System.out.println("Adding item #" + (i+1));
+            System.out.println("Adding item #" + (i + 1));
 
             womenNewPage.chooseOneItem();
 
             FastShopPage dropPage = new FastShopPage(driver);
 
-            if(home.rewardBox.isBannerDisplayed()){
+            if (home.rewardBox.isBannerDisplayed()) {
                 home.rewardBox.closeBanner();
             }
             dropPage.clickRandomColorResult();
@@ -208,7 +208,7 @@ public class ShoppingBagPageTests extends  PrepareDriverTest{
         String expectedText = AddedToBagSideBar.ADDED_SUCCESS;
         String currentText = bar.getText();
 
-        Assertions.assertEquals(expectedText,currentText);
+        Assertions.assertEquals(expectedText, currentText);
 
         bar.clickViewBag();
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
@@ -218,11 +218,10 @@ public class ShoppingBagPageTests extends  PrepareDriverTest{
 
         int globalCount = Integer.parseInt(bag.getGlobalQty());
         int sumResult = bag.sumItemsQty();
-        Assertions.assertEquals(globalCount,sumResult);
+        Assertions.assertEquals(globalCount, sumResult);
 
         bag.goBack();
         int bagIconCount = home.header.getBagCount();
-        Assertions.assertEquals(globalCount,bagIconCount);
-
+        Assertions.assertEquals(globalCount, bagIconCount);
     }
 }

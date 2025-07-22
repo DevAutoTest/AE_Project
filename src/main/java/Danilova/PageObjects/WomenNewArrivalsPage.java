@@ -28,6 +28,7 @@ public class WomenNewArrivalsPage extends BasePage {
         int attempts = 0;
         while (attempts < 3) {
             try {
+                driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(4));
                 wait.until(ExpectedConditions.presenceOfElementLocated(
                         By.xpath("//div[contains(@class,'product-tile')]")));
 
@@ -71,9 +72,10 @@ public class WomenNewArrivalsPage extends BasePage {
                 ((JavascriptExecutor) driver)
                         .executeScript("arguments[0].scrollIntoView({block:'center', inline:'center'});", tile);
                 // ждём, пока станет кликабельным
+                driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
                 wait.until(ExpectedConditions.elementToBeClickable(tile)).click();
                 System.out.println("Кликаем по выбранному элементу");
-                driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
+                driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(6));
 
                 return;  // успех — выходим
             } catch (StaleElementReferenceException | ElementClickInterceptedException e) {

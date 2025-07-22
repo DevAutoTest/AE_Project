@@ -14,8 +14,7 @@ import java.time.Duration;
 import static org.junit.jupiter.api.Assertions.*;
 
 @Feature("Header module tests")
-public class HeaderComponentTests extends PrepareDriverTest  {
-
+public class HeaderComponentTests extends PrepareDriverTest {
 
     @Test
     @Description("Check AE logo")
@@ -31,11 +30,10 @@ public class HeaderComponentTests extends PrepareDriverTest  {
 
     /*Добавить тесты для aerie logo*/
 
-
     @Test
     @Tag("smoke")
     @Description("Opening search icon is present in header component, clickable and closable")
-    void openHdrSrchSideBar(){
+    void openHdrSrchSideBar() {
         HomePage home = new HomePage(driver);
         driver.findElement(home.header().getSearch()).click();
         SearchSideBarPage searchSide = new SearchSideBarPage(driver);
@@ -48,13 +46,13 @@ public class HeaderComponentTests extends PrepareDriverTest  {
         String actualHomeUrl = driver.getCurrentUrl();
         String expectedHomeUrl = HomePage.HOME_PAGE_URL;
 
-        assertEquals(expectedHomeUrl,actualHomeUrl);
+        assertEquals(expectedHomeUrl, actualHomeUrl);
     }
 
     @Test
     @Tag("smoke")
     @Description("Open Account icon is present in header component, clickable and closable")
-    void openHdrAcntBttnTest(){
+    void openHdrAcntBttnTest() {
         HomePage home = new HomePage(driver);
         AccountSideBarPage asbp = new AccountSideBarPage(driver);
         driver.findElement(home.header.getAcntBttn()).click();
@@ -67,15 +65,13 @@ public class HeaderComponentTests extends PrepareDriverTest  {
         String actualHomeUrl = driver.getCurrentUrl();
         String expectedHomeUrl = HomePage.HOME_PAGE_URL;
 
-        assertEquals(expectedHomeUrl,actualHomeUrl);
+        assertEquals(expectedHomeUrl, actualHomeUrl);
     }
-
-    //Добавить фаворитов
 
     @Test
     @Tag("smoke")
     @Description("Open Cart icon is present in header component, clickable and go home page")
-    void openHdrCartBttnTest(){
+    void openHdrCartBttnTest() {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         HomePage home = new HomePage(driver);
         home.header().clckHdrCartBttn();
@@ -89,7 +85,6 @@ public class HeaderComponentTests extends PrepareDriverTest  {
         String actualHomeUrl = driver.getCurrentUrl();
         String expectedHomeUrl = HomePage.HOME_PAGE_URL;
 
-        assertEquals(expectedHomeUrl,actualHomeUrl);
+        assertEquals(expectedHomeUrl, actualHomeUrl);
     }
-
 }

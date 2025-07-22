@@ -3,6 +3,7 @@ package api.dto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.Getter;
+
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -333,11 +334,13 @@ public class SearchResponse {
         public String plpMarketingMessage;
         @Getter
         public Map<String, Object> additionalProperties = new LinkedHashMap<String, Object>();
+
         public void setAdditionalProperty(String name, Object value) {
             this.additionalProperties.put(name, value);
         }
 
     }
+
     @JsonIgnoreProperties(ignoreUnknown = true)
     @Data
     public static class FilterMatchTypes {

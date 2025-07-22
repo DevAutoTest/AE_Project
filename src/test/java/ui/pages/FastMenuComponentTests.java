@@ -23,15 +23,15 @@ public class FastMenuComponentTests extends PrepareDriverTest {
     void openFastWomenNewMenuTest() throws InterruptedException {
         HomePage home = new HomePage(driver);
 
-        if(home.dialogBox.isPresent()){
+        if (home.dialogBox.isPresent()) {
             home.dialogBox.closeDialogBox();
         }
 
-        if(home.offerBox.isPresent()){
+        if (home.offerBox.isPresent()) {
             home.offerBox.closeOfferBox();
         }
 
-        if(home.rewardBox.isBannerDisplayed()){
+        if (home.rewardBox.isBannerDisplayed()) {
             home.rewardBox.closeBanner();
         }
 
@@ -43,6 +43,6 @@ public class FastMenuComponentTests extends PrepareDriverTest {
         wait.until(ExpectedConditions.titleIs(PAGE_TITLE));
         String actualResult = womenNewPage.getCurrentUrl();
 
-        Assertions.assertEquals(WOMEN_NEW_ARRIVALS_URL,actualResult);
+        Assertions.assertEquals(WOMEN_NEW_ARRIVALS_URL, actualResult);
     }
 }

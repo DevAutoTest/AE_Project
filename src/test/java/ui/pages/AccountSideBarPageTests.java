@@ -6,8 +6,8 @@ import io.qameta.allure.Feature;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
 
+import static org.junit.jupiter.api.Assertions.*;
 import static Danilova.PageObjects.CreateAccountPage.CREATE_ACCOUNT_PAGE_TITLE;
 
 @Feature("Account side bar module tests")
@@ -16,7 +16,7 @@ public class AccountSideBarPageTests extends PrepareDriverTest {
     @Test
     @Description("Open Create Account page")
     @Tag("smoke")
-    void openCreateAccountPageTest(){
+    void openCreateAccountPageTest() {
         HomePage home = new HomePage(driver);
 
         home.header().clckHdrAcntBttn();
@@ -34,20 +34,16 @@ public class AccountSideBarPageTests extends PrepareDriverTest {
     @Test
     @Description("Open SignIn page")
     @Tag("smoke")
-    void openSignInPageTest(){
+    void openSignInPageTest() {
         HomePage home = new HomePage(driver);
 
         home.header().clckHdrAcntBttn();
         AccountSideBarPage asb = new AccountSideBarPage(driver);
         asb.openSignInPage();
-
     }
 
     @Test
     @Disabled("Akamai bot")
-    void signOutTest(){
+    void signOutTest() {
     }
-
-
-
 }

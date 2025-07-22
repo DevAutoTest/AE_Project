@@ -53,7 +53,7 @@ public class FastShopPage extends BasePage {
 
     @Step("Return list of available colors")
     private List<WebElement> getAllColors() {
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         wait.until(
                 ExpectedConditions.visibilityOfAllElements(
                         driver.findElement(By.xpath("//div[@data-test-extras='colors']//div[@role='button']//img"))));
@@ -124,12 +124,15 @@ public class FastShopPage extends BasePage {
         int idx = randomIntInclusive(0, count - 1);
         System.out.println("random indx = " + idx);
 
+
         // Попробуем кликнуть, повторяя при StaleElementReference
         int attempts = 0;
         while (attempts < 2) {
             try {
                 WebElement tile = tiles.get(idx);
                 System.out.println("попытка = " + attempts);
+                System.out.println("URL=" + getCurrentUrl());
+
                 // Сохраняем выбранный размер
                 this.selectedSize = tile.getText();
                 // скроллим к нему, чтобы не было off-screen

@@ -11,10 +11,12 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import ui.extensions.AllureExtension;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.Duration;
 import java.util.Map;
+import java.util.Objects;
 
 @Feature("preparing driver")
 @ExtendWith(AllureExtension.class)
@@ -27,20 +29,23 @@ public class PrepareDriverTest {
     @BeforeEach
     void setup() {
         initDriver();
-        driver = new ChromeDriver();
+
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
     }
 
     @AfterEach
     void tearDown() {
-        driver.quit();
+        if (driver != null) {
+            driver.quit();
+        }
     }
 
     private void initDriver() {
         String remoteUrl = System.getenv("SELENIUM_REMOTE_URL");
-        Allure.addAttachment("remote", remoteUrl);
-        if (remoteUrl != null || !remoteUrl.isEmpty()) {
+        // Безопасное добавление вложения в Allure
+        Allure.addAttachment("remote", Objects.requireNonNullElse(remoteUrl, "SELENIUM_REMOTE_URL not set"));
+        if (remoteUrl != null && !remoteUrl.isEmpty()) {
             ChromeOptions options = new ChromeOptions();
             options.addArguments("--headless");  // Add headless mode
             options.addArguments("--disable-gpu"); // Switch off GPU, because we don't need it in headless mode

@@ -8,16 +8,17 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import java.time.Duration;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.time.Duration;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Feature("Search Side Bar module tests")
 public class SearchSideBarPageTests extends PrepareDriverTest {
     @Test
     @Tag("smoke")
     @Description("Check placeholder text of search input")
-    void checkInputHintText(){
+    void checkInputHintText() {
         HomePage home = new HomePage(driver);
         SearchSideBarPage searchSide = new SearchSideBarPage(driver);
         home.header().clckHdrSrchBttn();
@@ -29,7 +30,7 @@ public class SearchSideBarPageTests extends PrepareDriverTest {
     @Test
     @Tag("smoke")
     @Description("Get search input")
-    void enterForSearch(){
+    void enterForSearch() {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
         HomePage home = new HomePage(driver);
         SearchSideBarPage searchSide = new SearchSideBarPage(driver);
@@ -42,6 +43,4 @@ public class SearchSideBarPageTests extends PrepareDriverTest {
         String actualURL = searchSide.getCurrentUrl();
         org.assertj.core.api.Assertions.assertThat(actualURL).contains(expectedURL);
     }
-
-
 }

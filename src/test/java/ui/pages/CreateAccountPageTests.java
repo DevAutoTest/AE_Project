@@ -42,9 +42,7 @@ public class CreateAccountPageTests extends PrepareDriverTest {
 
         assertTrue(page.isAccountSuccsPage());
         assertTrue(page.isSucMessage());
-
     }
-
 }
 
 

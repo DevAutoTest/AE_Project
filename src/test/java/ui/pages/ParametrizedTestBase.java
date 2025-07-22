@@ -34,10 +34,14 @@ public class ParametrizedTestBase {
             driver.quit();
         }
     }
+
     private static void initDriver() {
         String remoteUrl = System.getenv("SELENIUM_REMOTE_URL");
-        Allure.addAttachment("remote", remoteUrl);
-        if (remoteUrl != null || !remoteUrl.isEmpty()) {
+        // Добавляем вложение только если remoteUrl не null
+        if (remoteUrl != null) {
+            Allure.addAttachment("remote", remoteUrl);
+        }
+        if (remoteUrl != null && !remoteUrl.isEmpty()) {
             ChromeOptions options = new ChromeOptions();
             options.addArguments("--headless");  // Add headless mode
             options.addArguments("--disable-gpu"); // Switch off GPU, because we don't need it in headless mode
@@ -53,5 +57,4 @@ public class ParametrizedTestBase {
             driver = new ChromeDriver();
         }
     }
-
 }

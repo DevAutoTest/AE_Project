@@ -1,6 +1,6 @@
 package api.config;
+
 import org.aeonbits.owner.Config;
-import org.aeonbits.owner.ConfigFactory;
 
 @Config.Sources({
         "classpath:properties/guest.properties"
@@ -8,7 +8,7 @@ import org.aeonbits.owner.ConfigFactory;
 //        "classpath:default.properties"
 })
 
-public interface TestPropertiesConfig extends org.aeonbits.owner.Config{
+public interface TestPropertiesConfig extends org.aeonbits.owner.Config {
 
     @Key("mode")
     String getUserMode();
