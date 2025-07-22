@@ -24,7 +24,7 @@ import java.util.Objects;
 public class PrepareDriverTest {
 
     @Getter
-    private static WebDriver driver;
+    static WebDriver driver;
 
     @BeforeEach
     void setup() {
