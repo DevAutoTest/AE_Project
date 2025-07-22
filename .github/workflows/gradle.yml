@@ -26,6 +26,19 @@ jobs:
         ports:
           - 4444:4444
 
+    # Стратегия выполнения (матрица для параллельного запуска)
+    strategy:
+      matrix:
+        # Тестируем в двух режимах
+        mode: [ GUEST, AUTH ]
+        # Дополнительные параметры для каждого режима
+        include:
+             - mode: GUEST
+               report_name: "Guest Mode Report"  # Название отчета для Guest
+             - mode: AUTH
+               report_name: "Auth Mode Report"  # Название отчета для Auth
+
+
     steps:
     - uses: actions/checkout@v4
     - name: Set up JDK 18
@@ -62,6 +75,39 @@ jobs:
       env:
         SELENIUM_REMOTE_URL: http://localhost:4444/wd/hub
       run: ./gradlew clean test
+
+
+    # Шаг 5: Конфигурация тестовых properties-файлов
+    - name: Configure test properties
+    - env:
+       # Получаем секреты из GitHub Secrets
+       GUEST_TOKEN: ${{ secrets.GUEST_AUTHORIZATION }}
+       AUTH_USERNAME: ${{ secrets.AUTH_USERNAME }}
+       AUTH_PASSWORD: ${{ secrets.AUTH_PASSWORD }}
+       BASE_URL: "https://www.ae.com"  # Базовый URL (можно вынести в secrets при необходимости)
+      run: |
+               # Создаем директорию для properties-файлов
+               mkdir -p src/test/resources/properties
+               
+               # В зависимости от режима создаем соответствующий файл
+               if [ "${{ matrix.mode }}" = "GUEST" ]; then
+                 # Конфигурация для гостевого режима
+                 echo "mode=GUEST" > src/test/resources/properties/guest.properties
+                 echo "baseUrl=$BASE_URL" >> src/test/resources/properties/guest.properties
+                 echo "guest.header.authorization=$GUEST_AUTHORIZATION" >> src/test/resources/properties/guest.properties
+               else
+                 # Конфигурация для авторизованного режима
+                 echo "auth.mode=AUTH" > src/test/resources/properties/auth.properties
+                 echo "auth.username=$AUTH_USERNAME" >> src/test/resources/properties/auth.properties
+                 echo "auth.password=$AUTH_PASSWORD" >> src/test/resources/properties/auth.properties
+               fi
+      # Шаг: Запуск тестов
+    - name: Run tests
+      env:
+        # URL для подключения к Selenium
+        SELENIUM_REMOTE_URL: http://localhost:4444/wd/hub
+      # Запускаем тесты через Gradle с параметром режима
+      run: ./gradlew clean test -Duser.mode=${{ matrix.mode }}
 
     - name: Copy History
       uses: actions/checkout@v2
