@@ -22,7 +22,11 @@ jobs:
     services:
       selenium:
         image: selenium/standalone-chrome:latest
-        options: --shm-size 2g
+        options: >-
+          --shm-size 2g
+          -e SE_SCREEN_WIDTH=1920
+          -e SE_SCREEN_HEIGHT=1080
+          -e SE_START_XVFB=false
         ports:
           - 4444:4444
 
@@ -68,27 +72,18 @@ jobs:
       # - name: Build with Gradle 8.9
       #   run: gradle build
 
+          
+
       - name: Build with Gradle Wrapper
         env:
           SELENIUM_REMOTE_URL: http://localhost:4444/wd/hub
-          # Запускаем тесты через Gradle с параметром режима
-          run: |
-            # Устанавливаем Chrome только если не используется RemoteWebDriver
-            if [ "${{ matrix.mode }}" = "AUTH" ]; then
-              sudo apt-get update
-              sudo apt-get install -y wget unzip google-chrome-stable
-              wget https://chromedriver.storage.googleapis.com/114.0.5735.90/chromedriver_linux64.zip
-              unzip chromedriver_linux64.zip
-              sudo mv chromedriver /usr/local/bin/
-              sudo chmod +x /usr/local/bin/chromedriver
-            fi
-        run: ./gradlew clean test -Dmode=${{ matrix.mode }}
+        run: ./gradlew clean test -Dmode=${{ matrix.mode }} -Dselenium.remote.url=$SELENIUM_REMOTE_URL
       
       # Шаг 5: Конфигурация тестовых properties-файлов
       - name: Configure test properties
         env:
           # Получаем секреты из GitHub Secrets
-          GUEST_TOKEN: ${{ secrets.GUEST_AUTHORIZATION }}
+          GUEST_AUTHORIZATION: ${{ secrets.GUEST_AUTHORIZATION }}
           AUTH_USERNAME: ${{ secrets.AUTH_USERNAME }}
           AUTH_PASSWORD: ${{ secrets.AUTH_PASSWORD }}
           BASE_URL: ${{ secrets.BASE_URL }} # Базовый URL
@@ -110,7 +105,7 @@ jobs:
           fi
 
       - name: Copy History
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         if: always()
         with:
           ref: gh-pages
