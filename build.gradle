@@ -33,7 +33,8 @@ dependencies {
 
 test {
     useJUnitPlatform()
-    systemProperties(System.getProperties())
+    systemProperty("mode", System.getProperty("mode", "GUEST")) // для параметризации тестов
+    systemProperty("selenium.remote.url", System.getProperty("selenium.remote.url"))
 }
 
 // Регистрируем отдельные задачи для UI и API тестов
