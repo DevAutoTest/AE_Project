@@ -25,14 +25,7 @@ jobs:
           - 4444:4444  # Selenium Grid
           - 7900:7900  # VNC (для просмотра сессий)
 
-    strategy:
-      matrix:
-        mode: [GUEST, AUTH]
-        include:
-          - mode: GUEST
-            report_name: "Guest Mode Report"
-          # - mode: AUTH
-          #   report_name: "Auth Mode Report"
+
 
     steps:
       - uses: actions/checkout@v4
@@ -55,7 +48,7 @@ jobs:
 
         run: |
           mkdir -p src/test/resources/properties
-          if [ "${{ matrix.mode }}" = "GUEST" ]; then
+          if [ "${{ mode }}" = "GUEST" ]; then
             echo "mode=GUEST" > src/test/resources/properties/guest.properties
             echo "baseUrl=${{ secrets.BASE_URL }}" >> src/test/resources/properties/guest.properties
             echo "guest.header.authorization=${{ secrets.GUEST_AUTHORIZATION }}" >> src/test/resources/properties/guest.properties
