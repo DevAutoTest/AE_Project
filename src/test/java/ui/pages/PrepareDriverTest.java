@@ -24,8 +24,11 @@ import java.util.Objects;
 
 public class PrepareDriverTest {
 
+    // Добавляем статический метод для доступа к драйверу
     //non static
-    WebDriver driver;
+    @Getter
+    static WebDriver driver;
+
 
     @BeforeEach
     void setup() {
