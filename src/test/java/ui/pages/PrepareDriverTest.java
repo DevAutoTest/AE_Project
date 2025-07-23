@@ -61,7 +61,8 @@ public class PrepareDriverTest {
     }
 
     private void initDriver() {
-        String remoteUrl = System.getenv("SELENIUM_REMOTE_URL");
+        // Читаем из system properties (передаётся через -D)
+        String remoteUrl = System.getProperty("selenium.remote.url");
         // Безопасное добавление вложения в Allure
         safeAddAttachment("Remote URL", remoteUrl != null ? remoteUrl : "Not specified");
         if (remoteUrl != null && !remoteUrl.isEmpty()) {
