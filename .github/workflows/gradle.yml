@@ -108,6 +108,7 @@ jobs:
             echo "auth.username=$AUTH_USERNAME" >> src/test/resources/properties/auth.properties
             echo "auth.password=$AUTH_PASSWORD" >> src/test/resources/properties/auth.properties
           fi
+
         # Шаг: Запуск тестов
       - name: Run tests
         env:
