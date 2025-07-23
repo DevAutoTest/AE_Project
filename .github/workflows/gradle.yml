@@ -2,6 +2,15 @@ name: AE project (API and UI)
 
 on:
   workflow_dispatch:
+    inputs:
+      test_mode:
+        description: 'Test mode (GUEST or AUTH)'
+        required: true
+        default: 'GUEST'
+        type: choice
+        options:
+          - GUEST
+          - AUTH
 
 jobs:
   build:
@@ -27,12 +36,12 @@ jobs:
 
     strategy:
       matrix:
-        mode: [GUEST, AUTH]
+        mode: [${{ github.event.inputs.test_mode }}]
         include:
           - mode: GUEST
             report_name: "Guest Mode Report"
-         # - mode: AUTH
-         #   report_name: "Auth Mode Report"
+          - mode: AUTH
+            report_name: "Auth Mode Report"
 
     steps:
       - uses: actions/checkout@v4
@@ -57,7 +66,6 @@ jobs:
           AUTH_USERNAME: ${{ secrets.AUTH_USERNAME }}
           AUTH_PASSWORD: ${{ secrets.AUTH_PASSWORD }}
           BASE_URL: ${{ secrets.BASE_URL }}
-          #config files:
         run: |
           mkdir -p src/test/resources/properties
           if [ "${{ matrix.mode }}" = "GUEST" ]; then
@@ -74,7 +82,6 @@ jobs:
       - name: Run tests
         env:
           SELENIUM_REMOTE_URL: http://localhost:4444/wd/hub
-          #System properties
         run: ./gradlew clean test -Dselenium.remote.url=$SELENIUM_REMOTE_URL
 
       - name: Copy History

@@ -44,6 +44,8 @@ test {
     }
 }
 
+
+//./gradlew uiTest - таски для запуска по отдельности
 // Регистрируем отдельные задачи для UI и API тестов
 tasks.register('uiTest', Test) {
     useJUnitPlatform {

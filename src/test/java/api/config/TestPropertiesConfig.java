@@ -13,9 +13,10 @@ import org.aeonbits.owner.Config;
 //        "classpath:${env}.properties",
 //        "classpath:default.properties"
 
-        "classpath:properties/${mode}.properties",  // Динамический выбор файла
-        "system:env",                                   // Переопределение через ENV (CI)
-        "system:properties"  // Добавьте эту строку для чтения из -D параметров
+       //Порядок получения параметров:
+        "classpath:properties/${mode}.properties",
+        "system:properties",  // Чтение из -D параметров
+        "system:env"
 })
 
 public interface TestPropertiesConfig extends org.aeonbits.owner.Config {
