@@ -42,30 +42,11 @@ jobs:
       - name: Grant execute permission for Gradle
         run: chmod +x gradlew
 
-      - name: Configure test properties
-        env:
-          GUEST_AUTHORIZATION: ${{ secrets.GUEST_AUTHORIZATION }}
-          AUTH_USERNAME: ${{ secrets.AUTH_USERNAME }}
-          AUTH_PASSWORD: ${{ secrets.AUTH_PASSWORD }}
-          BASE_URL: ${{ secrets.BASE_URL }}
-          #config files:
-        run: |
-          mkdir -p src/test/resources/properties
-          if [ "${{ matrix.mode }}" = "GUEST" ]; then
-            echo "mode=GUEST" > src/test/resources/properties/guest.properties
-            echo "baseUrl=$BASE_URL" >> src/test/resources/properties/guest.properties
-            echo "guest.header.authorization=$GUEST_AUTHORIZATION" >> src/test/resources/properties/guest.properties
-          else
-            echo "mode=AUTH" > src/test/resources/properties/auth.properties
-            echo "baseUrl=$BASE_URL" >> src/test/resources/properties/auth.properties
-            echo "auth.username=$AUTH_USERNAME" >> src/test/resources/properties/auth.properties
-            echo "auth.password=$AUTH_PASSWORD" >> src/test/resources/properties/auth.properties
-          fi
-
       - name: Run tests
         env:
           SELENIUM_REMOTE_URL: http://localhost:4444/wd/hub
-          #System properties
+          BASE_URL: ${{ secrets.BASE_URL }}
+          GUEST_AUTHORIZATION: ${{ secrets.GUEST_AUTHORIZATION }}
         run: |
           ./gradlew clean test \
             -Dselenium.remote.url=$SELENIUM_REMOTE_URL \
