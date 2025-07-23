@@ -82,7 +82,7 @@ jobs:
               sudo mv chromedriver /usr/local/bin/
               sudo chmod +x /usr/local/bin/chromedriver
             fi
-        run: ./gradlew clean test -Duser.mode=${{ matrix.mode }}
+        run: ./gradlew clean test -Dmode=${{ matrix.mode }}
       
       # Шаг 5: Конфигурация тестовых properties-файлов
       - name: Configure test properties
@@ -108,12 +108,6 @@ jobs:
             echo "auth.username=$AUTH_USERNAME" >> src/test/resources/properties/auth.properties
             echo "auth.password=$AUTH_PASSWORD" >> src/test/resources/properties/auth.properties
           fi
-
-        # Шаг: Запуск тестов
-      - name: Run tests
-        env:
-          SELENIUM_REMOTE_URL: http://localhost:4444/wd/hub  # Всегда передаем URL
-        run: ./gradlew clean test -Dmode=${{ matrix.mode }}
 
       - name: Copy History
         uses: actions/checkout@v2
