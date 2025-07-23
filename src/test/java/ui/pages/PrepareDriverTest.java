@@ -74,11 +74,15 @@ public class PrepareDriverTest {
             options.addArguments("--disable-dev-shm-usage"); // Use /tmp instead of /dev/shm
             options.addArguments("--window-size=1920,1080"); // Установка размера окна
 
-            // Для полноэкранного режима в контейнере
+            // Дополнительные параметры для полноэкранного режима
             options.addArguments("--start-maximized");
-            // Дополнительные возможности
-            options.setCapability("goog:loggingPrefs", Map.of("browser", "ALL"));
+
+            // Для Selenium Grid
             options.setCapability("se:recordVideo", true);
+            options.setCapability("se:screenResolution", "1920x1080");
+            options.setCapability("se:timeZone", "UTC");
+
+            options.setCapability("goog:loggingPrefs", Map.of("browser", "ALL"));
 
             try {
                 driver = new RemoteWebDriver(new URL(remoteUrl), options);

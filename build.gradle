@@ -36,6 +36,7 @@ test {
     useJUnitPlatform()
     systemProperty("mode", System.getProperty("mode", "GUEST")) // для параметризации тестов
     systemProperty("selenium.remote.url", System.getProperty("selenium.remote.url"))
+    systemProperty "chrome.switches", "--start-maximized --window-size=1920,1080"
     // Добавьте вывод для отладки
     doFirst {
         println "Using mode: " + System.getProperty("mode")
