@@ -25,8 +25,6 @@ jobs:
           - 4444:4444  # Selenium Grid
           - 7900:7900  # VNC (для просмотра сессий)
 
-
-
     steps:
       - uses: actions/checkout@v4
 
@@ -46,21 +44,20 @@ jobs:
 
       - name: Configure test properties
         run: |
-            mkdir -p src/test/resources/properties
-            echo "mode=GUEST" > src/test/resources/properties/guest.properties
-            echo "baseUrl=${{ secrets.BASE_URL }}" >> src/test/resources/properties/guest.properties
-            echo "guest.header.authorization=${{ secrets.GUEST_AUTHORIZATION }}" >> src/test/resources/properties/guest.properties
+          mkdir -p src/test/resources/properties
+          echo "mode=GUEST" > src/test/resources/properties/guest.properties
+          echo "baseUrl=${{ secrets.BASE_URL }}" >> src/test/resources/properties/guest.properties
+          echo "guest.header.authorization=${{ secrets.GUEST_AUTHORIZATION }}" >> src/test/resources/properties/guest.properties
 
-            - name: Run tests
-              env:
-                SELENIUM_REMOTE_URL: http://localhost:4444/wd/hub
-              run: |
-                ./gradlew clean test \
-                  -Dselenium.remote.url=$SELENIUM_REMOTE_URL \
-                  -Dmode=GUEST \
-                  -DbaseUrl=${{ secrets.BASE_URL }} \
-                  -Dguest.header.authorization=${{ secrets.GUEST_AUTHORIZATION }}
-
+      - name: Run tests
+        env:
+          SELENIUM_REMOTE_URL: http://localhost:4444/wd/hub
+        run: |
+          ./gradlew clean test \
+            -Dselenium.remote.url=$SELENIUM_REMOTE_URL \
+            -Dmode=GUEST \
+            -DbaseUrl=${{ secrets.BASE_URL }} \
+            -Dguest.header.authorization=${{ secrets.GUEST_AUTHORIZATION }}
 
       - name: Copy History
         uses: actions/checkout@v4
