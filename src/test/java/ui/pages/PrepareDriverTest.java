@@ -14,6 +14,7 @@ import ui.extensions.AllureExtension;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.util.Map;
 import java.util.Objects;
@@ -38,10 +39,10 @@ public class PrepareDriverTest {
                 driver.manage().window().maximize();
                 driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
             } else {
-                Allure.addAttachment("Driver initialization", "Failed to initialize driver");
+                safeAddAttachment("Driver initialization", "Driver initialization failed");
             }
         } catch (Exception e) {
-            Allure.addAttachment("Setup error", e.getMessage());
+            safeAddAttachment("Setup error", "Error during setup: " + e.getMessage());
             throw e;
         }
     }
@@ -51,16 +52,18 @@ public class PrepareDriverTest {
         try {
             if (driver != null) {
                 driver.quit();
+                driver = null;
+                safeAddAttachment("Driver closed", "Driver successfully closed");
             }
         } catch (Exception e) {
-            Allure.addAttachment("Teardown error", e.getMessage());
+            safeAddAttachment("Teardown error", "Error during teardown: " + e.getMessage());
         }
     }
 
     private void initDriver() {
         String remoteUrl = System.getenv("SELENIUM_REMOTE_URL");
         // Безопасное добавление вложения в Allure
-        Allure.addAttachment("remote", Objects.requireNonNullElse(remoteUrl, "SELENIUM_REMOTE_URL not set"));
+        safeAddAttachment("Remote URL", remoteUrl != null ? remoteUrl : "Not specified");
         if (remoteUrl != null && !remoteUrl.isEmpty()) {
             ChromeOptions options = new ChromeOptions();
             options.addArguments("--headless");  // Add headless mode
@@ -75,6 +78,16 @@ public class PrepareDriverTest {
             }
         } else {
             driver = new ChromeDriver();
+        }
+    }
+
+    private void safeAddAttachment(String name, String content) {
+        try {
+            Allure.addAttachment(name, "text/plain",
+                    content != null ? content : "No content provided",
+                    StandardCharsets.UTF_8.name());
+        } catch (Exception e) {
+            System.err.println("Failed to add Allure attachment: " + e.getMessage());
         }
     }
 
