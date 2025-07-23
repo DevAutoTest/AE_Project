@@ -52,12 +52,19 @@ jobs:
       - name: Run tests
         env:
           SELENIUM_REMOTE_URL: http://localhost:4444/wd/hub
+          SECRET_BASE_URL: ${{ secrets.BASE_URL }}
+          SECRET_GUEST_AUTH: ${{ secrets.GUEST_AUTHORIZATION }}
         run: |
+          echo "Running tests with:"
+          echo "Selenium URL: $SELENIUM_REMOTE_URL"
+          echo "Base URL length: ${#SECRET_BASE_URL}"
+          echo "Auth token length: ${#SECRET_GUEST_AUTH}"
+
           ./gradlew clean test \
-            -Dselenium.remote.url=$SELENIUM_REMOTE_URL \
-            -Dmode=GUEST \
-            -DbaseUrl=${{ secrets.BASE_URL }} \
-            -Dguest.header.authorization=${{ secrets.GUEST_AUTHORIZATION }}
+            -Dselenium.remote.url="$SELENIUM_REMOTE_URL" \
+            -Dmode="GUEST" \
+            -DbaseUrl="$SECRET_BASE_URL" \
+            -Dguest.header.authorization="$SECRET_GUEST_AUTH"
 
       - name: Copy History
         uses: actions/checkout@v4
