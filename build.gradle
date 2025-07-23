@@ -41,6 +41,7 @@ test {
     doFirst {
         println "Using mode: " + System.getProperty("mode")
         println "Base URL: " + System.getProperty("baseUrl")
+        println "token: " + System.getProperty("guest.header.authorization")
     }
 }
 
