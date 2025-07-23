@@ -82,6 +82,7 @@ public class HeaderComponentTests extends PrepareDriverTest {
         assertEquals(expectedUrl, actualUrl);
 
         home.header.clickLogoAE_Header();
+
         String actualHomeUrl = driver.getCurrentUrl();
         String expectedHomeUrl = HomePage.HOME_PAGE_URL;
 

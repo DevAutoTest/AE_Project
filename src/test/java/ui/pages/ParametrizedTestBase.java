@@ -14,6 +14,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.Duration;
 import java.util.Map;
+import java.util.Objects;
 
 @ExtendWith(AllureExtension.class)
 public class ParametrizedTestBase {
@@ -37,10 +38,8 @@ public class ParametrizedTestBase {
 
     private static void initDriver() {
         String remoteUrl = System.getenv("SELENIUM_REMOTE_URL");
-        // Добавляем вложение только если remoteUrl не null
-        if (remoteUrl != null) {
-            Allure.addAttachment("remote", remoteUrl);
-        }
+        // Безопасное добавление вложения в Allure
+        Allure.addAttachment("remote", Objects.requireNonNullElse(remoteUrl, "SELENIUM_REMOTE_URL not set"));
         if (remoteUrl != null && !remoteUrl.isEmpty()) {
             ChromeOptions options = new ChromeOptions();
             options.addArguments("--headless");  // Add headless mode

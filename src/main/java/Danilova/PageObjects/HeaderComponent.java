@@ -5,6 +5,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import java.time.Duration;
+
 /** компонент, у которого есть внутри только WebDriver и локаторы.*/
 
 public class HeaderComponent {
@@ -35,6 +37,7 @@ public class HeaderComponent {
     @Step("Click logo AE_Header")
     public void clickLogoAE_Header() {
         driver.findElement(logoAE_Header).click();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
     }
 
     @Step("Get search header button")
@@ -45,6 +48,7 @@ public class HeaderComponent {
     @Step("click search header button")
     public void clckHdrSrchBttn(){
         driver.findElement(headerSearchButton).click();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
     }
 
     @Step("Get account header button")
@@ -55,11 +59,13 @@ public class HeaderComponent {
     @Step("click account header button")
     public void clckHdrAcntBttn(){
         driver.findElement(headerAccountButton).click();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
     }
 
     @Step("click cart header button")
     public void clckHdrCartBttn(){
         driver.findElement(headerCartButton).click();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
     }
 
     @Step("Get header bag icon count items added to bag")

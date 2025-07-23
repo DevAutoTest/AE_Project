@@ -72,6 +72,16 @@ jobs:
         env:
           SELENIUM_REMOTE_URL: http://localhost:4444/wd/hub
           # Запускаем тесты через Gradle с параметром режима
+          run: |
+            # Устанавливаем Chrome только если не используется RemoteWebDriver
+            if [ "${{ matrix.mode }}" = "AUTH" ]; then
+              sudo apt-get update
+              sudo apt-get install -y wget unzip google-chrome-stable
+              wget https://chromedriver.storage.googleapis.com/114.0.5735.90/chromedriver_linux64.zip
+              unzip chromedriver_linux64.zip
+              sudo mv chromedriver /usr/local/bin/
+              sudo chmod +x /usr/local/bin/chromedriver
+            fi
         run: ./gradlew clean test -Duser.mode=${{ matrix.mode }}
       
       # Шаг 5: Конфигурация тестовых properties-файлов

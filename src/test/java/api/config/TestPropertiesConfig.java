@@ -4,8 +4,8 @@ import org.aeonbits.owner.Config;
 
 
 /* Для локального запуска:
-./gradlew test -Duser.mode=GUEST
-./gradlew test -Duser.mode=AUTH
+./gradlew test -Dmode=GUEST
+./gradlew test -Dmode=AUTH
 **/
 
 @Config.Sources({
@@ -13,8 +13,9 @@ import org.aeonbits.owner.Config;
 //        "classpath:${env}.properties",
 //        "classpath:default.properties"
 
-        "classpath:properties/${user.mode}.properties",  // Динамический выбор файла
-        "system:env"                                     // Переопределение через ENV (CI)
+        "classpath:properties/${mode}.properties",  // Динамический выбор файла
+        "system:env",                                   // Переопределение через ENV (CI)
+        "system:properties"  // Добавьте эту строку для чтения из -D параметров
 })
 
 public interface TestPropertiesConfig extends org.aeonbits.owner.Config {
