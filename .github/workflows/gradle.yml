@@ -2,15 +2,6 @@ name: AE project (API and UI)
 
 on:
   workflow_dispatch:
-    inputs:
-      test_mode:
-        description: 'Test mode (GUEST or AUTH)'
-        required: true
-        default: 'GUEST'
-        type: choice
-        options:
-          - GUEST
-          - AUTH
 
 jobs:
   build:
@@ -33,15 +24,6 @@ jobs:
         ports:
           - 4444:4444  # Selenium Grid
           - 7900:7900  # VNC (для просмотра сессий)
-
-    strategy:
-      matrix:
-        mode: [${{ github.event.inputs.test_mode }}]
-        include:
-          - mode: GUEST
-            report_name: "Guest Mode Report"
-          - mode: AUTH
-            report_name: "Auth Mode Report"
 
     steps:
       - uses: actions/checkout@v4
@@ -66,6 +48,7 @@ jobs:
           AUTH_USERNAME: ${{ secrets.AUTH_USERNAME }}
           AUTH_PASSWORD: ${{ secrets.AUTH_PASSWORD }}
           BASE_URL: ${{ secrets.BASE_URL }}
+          #config files:
         run: |
           mkdir -p src/test/resources/properties
           if [ "${{ matrix.mode }}" = "GUEST" ]; then
@@ -82,7 +65,8 @@ jobs:
       - name: Run tests
         env:
           SELENIUM_REMOTE_URL: http://localhost:4444/wd/hub
-        run: ./gradlew clean test -Dselenium.remote.url=$SELENIUM_REMOTE_URL
+          #System properties
+        run: ./gradlew clean test -Dselenium.remote.url=$SELENIUM_REMOTE_URL  -Dmode=GUEST
 
       - name: Copy History
         uses: actions/checkout@v4
