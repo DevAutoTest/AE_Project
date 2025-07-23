@@ -70,10 +70,7 @@ jobs:
         env:
           SELENIUM_REMOTE_URL: http://localhost:4444/wd/hub
           #System properties
-        run: ./gradlew clean test -Dselenium.remote.url=$SELENIUM_REMOTE_URL \
-          -Dmode='GUEST' \
-          -DbaseUrl=${{ secrets.BASE_URL }} \
-          -Dguest.header.authorization=${{ secrets.GUEST_AUTHORIZATION }}
+        run: ./gradlew clean test -Dselenium.remote.url=$SELENIUM_REMOTE_URL  -Dmode='GUEST'  -DbaseUrl=${{ secrets.BASE_URL }}  -Dguest.header.authorization=${{ secrets.GUEST_AUTHORIZATION }}
 
       - name: Copy History
         uses: actions/checkout@v4
