@@ -14,8 +14,9 @@ import org.aeonbits.owner.Config;
 //        "classpath:default.properties"
 
        //Порядок получения параметров:
-        "system:properties",  // Чтение из -D параметров
         "classpath:properties/${mode}.properties",
+        "system:properties",  // Чтение из -D параметров
+
         "system:env"
 })
 
