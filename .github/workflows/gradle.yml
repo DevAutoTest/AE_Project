@@ -87,11 +87,11 @@ jobs:
 
       - name: Upload videos
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: test-videos
           path: ./videos/*.*
-          retention-days: 3  # Автоочистка через 3 дня
+          # retention-days: 3  # Автоочистка через 3 дня
 
       - name: Copy History
         if: always()
