@@ -12,7 +12,13 @@ jobs:
 
     services:
       selenium:
+        #selenium grid ???
         image: selenium/standalone-chrome:latest
+        volumes:
+          - ./videos:/opt/selenium/videos  # Важно: монтируем папку для видео
+        environment:
+          - SE_RECORD_VIDEO=true           # Включаем запись
+          - SE_VIDEO_FILE_NAME=test.mp4     # Формат имени файла
         options: >-
           --shm-size 2g
           -e SE_SCREEN_WIDTH=1920
@@ -24,6 +30,7 @@ jobs:
         ports:
           - 4444:4444  # Selenium Grid
           - 7900:7900  # VNC (для просмотра сессий)
+
 
     steps:
       - uses: actions/checkout@v4
@@ -49,6 +56,9 @@ jobs:
           echo "baseUrl=${{ secrets.BASE_URL }}" >> src/test/resources/properties/guest.properties
           echo "guest.header.authorization=${{ secrets.GUEST_AUTHORIZATION }}" >> src/test/resources/properties/guest.properties
 
+      - name: Create videos directory
+        run: mkdir -p ./videos
+
       - name: Run tests
         env:
           SELENIUM_REMOTE_URL: http://localhost:4444/wd/hub
@@ -64,7 +74,10 @@ jobs:
             -Dselenium.remote.url="$SELENIUM_REMOTE_URL" \
             -Dmode="GUEST" \
             -DbaseUrl="$SECRET_BASE_URL" \
-            -Dguest.header.authorization="$SECRET_GUEST_AUTH"
+            -Dguest.header.authorization="$SECRET_GUEST_AUTH" \
+            -Dheadless=true 
+
+  
 
       - name: Copy History
         uses: actions/checkout@v4
@@ -88,3 +101,10 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
           publish_dir: allure-history
+
+      - name: Upload videos
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-videos
+          path: ./videos/*.mp4

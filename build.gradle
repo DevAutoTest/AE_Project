@@ -40,7 +40,6 @@ test {
     systemProperty "guest.header.authorization", System.getProperty("guest.header.authorization")
     systemProperty "baseUrl", System.getProperty("baseUrl")
 
-    systemProperty "chrome.switches", "--start-maximized --window-size=1920,1080"
     // Добавьте вывод для отладки
     doFirst {
         println "Using mode: " + System.getProperty("mode")

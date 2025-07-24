@@ -67,14 +67,20 @@ public class PrepareDriverTest {
         if (remoteUrl != null && !remoteUrl.isEmpty()) {
             ChromeOptions options = new ChromeOptions();
             // Основные параметры для CI
+           /* Headless=true (по умолчанию в CI):
+            Быстрее выполнение, Меньше потребление ресурсов,  Не требует GUI
+                 Headless=false:
+            Для отладки через VNC (порт 7900)
+            Когда нужны скриншоты/видео
+            Для сложных UI-тестов с WebGL/Canvas **/
+
+
             options.addArguments("--headless");  // Add headless mode
             options.addArguments("--disable-gpu"); // Switch off GPU, because we don't need it in headless mode
             options.addArguments("--no-sandbox"); // Switch off sandbox to prevent access rights issues
             options.addArguments("--disable-dev-shm-usage"); // Use /tmp instead of /dev/shm
-            options.addArguments("--window-size=1920,1080"); // Установка размера окна
+            options.addArguments("--window-size=1920,1080"); // Установка явного размера окна, предпочтительнее для CI
 
-            // Дополнительные параметры для полноэкранного режима
-            options.addArguments("--start-maximized");
 
             // Для Selenium Grid
             options.setCapability("se:recordVideo", true);
