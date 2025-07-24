@@ -1,6 +1,7 @@
 package ui.pages;
 
 import io.qameta.allure.Allure;
+import lombok.Getter;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,12 +15,12 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.Duration;
 import java.util.Map;
-import java.util.Objects;
 
 @ExtendWith(AllureExtension.class)
 public class ParametrizedTestBase {
 
-    protected static WebDriver driver;
+    @Getter
+    static WebDriver driver;
 
     @BeforeAll
     public static void setUp() {
@@ -38,8 +39,10 @@ public class ParametrizedTestBase {
 
     private static void initDriver() {
         String remoteUrl = System.getenv("SELENIUM_REMOTE_URL");
-        // Безопасное добавление вложения в Allure
-        Allure.addAttachment("remote", Objects.requireNonNullElse(remoteUrl, "SELENIUM_REMOTE_URL not set"));
+        // Добавляем вложение только если remoteUrl не null
+        if (remoteUrl != null) {
+            Allure.addAttachment("remote", remoteUrl);
+        }
         if (remoteUrl != null && !remoteUrl.isEmpty()) {
             ChromeOptions options = new ChromeOptions();
             options.addArguments("--headless");  // Add headless mode

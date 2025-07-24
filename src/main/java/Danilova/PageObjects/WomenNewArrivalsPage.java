@@ -72,11 +72,19 @@ public class WomenNewArrivalsPage extends BasePage {
                 ((JavascriptExecutor) driver)
                         .executeScript("arguments[0].scrollIntoView({block:'center', inline:'center'});", tile);
                 // ждём, пока станет кликабельным
-                driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
-                wait.until(ExpectedConditions.elementToBeClickable(tile)).click();
-                System.out.println("Кликаем по выбранному элементу");
-                driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(6));
 
+                wait.until(ExpectedConditions.elementToBeClickable(tile));
+                System.out.println("Кликаем по выбранному элементу");
+
+               WebElement filter= driver.findElement(By.xpath("//h3[text()='Filter + Sort']"));
+
+                ((JavascriptExecutor) driver)
+                        .executeScript("arguments[0].scrollIntoView({block:'center', inline:'center'});", filter);
+
+                driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(6));
+                tile.click();
+                driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+                System.out.println(driver.getCurrentUrl());
                 return;  // успех — выходим
             } catch (StaleElementReferenceException | ElementClickInterceptedException e) {
                 attempts++;
