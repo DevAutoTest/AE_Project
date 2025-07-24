@@ -76,7 +76,9 @@ jobs:
             -Dmode="GUEST" \
             -DbaseUrl="$SECRET_BASE_URL" \
             -Dguest.header.authorization="$SECRET_GUEST_AUTH" \
-            -Dheadless=true
+            -Dheadless=true \
+            -Dbrowser.size=1920x1080 \
+            -Dbrowser.start.maximized=true
 
       # 4. Пост-обработка
       - name: Debug videos folder
