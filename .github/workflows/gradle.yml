@@ -15,9 +15,9 @@ jobs:
         image: selenium/standalone-chrome:latest
         volumes:
           - ./videos:/opt/selenium/videos
-        environment:
-          - SE_RECORD_VIDEO=true
-          - SE_VIDEO_FILE_NAME=test_${GITHUB_RUN_ID}.mp4  # Уникальное имя файла
+        env:
+          SE_RECORD_VIDEO: "true"
+          SE_VIDEO_FILE_NAME: "test.mp4"
         options: >-
           --shm-size 2g
           -e SE_SCREEN_WIDTH=1920
