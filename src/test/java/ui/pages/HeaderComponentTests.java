@@ -83,6 +83,7 @@ public class HeaderComponentTests extends PrepareDriverTest {
 
         home.header.clickLogoAE_Header();
 
+        wait.until(ExpectedConditions.not(ExpectedConditions.urlContains(ShoppingBagPage.CART_URL)));
         String actualHomeUrl = driver.getCurrentUrl();
         String expectedHomeUrl = HomePage.HOME_PAGE_URL;
 
