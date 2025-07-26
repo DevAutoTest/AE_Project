@@ -13,7 +13,7 @@ import java.time.Duration;
 
 public class BonusOfferShadowRootComponent {
     final WebDriver driver;
-    private WebDriverWait wait;
+    private final WebDriverWait wait;
 //    By bonusOfferShadowRootBox = By.cssSelector("div.bloomreach-weblayer");
 //    By bonusOfferBox = By.cssSelector("div.weblayer--box-promotion-1.vertical-center.horizontal-center.enter-fade");
 //    By closeBonusOfferBox = By.cssSelector("div.bloomreach-weblayer button[aria-label=\"Close\"]");

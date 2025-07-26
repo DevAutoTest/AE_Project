@@ -1,8 +1,6 @@
 package ui.pages;
 
 import Danilova.PageObjects.FastShopPage;
-import Danilova.PageObjects.HomePage;
-
 import Danilova.PageObjects.WomenNewArrivalsPage;
 
 import io.qameta.allure.Description;

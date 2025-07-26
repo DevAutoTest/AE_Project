@@ -1,7 +1,6 @@
 package ui.pages;
 
 import Danilova.PageObjects.AccountSideBarPage;
-import Danilova.PageObjects.HomePage;
 import Danilova.PageObjects.SignInPage;
 import Danilova.PageObjects.UsersAccountSideBarPage;
 import Danilova.models.UsersFactory;

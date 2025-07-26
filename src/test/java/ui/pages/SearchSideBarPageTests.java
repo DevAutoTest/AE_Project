@@ -1,6 +1,5 @@
 package ui.pages;
 
-import Danilova.PageObjects.HomePage;
 import Danilova.PageObjects.SearchSideBarPage;
 import io.qameta.allure.Description;
 import io.qameta.allure.Feature;

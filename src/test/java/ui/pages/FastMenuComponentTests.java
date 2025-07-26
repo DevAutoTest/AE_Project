@@ -1,7 +1,5 @@
 package ui.pages;
 
-
-import Danilova.PageObjects.HomePage;
 import Danilova.PageObjects.WomenNewArrivalsPage;
 import jdk.jfr.Description;
 import org.junit.jupiter.api.Assertions;
@@ -11,8 +9,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
-import java.util.List;
-import java.util.function.Consumer;
 
 import static Danilova.PageObjects.WomenNewArrivalsPage.PAGE_TITLE;
 import static Danilova.PageObjects.WomenNewArrivalsPage.WOMEN_NEW_ARRIVALS_URL;
