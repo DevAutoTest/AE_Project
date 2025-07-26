@@ -18,9 +18,12 @@ public class HomePage  extends BasePage {
     public final HeaderComponent header;
     public final MenuComponent menu;
     public final FastMenuComponent fastMenu;
+    public final TodayOffersComponent todayOffer;
+    public final ShippingToBoxComponent shippingBox;
     public final DialogBoxComponent dialogBox;
     public final BonusOfferShadowRootComponent offerBox;
     public final RealRewardBannerComponent rewardBox;
+    public final SignUpOfferBoxShadowRootComponent signUpBox;
 
 
     public HomePage(WebDriver driver) {
@@ -31,6 +34,9 @@ public class HomePage  extends BasePage {
         this.dialogBox = new DialogBoxComponent(driver);
         this.offerBox = new BonusOfferShadowRootComponent(driver);
         this.rewardBox = new RealRewardBannerComponent(driver);
+        this.signUpBox = new SignUpOfferBoxShadowRootComponent(driver);
+        this.todayOffer = new TodayOffersComponent(driver);
+        this.shippingBox = new ShippingToBoxComponent(driver);
         open();
     }
 

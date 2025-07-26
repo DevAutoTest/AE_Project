@@ -1,15 +1,15 @@
 package Danilova.PageObjects;
 
 import io.qameta.allure.Step;
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
-/** Вы не можете использовать XPath внутри shadowRoot, только CSS-селекторы.*/
+/**
+ * Вы не можете использовать XPath внутри shadowRoot, только CSS-селекторы.
+ */
 
 public class BonusOfferShadowRootComponent {
     final WebDriver driver;
@@ -19,34 +19,39 @@ public class BonusOfferShadowRootComponent {
 //    By closeBonusOfferBox = By.cssSelector("div.bloomreach-weblayer button[aria-label=\"Close\"]");
 
 
-    By offerBox = By.xpath("//div[@class='text-center ']");
-    By closeOffer = By.xpath("//button[@aria-label='Close']");
+    By offerBox = By.cssSelector(".text-center ");
+    By closeOffer = By.cssSelector(".close-button");
 
     public BonusOfferShadowRootComponent(WebDriver driver) {
         this.driver = driver;
-        this.wait   = new WebDriverWait(driver, Duration.ofSeconds(10));
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(5));
     }
 
     @Step("Does bonus offer box present?")
-    public boolean isPresent(){
+    public boolean isPresent() {
 
         try {
-            driver.findElement(offerBox);
+            final WebElement shadowHost = driver.findElement(offerBox);
+            final SearchContext shadowRoot = shadowHost.getShadowRoot();
+            shadowRoot.findElement(offerBox);
+            System.out.println("bonus offer box presents");
             return true;
         } catch (NoSuchElementException e) {
+            System.out.println("bonus offer doesn't present");
             return false;
         }
 
     }
 
     @Step("Close bonus offer box")
-    public void closeOfferBox(){
-//        SearchContext shadow = driver.findElement(bonusOfferShadowRootBox).getShadowRoot();
-//        shadow.findElement(closeBonusOfferBox).click();
-        driver.findElement(closeOffer).click();
-        // ждём, пока сам баннер исчезнет
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(
-                By.cssSelector("div.text-center ")
-        ));
+    public void closeOfferBox() {
+        try {
+            final WebElement shadowHost = driver.findElement(offerBox);
+            final SearchContext shadowRoot = shadowHost.getShadowRoot();
+            shadowRoot.findElement(closeOffer).click();
+            wait.until(ExpectedConditions.invisibilityOfElementLocated(offerBox));
+        } catch (NoSuchElementException e) {
+            System.out.println("bonus offer doesn't close");
+        }
     }
 }

@@ -18,7 +18,8 @@ public class CreateAccountPageTests extends PrepareDriverTest {
     @Tag("critical")
     @Disabled("antibot Akamai is working")
     void createAccountSuccess() throws InterruptedException {
-        HomePage home = new HomePage(driver);
+        CloseAddBoxes.closeAdds(driver);
+
         home.header().clckHdrAcntBttn();
         AccountSideBarPage asbp = new AccountSideBarPage(driver);
         asbp.openCrtAcntPage();
@@ -27,9 +28,7 @@ public class CreateAccountPageTests extends PrepareDriverTest {
 
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
-        if(home.dialogBox.isPresent()){
-            home.dialogBox.closeDialogBox();
-        }
+        CloseAddBoxes.closeAdds(driver);
 
         wait.until(ExpectedConditions.elementToBeClickable(page.getEmailInput()));
 

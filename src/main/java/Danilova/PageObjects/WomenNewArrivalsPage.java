@@ -5,8 +5,10 @@ import org.junit.jupiter.api.Disabled;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
 import java.time.Duration;
 import java.util.List;
+
 import static Danilova.utils.RandomUtils.randomIntInclusive;
 
 public class WomenNewArrivalsPage extends BasePage {
@@ -62,34 +64,46 @@ public class WomenNewArrivalsPage extends BasePage {
         int idx = randomIntInclusive(0, count - 1);
         System.out.println("random indx = " + idx);
 
-        // Попробуем кликнуть, повторяя при StaleElementReference
-        int attempts = 0;
-        while (attempts < 2) {
-            try {
-                WebElement tile = tiles.get(idx);
-                System.out.println("попытка = " + attempts);
-                // скроллим к нему, чтобы не было off-screen
-                ((JavascriptExecutor) driver)
-                        .executeScript("arguments[0].scrollIntoView({block:'center', inline:'center'});", tile);
-                // ждём, пока станет кликабельным
+        for (int i = 0; i < idx; i++) {
+            boolean success = false;
 
-                wait.until(ExpectedConditions.elementToBeClickable(tile));
-                System.out.println("Кликаем по выбранному элементу");
+            // Попробуем кликнуть, повторяя при StaleElementReference
+            int attempts = 0;
+            while (attempts < 3 && !success) {
+                try {
+                    WebElement tile = tiles.get(idx);
+                    System.out.println("попытка = " + attempts);
+                    // скроллим к нему, чтобы не было off-screen
+                    ((JavascriptExecutor) driver)
+                            .executeScript("arguments[0].scrollIntoView({block:'center', inline:'center'});", tile);
+                    // ждём, пока станет кликабельным
 
-               WebElement filter= driver.findElement(By.xpath("//h3[text()='Filter + Sort']"));
+                    wait.until(ExpectedConditions.elementToBeClickable(tile));
+                    System.out.println("Кликаем по выбранному элементу");
 
-                ((JavascriptExecutor) driver)
-                        .executeScript("arguments[0].scrollIntoView({block:'center', inline:'center'});", filter);
+                    WebElement filter = driver.findElement(By.xpath("//h3[text()='Filter + Sort']"));
 
-                driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(6));
-                tile.click();
-                driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
-                System.out.println(driver.getCurrentUrl());
-                return;  // успех — выходим
-            } catch (StaleElementReferenceException | ElementClickInterceptedException e) {
-                attempts++;
-                // перечитываем актуальные элементы
-                tiles = getAllNewArrivals();
+                    ((JavascriptExecutor) driver)
+                            .executeScript("arguments[0].scrollIntoView({block:'center', inline:'center'});", filter);
+
+                    driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(6));
+                    tile.click();
+                    driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+                    System.out.println(driver.getCurrentUrl());
+                    //    success = true;
+
+                } catch (StaleElementReferenceException e) {
+                    attempts++;
+                    System.out.println("Stale element, refreshing list. Attempt: " + attempts);
+                    tiles = getAllNewArrivals();
+                } catch (ElementClickInterceptedException e) {
+                    attempts++;
+                    System.out.println("Click intercepted, retrying. Attempt: " + attempts);
+                    ((JavascriptExecutor) driver).executeScript("window.scrollBy(0, -100);");
+                } catch (TimeoutException e) {
+                    attempts++;
+                    System.out.println("Timeout, retrying. Attempt: " + attempts);
+                }
             }
         }
         // если после retry всё ещё не получилось
@@ -120,7 +134,7 @@ public class WomenNewArrivalsPage extends BasePage {
                     int idx = randomIntInclusive(0, totalItems - 1);
 
                     WebElement tile = tiles.get(idx);
-                    System.out.println("Adding item #" + (i+1) + " with index: " + idx);
+                    System.out.println("Adding item #" + (i + 1) + " with index: " + idx);
 
                     // Скроллим к элементу
                     ((JavascriptExecutor) driver)
@@ -130,7 +144,7 @@ public class WomenNewArrivalsPage extends BasePage {
                     wait.until(ExpectedConditions.elementToBeClickable(tile)).click();
 
 
-                //    success = true;
+                    //    success = true;
 
                 } catch (StaleElementReferenceException e) {
                     attempts++;

@@ -1,7 +1,6 @@
 package Danilova.PageObjects;
 
 
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebDriver;
@@ -13,12 +12,12 @@ import java.util.List;
 
 public class RealRewardBannerComponent {
 
-   WebDriver driver;
-    private WebDriverWait wait;
+    WebDriver driver;
+    private final WebDriverWait wait;
 
     public RealRewardBannerComponent(WebDriver driver) {
         this.driver = driver;
-        this.wait   = new WebDriverWait(driver, Duration.ofSeconds(10));
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(5));
     }
 
     /**

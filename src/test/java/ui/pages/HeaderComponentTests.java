@@ -20,8 +20,7 @@ public class HeaderComponentTests extends PrepareDriverTest {
     @Description("Check AE logo")
     @Tag("smoke")
     void checkLogoAEHeaderTest() {
-        HomePage home = new HomePage(driver);
-
+        CloseAddBoxes.closeAdds(driver);
         WebElement logo = home.getHeader().getLogoAE_Header();
 
         assertNotNull(logo, "Logo \"American Eagle\" not found ");
@@ -34,7 +33,7 @@ public class HeaderComponentTests extends PrepareDriverTest {
     @Tag("smoke")
     @Description("Opening search icon is present in header component, clickable and closable")
     void openHdrSrchSideBar() {
-        HomePage home = new HomePage(driver);
+        CloseAddBoxes.closeAdds(driver);
         driver.findElement(home.header().getSearch()).click();
         SearchSideBarPage searchSide = new SearchSideBarPage(driver);
         String actualTitle = searchSide.getSearchTitle();
@@ -53,7 +52,7 @@ public class HeaderComponentTests extends PrepareDriverTest {
     @Tag("smoke")
     @Description("Open Account icon is present in header component, clickable and closable")
     void openHdrAcntBttnTest() {
-        HomePage home = new HomePage(driver);
+        CloseAddBoxes.closeAdds(driver);
         AccountSideBarPage asbp = new AccountSideBarPage(driver);
         driver.findElement(home.header.getAcntBttn()).click();
         String actualTitle = asbp.getTitleAcntSideBar();
@@ -72,8 +71,9 @@ public class HeaderComponentTests extends PrepareDriverTest {
     @Tag("smoke")
     @Description("Open Cart icon is present in header component, clickable and go home page")
     void openHdrCartBttnTest() {
+        CloseAddBoxes.closeAdds(driver);
+
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        HomePage home = new HomePage(driver);
         home.header().clckHdrCartBttn();
         wait.until(ExpectedConditions.urlContains("cart"));
         String actualUrl = driver.getCurrentUrl();

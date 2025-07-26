@@ -16,17 +16,7 @@ public class WomenNewArrivalsPageTests extends PrepareDriverTest {
     @Tag("smoke")
     @Description("accessibility add item to bag")
     void clickRandomItem() throws InterruptedException {
-        HomePage home = new HomePage(driver);
-
-        //из России с 19 июля не работает
-        if (home.dialogBox.isPresent()) {
-            home.dialogBox.closeDialogBox();
-        }
-        //из России с 19 июля не работает
-        if (home.offerBox.isPresent()) {
-            home.offerBox.closeOfferBox();
-        }
-
+        CloseAddBoxes.closeAdds(driver);
         home.fastMenu.openWomenMenu();
 
         WomenNewArrivalsPage womenNewPage = new WomenNewArrivalsPage(driver);
@@ -34,9 +24,7 @@ public class WomenNewArrivalsPageTests extends PrepareDriverTest {
 
         FastShopPage dropPage = new FastShopPage(driver);
 
-        if (home.rewardBox.isBannerDisplayed()) {
-            home.rewardBox.closeBanner();
-        }
+        CloseAddBoxes.closeAdds(driver);
 
         Assertions.assertTrue(dropPage.addToBagButtonIsPresent());
     }

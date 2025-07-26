@@ -11,6 +11,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.List;
+import java.util.function.Consumer;
 
 import static Danilova.PageObjects.WomenNewArrivalsPage.PAGE_TITLE;
 import static Danilova.PageObjects.WomenNewArrivalsPage.WOMEN_NEW_ARRIVALS_URL;
@@ -21,20 +23,8 @@ public class FastMenuComponentTests extends PrepareDriverTest {
     @Test
     @Description("Open women new arrivals page")
     void openFastWomenNewMenuTest() throws InterruptedException {
-        HomePage home = new HomePage(driver);
 
-        if (home.dialogBox.isPresent()) {
-            home.dialogBox.closeDialogBox();
-        }
-
-        if (home.offerBox.isPresent()) {
-            home.offerBox.closeOfferBox();
-        }
-
-        if (home.rewardBox.isBannerDisplayed()) {
-            home.rewardBox.closeBanner();
-        }
-
+        CloseAddBoxes.closeAdds(driver);
 
         home.fastMenu.openWomenMenu();
 

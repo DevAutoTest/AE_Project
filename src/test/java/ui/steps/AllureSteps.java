@@ -11,10 +11,16 @@ import ui.pages.PrepareDriverTest;
 import java.io.ByteArrayInputStream;
 
 public class AllureSteps {
-    @Step("Capture screenshot (spoiler)")
-    public static void screenshotSpoiler() {
-        Allure.addAttachment("Screenshot", new ByteArrayInputStream(((TakesScreenshot)
-                PrepareDriverTest.getDriver()).getScreenshotAs(OutputType.BYTES)));
+    private final WebDriver driver;
+
+    // Конструктор, принимающий драйвер
+    public AllureSteps(WebDriver driver) {
+        this.driver = driver;
     }
 
+    @Step("Capture screenshot (spoiler)")
+    public void screenshotSpoiler() {
+        Allure.addAttachment("Screenshot",
+                new ByteArrayInputStream(((TakesScreenshot)driver).getScreenshotAs(OutputType.BYTES)));
+    }
 }

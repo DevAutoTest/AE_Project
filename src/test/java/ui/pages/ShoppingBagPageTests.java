@@ -15,16 +15,8 @@ public class ShoppingBagPageTests extends PrepareDriverTest {
     @Tag("critical")
     @Description("Check color of random item in bag")
     void checkItemColorInBag() throws InterruptedException {
-        HomePage home = new HomePage(driver);
 
-        //из России с 19 июля не работает
-        if (home.dialogBox.isPresent()) {
-            home.dialogBox.closeDialogBox();
-        }
-        //из России с 19 июля не работает
-        if (home.offerBox.isPresent()) {
-            home.offerBox.closeOfferBox();
-        }
+        CloseAddBoxes.closeAdds(driver);
 
         home.fastMenu.openWomenMenu();
 
@@ -33,9 +25,7 @@ public class ShoppingBagPageTests extends PrepareDriverTest {
 
         FastShopPage dropPage = new FastShopPage(driver);
 
-        if (home.rewardBox.isBannerDisplayed()) {
-            home.rewardBox.closeBanner();
-        }
+        CloseAddBoxes.closeAdds(driver);
 
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
@@ -63,17 +53,8 @@ public class ShoppingBagPageTests extends PrepareDriverTest {
     @Tag("critical")
     @Description("Check size of random item in bag")
     void checkItemSizeInBag() throws InterruptedException {
-        HomePage home = new HomePage(driver);
 
-        //из России с 19 июля не работает
-        if (home.dialogBox.isPresent()) {
-            home.dialogBox.closeDialogBox();
-        }
-        //из России с 19 июля не работает
-        if (home.offerBox.isPresent()) {
-            home.offerBox.closeOfferBox();
-        }
-
+        CloseAddBoxes.closeAdds(driver);
         home.fastMenu.openWomenMenu();
 
         WomenNewArrivalsPage womenNewPage = new WomenNewArrivalsPage(driver);
@@ -81,9 +62,7 @@ public class ShoppingBagPageTests extends PrepareDriverTest {
 
         FastShopPage dropPage = new FastShopPage(driver);
 
-        if (home.rewardBox.isBannerDisplayed()) {
-            home.rewardBox.closeBanner();
-        }
+        CloseAddBoxes.closeAdds(driver);
 
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
@@ -113,16 +92,7 @@ public class ShoppingBagPageTests extends PrepareDriverTest {
     @Tag("critical")
     @Description("Check quantity of random item in bag")
     void checkItemQtyInBag() throws InterruptedException {
-        HomePage home = new HomePage(driver);
-
-        //из России с 19 июля не работает
-        if (home.dialogBox.isPresent()) {
-            home.dialogBox.closeDialogBox();
-        }
-        //из России с 19 июля не работает
-        if (home.offerBox.isPresent()) {
-            home.offerBox.closeOfferBox();
-        }
+       CloseAddBoxes.closeAdds(driver);
 
         home.fastMenu.openWomenMenu();
 
@@ -131,9 +101,7 @@ public class ShoppingBagPageTests extends PrepareDriverTest {
 
         FastShopPage dropPage = new FastShopPage(driver);
 
-        if (home.rewardBox.isBannerDisplayed()) {
-            home.rewardBox.closeBanner();
-        }
+        CloseAddBoxes.closeAdds(driver);
 
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
@@ -162,19 +130,10 @@ public class ShoppingBagPageTests extends PrepareDriverTest {
 
     @Test
     @Tag("critical")
-    @Description("Add random count if items to bag")
+    @Description("Add random count of items to bag")
     void addRandomCountOfItemsToBag() throws InterruptedException {
         int iterations = 5;
-        HomePage home = new HomePage(driver);
-
-        //из России с 19 июля не работает
-        if (home.dialogBox.isPresent()) {
-            home.dialogBox.closeDialogBox();
-        }
-        //из России с 19 июля не работает
-        if (home.offerBox.isPresent()) {
-            home.offerBox.closeOfferBox();
-        }
+        CloseAddBoxes.closeAdds(driver);
         home.fastMenu.openWomenMenu();
 
         WomenNewArrivalsPage womenNewPage = new WomenNewArrivalsPage(driver);
@@ -187,9 +146,8 @@ public class ShoppingBagPageTests extends PrepareDriverTest {
 
             FastShopPage dropPage = new FastShopPage(driver);
 
-            if (home.rewardBox.isBannerDisplayed()) {
-                home.rewardBox.closeBanner();
-            }
+            CloseAddBoxes.closeAdds(driver);
+
             dropPage.clickRandomColorResult();
             dropPage.clickRandomSizeResult();
             dropPage.clickAddToBagRandomCountOfItems();

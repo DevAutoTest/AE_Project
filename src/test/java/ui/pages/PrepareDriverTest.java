@@ -1,5 +1,6 @@
 package ui.pages;
 
+import Danilova.PageObjects.HomePage;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Feature;
 import lombok.Getter;
@@ -24,10 +25,8 @@ import java.util.Map;
 
 public class PrepareDriverTest {
 
-    // Добавляем статический метод для доступа к драйверу
-    //non static
-    @Getter
-    static WebDriver driver;
+    protected WebDriver driver;
+    protected static HomePage home;
 
 
     @BeforeEach
@@ -36,6 +35,10 @@ public class PrepareDriverTest {
             initDriver();
             if (driver != null) {
                 driver.manage().window().maximize();
+                driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
+                home = new HomePage(driver); // Инициализируем только после создания драйвера
+                //important hoverOver to load menu woman elements!
+               // home.menu.hoverOverWomen();
                 driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
             } else {
                 safeAddAttachment("Driver initialization", "Driver initialization failed");

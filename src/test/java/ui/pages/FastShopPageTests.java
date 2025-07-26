@@ -16,16 +16,7 @@ public class FastShopPageTests extends PrepareDriverTest {
     @Tag("smoke")
     @Description("Add random item to bag")
     void addItemToBag() throws InterruptedException {
-        HomePage home = new HomePage(driver);
-
-        //из России с 19 июля не работает
-        if (home.dialogBox.isPresent()) {
-            home.dialogBox.closeDialogBox();
-        }
-        //из России с 19 июля не работает
-        if (home.offerBox.isPresent()) {
-            home.offerBox.closeOfferBox();
-        }
+        CloseAddBoxes.closeAdds(driver);
 
         home.fastMenu.openWomenMenu();
 
@@ -34,9 +25,7 @@ public class FastShopPageTests extends PrepareDriverTest {
 
         FastShopPage dropPage = new FastShopPage(driver);
 
-        if (home.rewardBox.isBannerDisplayed()) {
-            home.rewardBox.closeBanner();
-        }
+        CloseAddBoxes.closeAdds(driver);
 
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
 
