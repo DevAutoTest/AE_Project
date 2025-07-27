@@ -1,10 +1,9 @@
 package Danilova.PageObjects;
 
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.SearchContext;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import io.qameta.allure.Step;
+import org.openqa.selenium.*;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
@@ -15,53 +14,37 @@ public class RealRewardBannerComponent {
     WebDriver driver;
     private final WebDriverWait wait;
 
+    public By shadowHostSignUpBox = By.cssSelector(".bloomreach-weblayer");
+    By closeBox = By.cssSelector(".close-button");
+
+
     public RealRewardBannerComponent(WebDriver driver) {
         this.driver = driver;
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(2));
     }
-
-    /**
-     * Возвращает SearchContext внутри Shadow DOM, или null, если хоста нет
-     */
-    private SearchContext getShadowRoot() {
-        List<WebElement> hosts = driver.findElements(
-                By.cssSelector("div.bloomreach-weblayer")
-        );
-        if (hosts.isEmpty()) {
-            return null;
-        }
-        return hosts.get(0).getShadowRoot();  // <-- возвращает SearchContext
-    }
-
-    public boolean isBannerDisplayed() {
-        SearchContext shadow = getShadowRoot();
-        if (shadow == null) {
+    @Step("Does reward box present?")
+    public boolean isRealRewardPresent() {
+        try {
+            final WebElement shadowHost = driver.findElement(shadowHostSignUpBox);
+            final SearchContext shadowRoot = shadowHost.getShadowRoot();
+            shadowRoot.findElement(shadowHostSignUpBox);
+            System.out.println("reward box presents");
+            return true;
+        } catch (NoSuchElementException e) {
+            System.out.println("reward box doesn't present");
             return false;
         }
-        List<WebElement> banners = shadow.findElements(
-                By.cssSelector("div.bonus-offer-image")
-        );
-        return !banners.isEmpty() && banners.get(0).isDisplayed();
     }
 
-    public void closeBanner() {
-        SearchContext shadow = getShadowRoot();
-        System.out.println("Closing reward bunner");
-        if (shadow == null) {
-            return;
+    @Step("Close reward box")
+    public void closeRewardBox() {
+        try {
+            final WebElement shadowHost = driver.findElement(shadowHostSignUpBox);
+            final SearchContext shadowRoot = shadowHost.getShadowRoot();
+            shadowRoot.findElement(closeBox).click();
+            wait.until(ExpectedConditions.invisibilityOfElementLocated(shadowHostSignUpBox));
+        } catch (NoSuchElementException e) {
+            System.out.println("reward box doesn't close");
         }
-        List<WebElement> closeBtns = shadow.findElements(
-                By.cssSelector("button.close")
-        );
-        if (closeBtns.isEmpty()) {
-            return;
-        }
-        WebElement btn = closeBtns.get(0);
-        btn.click();
-        // подождать, пока баннер исчезнет
-        wait.until(driver ->
-                driver.findElements(By.cssSelector("div.bloomreach-weblayer div.bonus-offer-image"))
-                        .isEmpty()
-        );
     }
 }

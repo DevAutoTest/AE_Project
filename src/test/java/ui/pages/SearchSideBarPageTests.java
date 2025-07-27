@@ -32,10 +32,11 @@ public class SearchSideBarPageTests extends PrepareDriverTest {
     @Description("Get search input")
     void enterForSearch() {
         CloseAddBoxes.closeAdds(driver);
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(2));
 
         SearchSideBarPage searchSide = new SearchSideBarPage(driver);
         home.header().clckHdrSrchBttn();
+
         searchSide.enterSearchInput("women top");
         searchSide.clickSerchButton();
         String expectedURL = SearchSideBarPage.SEARCH_RESULT_URL;

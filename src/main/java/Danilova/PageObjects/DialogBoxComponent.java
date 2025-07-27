@@ -17,7 +17,7 @@ public class DialogBoxComponent {
 
     public DialogBoxComponent(WebDriver driver) {
         this.driver = driver;
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(2));
     }
 
     @Step("Does Dialog box present?")

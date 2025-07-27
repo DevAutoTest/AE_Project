@@ -21,7 +21,7 @@ public class HeaderComponentTests extends PrepareDriverTest {
     @Tag("smoke")
     void checkLogoAEHeaderTest() {
         CloseAddBoxes.closeAdds(driver);
-        WebElement logo = home.getHeader().getLogoAE_Header();
+        WebElement logo = driver.findElement(home.getHeader().getLogoAE_Header());
 
         assertNotNull(logo, "Logo \"American Eagle\" not found ");
         assertTrue(logo.isDisplayed(), "logo AE not displayed");
@@ -34,7 +34,7 @@ public class HeaderComponentTests extends PrepareDriverTest {
     @Description("Opening search icon is present in header component, clickable and closable")
     void openHdrSrchSideBar() {
         CloseAddBoxes.closeAdds(driver);
-        driver.findElement(home.header().getSearch()).click();
+        driver.findElement(home.header().getHeaderSearchButton()).click();
         SearchSideBarPage searchSide = new SearchSideBarPage(driver);
         String actualTitle = searchSide.getSearchTitle();
         String expectedTitle = "Search";
@@ -54,13 +54,16 @@ public class HeaderComponentTests extends PrepareDriverTest {
     void openHdrAcntBttnTest() {
         CloseAddBoxes.closeAdds(driver);
         AccountSideBarPage asbp = new AccountSideBarPage(driver);
-        driver.findElement(home.header.getAcntBttn()).click();
+        driver.findElement(home.header.getHeaderAccountButton()).click();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+
         String actualTitle = asbp.getTitleAcntSideBar();
         String expectedTitle = "Account";
 
         assertEquals(expectedTitle, actualTitle);
 
         asbp.clcCloseBttn();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
         String actualHomeUrl = driver.getCurrentUrl();
         String expectedHomeUrl = HomePage.HOME_PAGE_URL;
 

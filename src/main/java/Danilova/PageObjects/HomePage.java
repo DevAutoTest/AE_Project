@@ -54,9 +54,4 @@ public class HomePage  extends BasePage {
     private void openAerie() {
         driver.get(AERIE_URL);
     }
-
-
-
-
-
 }

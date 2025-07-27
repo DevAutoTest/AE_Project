@@ -21,11 +21,17 @@ public class ShoppingBagPageTests extends PrepareDriverTest {
         home.fastMenu.openWomenMenu();
 
         WomenNewArrivalsPage womenNewPage = new WomenNewArrivalsPage(driver);
+
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
+        if(home.rewardBox.isRealRewardPresent()){
+            home.rewardBox.closeRewardBox();
+        }
+        if(home.signUpBox.signUpIsPresent()){
+            home.signUpBox.closeSignUpBox();
+        }
         womenNewPage.chooseOneItem();
 
         FastShopPage dropPage = new FastShopPage(driver);
-
-        CloseAddBoxes.closeAdds(driver);
 
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
@@ -58,11 +64,17 @@ public class ShoppingBagPageTests extends PrepareDriverTest {
         home.fastMenu.openWomenMenu();
 
         WomenNewArrivalsPage womenNewPage = new WomenNewArrivalsPage(driver);
+
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
+        if(home.rewardBox.isRealRewardPresent()){
+            home.rewardBox.closeRewardBox();
+        }
+        if(home.signUpBox.signUpIsPresent()){
+            home.signUpBox.closeSignUpBox();
+        }
         womenNewPage.chooseOneItem();
 
         FastShopPage dropPage = new FastShopPage(driver);
-
-        CloseAddBoxes.closeAdds(driver);
 
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
@@ -97,11 +109,16 @@ public class ShoppingBagPageTests extends PrepareDriverTest {
         home.fastMenu.openWomenMenu();
 
         WomenNewArrivalsPage womenNewPage = new WomenNewArrivalsPage(driver);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
+        if(home.rewardBox.isRealRewardPresent()){
+            home.rewardBox.closeRewardBox();
+        }
+        if(home.signUpBox.signUpIsPresent()){
+            home.signUpBox.closeSignUpBox();
+        }
         womenNewPage.chooseOneItem();
 
         FastShopPage dropPage = new FastShopPage(driver);
-
-        CloseAddBoxes.closeAdds(driver);
 
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
@@ -141,12 +158,24 @@ public class ShoppingBagPageTests extends PrepareDriverTest {
         // Добавляем несколько товаров
         for (int i = 0; i < iterations; i++) {
             System.out.println("Adding item #" + (i + 1));
+            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
+            if(home.rewardBox.isRealRewardPresent()){
+                home.rewardBox.closeRewardBox();
+            }
+            if(home.signUpBox.signUpIsPresent()){
+                home.signUpBox.closeSignUpBox();
+            }
+            if(home.rewardBox.isRealRewardPresent()){
+                home.rewardBox.closeRewardBox();
+            }
+
+            if(home.signUpBox.signUpIsPresent()){
+                home.signUpBox.closeSignUpBox();
+            }
 
             womenNewPage.chooseOneItem();
 
             FastShopPage dropPage = new FastShopPage(driver);
-
-            CloseAddBoxes.closeAdds(driver);
 
             dropPage.clickRandomColorResult();
             dropPage.clickRandomSizeResult();

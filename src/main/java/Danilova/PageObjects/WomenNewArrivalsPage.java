@@ -64,51 +64,92 @@ public class WomenNewArrivalsPage extends BasePage {
         int idx = randomIntInclusive(0, count - 1);
         System.out.println("random indx = " + idx);
 
-        for (int i = 0; i < idx; i++) {
-            boolean success = false;
+        // Попробуем кликнуть, повторяя при StaleElementReference
+        int attempts = 0;
+        while (attempts < 2) {
+            try {
+                WebElement tile = tiles.get(idx);
+                System.out.println("попытка = " + attempts);
+                // скроллим к нему, чтобы не было off-screen
+                ((JavascriptExecutor) driver)
+                        .executeScript("arguments[0].scrollIntoView({block:'center', inline:'center'});", tile);
+                // ждём, пока станет кликабельным
 
-            // Попробуем кликнуть, повторяя при StaleElementReference
-            int attempts = 0;
-            while (attempts < 3 && !success) {
-                try {
-                    WebElement tile = tiles.get(idx);
-                    System.out.println("попытка = " + attempts);
-                    // скроллим к нему, чтобы не было off-screen
-                    ((JavascriptExecutor) driver)
-                            .executeScript("arguments[0].scrollIntoView({block:'center', inline:'center'});", tile);
-                    // ждём, пока станет кликабельным
+                wait.until(ExpectedConditions.elementToBeClickable(tile)).click();
+                System.out.println("Кликаем по выбранному элементу");
+                driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
 
-                    wait.until(ExpectedConditions.elementToBeClickable(tile));
-                    System.out.println("Кликаем по выбранному элементу");
-
-                    WebElement filter = driver.findElement(By.xpath("//h3[text()='Filter + Sort']"));
-
-                    ((JavascriptExecutor) driver)
-                            .executeScript("arguments[0].scrollIntoView({block:'center', inline:'center'});", filter);
-
-                    driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(6));
-                    tile.click();
-                    driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
-                    System.out.println(driver.getCurrentUrl());
-                    //    success = true;
-
-                } catch (StaleElementReferenceException e) {
-                    attempts++;
-                    System.out.println("Stale element, refreshing list. Attempt: " + attempts);
-                    tiles = getAllNewArrivals();
-                } catch (ElementClickInterceptedException e) {
-                    attempts++;
-                    System.out.println("Click intercepted, retrying. Attempt: " + attempts);
-                    ((JavascriptExecutor) driver).executeScript("window.scrollBy(0, -100);");
-                } catch (TimeoutException e) {
-                    attempts++;
-                    System.out.println("Timeout, retrying. Attempt: " + attempts);
-                }
+                return;  // успех — выходим
+            } catch (StaleElementReferenceException | ElementClickInterceptedException e) {
+                attempts++;
+                // перечитываем актуальные элементы
+                tiles = getAllNewArrivals();
             }
         }
         // если после retry всё ещё не получилось
         throw new WebDriverException("Failed to click random New Arrival product after retries");
     }
+
+
+//        List<WebElement> tiles = getAllNewArrivals();
+//        int count = tiles.size();
+//        System.out.println("count = " + count);
+//        if (count == 0) {
+//            throw new NoSuchElementException("No product tiles found on New Arrivals page");
+//        }
+//
+//        // генерируем индекс от 0 до count-1
+//        int idx = randomIntInclusive(1, count - 1);
+//        System.out.println("random indx = " + idx);
+//
+//       // for (int i = 0; i < idx; i++) {
+//           // boolean success = false;
+//
+//            // Попробуем кликнуть, повторяя при StaleElementReference
+//            int attempts = 0;
+//            while (attempts < 3 )//&& !success) {
+//            {
+//                try {
+//                    WebElement tile = tiles.get(idx);
+//                    System.out.println("попытка = " + attempts);
+//                    // скроллим к нему, чтобы не было off-screen
+//                    ((JavascriptExecutor) driver)
+//                            .executeScript("arguments[0].scrollIntoView({block:'center', inline:'center'});", tile);
+//                    // ждём, пока станет кликабельным
+//
+//                    wait.until(ExpectedConditions.elementToBeClickable(tile));
+//                    System.out.println("Прокручиваем и Кликаем по выбранному элементу");
+//
+//
+//                    WebElement filter = driver.findElement(By.xpath("//h3[text()='Filter + Sort']"));
+//
+//                    ((JavascriptExecutor) driver)
+//                            .executeScript("arguments[0].scrollIntoView({block:'center', inline:'center'});", filter);
+//
+//                    driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(6));
+//
+//                    tile.click();
+//
+//                    driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+//                    System.out.println("Link of product is: " + driver.getCurrentUrl());
+//                   // success = true;
+//
+//                } catch (StaleElementReferenceException e) {
+//                    attempts++;
+//                    System.out.println("Stale element, refreshing list. Attempt: " + attempts);
+//                } catch (ElementClickInterceptedException e) {
+//                    attempts++;
+//                    System.out.println("Click intercepted, retrying. Attempt: " + attempts);
+//                  //  ((JavascriptExecutor) driver).executeScript("window.scrollBy(0, -100);");
+//                } catch (TimeoutException e) {
+//                    attempts++;
+//                    System.out.println("Timeout, retrying. Attempt: " + attempts);
+//                }
+//            }
+//       // }
+//        // если после retry всё ещё не получилось
+//        throw new WebDriverException("Failed to click random New Arrival product after retries");
+//    }
 
     @Step("Add random items to bag from New Arrivals (1 to max available)")
     @Disabled("Need time to improve")
@@ -149,11 +190,11 @@ public class WomenNewArrivalsPage extends BasePage {
                 } catch (StaleElementReferenceException e) {
                     attempts++;
                     System.out.println("Stale element, refreshing list. Attempt: " + attempts);
-                    tiles = getAllNewArrivals();
+                  //  tiles = getAllNewArrivals();
                 } catch (ElementClickInterceptedException e) {
                     attempts++;
                     System.out.println("Click intercepted, retrying. Attempt: " + attempts);
-                    ((JavascriptExecutor) driver).executeScript("window.scrollBy(0, -100);");
+                  //  ((JavascriptExecutor) driver).executeScript("window.scrollBy(0, -100);");
                 } catch (TimeoutException e) {
                     attempts++;
                     System.out.println("Timeout, retrying. Attempt: " + attempts);

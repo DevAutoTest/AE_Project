@@ -12,7 +12,7 @@ public class SignUpOfferBoxShadowRootComponent {
     WebDriver driver;
     private final WebDriverWait wait;
 
-    By shadowHostSignUpBox = By.cssSelector(".bloomreach-weblayer");
+    public By shadowHostSignUpBox = By.cssSelector(".bloomreach-weblayer");
     By closeBox = By.cssSelector(".close-button");
 
     public SignUpOfferBoxShadowRootComponent(WebDriver driver) {
@@ -35,14 +35,14 @@ public class SignUpOfferBoxShadowRootComponent {
     }
 
     @Step("Close signUpBox box")
-    public void closeOfferBox() {
+    public void closeSignUpBox() {
         try {
             final WebElement shadowHost = driver.findElement(shadowHostSignUpBox);
             final SearchContext shadowRoot = shadowHost.getShadowRoot();
             shadowRoot.findElement(closeBox).click();
             wait.until(ExpectedConditions.invisibilityOfElementLocated(shadowHostSignUpBox));
         } catch (NoSuchElementException e) {
-            System.out.println("bonus offer doesn't present");
+            System.out.println("sign up box doesn't close");
         }
     }
 }

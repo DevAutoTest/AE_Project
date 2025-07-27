@@ -15,10 +15,10 @@ public class CloseAddBoxes extends PrepareDriverTest{
                     if (home.todayOffer.todayBoxIsPresent()) home.todayOffer.closeTodayBox();
                 },
                 home -> {
-                    if (home.shippingBox.shippingBoxIsPresent()) home.shippingBox.closeShippingBox();
+                    if (home.signUpBox.signUpIsPresent()) home.signUpBox.closeSignUpBox();
                 },
                 home -> {
-                    if (home.signUpBox.signUpIsPresent()) home.signUpBox.closeOfferBox();
+                    if (home.shippingBox.shippingBoxIsPresent()) home.shippingBox.closeShippingBox();
                 },
                 home -> {
                     if (home.dialogBox.isPresent()) home.dialogBox.closeDialogBox();
@@ -27,7 +27,7 @@ public class CloseAddBoxes extends PrepareDriverTest{
                     if (home.offerBox.isPresent()) home.offerBox.closeOfferBox();
                 },
                 home -> {
-                    if (home.rewardBox.isBannerDisplayed()) home.rewardBox.closeBanner();
+                    if (home.rewardBox.isRealRewardPresent()) home.rewardBox.closeRewardBox();
                 }
         );
         closePopupActions.forEach(action -> action.accept(home));

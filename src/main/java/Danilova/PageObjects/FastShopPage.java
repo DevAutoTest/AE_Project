@@ -32,7 +32,7 @@ public class FastShopPage extends BasePage {
 
     public FastShopPage(WebDriver driver) {
         super(driver);
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(5));
     }
 
     @Step("Checking of presence add to bag button" )
@@ -88,6 +88,7 @@ public class FastShopPage extends BasePage {
                         .executeScript("arguments[0].scrollIntoView({block:'center', inline:'center'});", tile);
                 // ждём, пока станет кликабельным
                 wait.until(ExpectedConditions.elementToBeClickable(tile)).click();
+                driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
                 return;  // успех — выходим
             } catch (StaleElementReferenceException | ElementClickInterceptedException e) {
                 attempts++;
@@ -104,10 +105,9 @@ public class FastShopPage extends BasePage {
 
         driver.findElement(By.xpath("//div[@aria-label='Size']")).click();
 
-        wait.until(
+       // wait.until(
                 // ExpectedConditions.visibilityOfAllElementsLocatedBy(PRODUCT_LIST)
-                ExpectedConditions.visibilityOfAllElementsLocatedBy(  By.xpath("//div[@data-test-select-custom='size']//a[@role='menuitem']")));
-
+               // ExpectedConditions.visibilityOfAllElementsLocatedBy(  By.xpath("//div[@data-test-select-custom='size']//a[@role='menuitem']")));
         return driver.findElements(By.xpath("//div[@data-test-select-custom='size']//a[@role='menuitem' and not(.//small)]"));
          }
 
@@ -140,6 +140,7 @@ public class FastShopPage extends BasePage {
                         .executeScript("arguments[0].scrollIntoView({block:'center', inline:'center'});", tile);
                 // ждём, пока станет кликабельным
                 wait.until(ExpectedConditions.elementToBeClickable(tile)).click();
+                driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
                 return;  // успех — выходим
             } catch (StaleElementReferenceException | ElementClickInterceptedException e) {
                 attempts++;
@@ -176,6 +177,7 @@ public class FastShopPage extends BasePage {
                         .executeScript("arguments[0].scrollIntoView({block:'center', inline:'center'});", button);
 
                 button.click();
+                driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
                 System.out.println("Click #" + (i + 1) + " performed");
 
                 // Небольшая пауза между кликами

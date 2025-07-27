@@ -3,6 +3,9 @@ package Danilova.PageObjects;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 public class AccountSideBarPage extends BasePage {
 
@@ -13,10 +16,11 @@ public class AccountSideBarPage extends BasePage {
     public By clsAcntSideBar = By.xpath("//button[@class='btn-close sidetray-close-button qa-btn-cancel']");
     public By signOutBttn = By.xpath("//button[@data-test-btn='sign-out']");
 
-
+    WebDriverWait wait;
 
     public AccountSideBarPage(WebDriver driver) {
         super(driver);
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(2));
     }
 
     @Step("Get title of account side bar")

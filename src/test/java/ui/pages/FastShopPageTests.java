@@ -15,17 +15,21 @@ public class FastShopPageTests extends PrepareDriverTest {
     @Test
     @Tag("smoke")
     @Description("Add random item to bag")
-    void addItemToBag() throws InterruptedException {
+    void addItemToBagWomenNewArrTest() throws InterruptedException {
         CloseAddBoxes.closeAdds(driver);
 
         home.fastMenu.openWomenMenu();
 
         WomenNewArrivalsPage womenNewPage = new WomenNewArrivalsPage(driver);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
+
+        if(home.signUpBox.signUpIsPresent()){
+            home.signUpBox.closeSignUpBox();
+        }
+
         womenNewPage.chooseOneItem();
 
         FastShopPage dropPage = new FastShopPage(driver);
-
-        CloseAddBoxes.closeAdds(driver);
 
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
 

@@ -24,16 +24,19 @@ public class BonusOfferShadowRootComponent {
 
     public BonusOfferShadowRootComponent(WebDriver driver) {
         this.driver = driver;
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(2));
     }
 
     @Step("Does bonus offer box present?")
     public boolean isPresent() {
 
         try {
-            final WebElement shadowHost = driver.findElement(offerBox);
-            final SearchContext shadowRoot = shadowHost.getShadowRoot();
-            shadowRoot.findElement(offerBox);
+            // First check if the host element exists
+            WebElement shadowHost = driver.findElement(offerBox);
+
+            // Try to find the close button directly (no shadow root)
+            // Adjust this based on your actual HTML structure
+            driver.findElement(closeOffer);
             System.out.println("bonus offer box presents");
             return true;
         } catch (NoSuchElementException e) {
@@ -46,12 +49,11 @@ public class BonusOfferShadowRootComponent {
     @Step("Close bonus offer box")
     public void closeOfferBox() {
         try {
-            final WebElement shadowHost = driver.findElement(offerBox);
-            final SearchContext shadowRoot = shadowHost.getShadowRoot();
-            shadowRoot.findElement(closeOffer).click();
+            WebElement closeButton = driver.findElement(closeOffer);
+            closeButton.click();
             wait.until(ExpectedConditions.invisibilityOfElementLocated(offerBox));
         } catch (NoSuchElementException e) {
-            System.out.println("bonus offer doesn't close");
+            System.out.println("bonus offer doesn't close or wasn't present");
         }
     }
 }

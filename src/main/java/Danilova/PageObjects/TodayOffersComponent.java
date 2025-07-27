@@ -16,7 +16,7 @@ public class TodayOffersComponent {
 
     public TodayOffersComponent(WebDriver driver) {
         this.driver = driver;
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(2));
     }
 
     By todayBox = By.xpath("//div[@class='container-fluid _container-inner_uptugp']");
@@ -43,7 +43,7 @@ public class TodayOffersComponent {
             driver.findElement(closeBox).click();
             wait.until(ExpectedConditions.invisibilityOfElementLocated(todayBox));
         } catch (NoSuchElementException e) {
-            System.out.println("bonus offer doesn't present");
+            System.out.println("today offer doesn't close");
         }
     }
 
