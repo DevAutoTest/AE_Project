@@ -5,6 +5,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
 import java.time.Duration;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,6 +26,7 @@ public class MenuComponent {
 
     @Step("Get list of women menu categories as String")
     public List<String> getWomenMenuTexts() {
+        wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(categories));
         return driver.findElements(categories).stream()
                 .map(WebElement::getText)
                 .map(String::trim)
@@ -33,6 +35,7 @@ public class MenuComponent {
 
     @Step("Get list of links of women menu as String")
     public List<String> getWomenMenuLinks() {
+        wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(categories));
         return driver.findElements(categories).stream()
                 .map(categories -> categories.getAttribute("href"))
                 .collect(Collectors.toList());
@@ -40,31 +43,29 @@ public class MenuComponent {
 
     @Step("Click women menu links")
     public void clickWomenMenuLink(String url) {
-            hoverOverWomen();
+        hoverOverWomen();
 
-            // Ждём не просто появления, но и видимости элементов
-            List<WebElement> categoryElements = driver.findElements(categories);
-            WebElement targetElement = categoryElements.stream()
-                    .filter(element -> url.equals(element.getAttribute("href")))
-                    .findFirst()
-                    .orElseThrow(() -> new NoSuchElementException("Категория с URL '" + url + "' не найдена"));
+        // Ждём не просто появления, но и видимости элементов
+        List<WebElement> categoryElements = driver.findElements(categories);
+        WebElement targetElement = categoryElements.stream()
+                .filter(element -> url.equals(element.getAttribute("href")))
+                .findFirst()
+                .orElseThrow(() -> new NoSuchElementException("Категория с URL '" + url + "' не найдена"));
 
-            // Прокручиваем к элементу (если нужно)
-            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", targetElement);
+        // Прокручиваем к элементу (если нужно)
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", targetElement);
 
-            // Кликаем через JS (если обычный клик не работает)
-            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", targetElement);
+        // Кликаем через JS (если обычный клик не работает)
+        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", targetElement);
 
-            wait.until(ExpectedConditions.urlToBe(url));
+        wait.until(ExpectedConditions.urlToBe(url));
     }
 
 
-
-@Step("Hover over Women menu")
-public void hoverOverWomen() {
-    WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(womenMenu));
-    new Actions(driver).moveToElement(element).perform();
-}
-
-
+    @Step("Hover over Women menu")
+    public void hoverOverWomen() {
+        WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(womenMenu));
+        new Actions(driver).moveToElement(element).perform();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+    }
 }

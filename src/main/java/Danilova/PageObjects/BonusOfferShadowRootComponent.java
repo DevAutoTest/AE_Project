@@ -49,11 +49,18 @@ public class BonusOfferShadowRootComponent {
     @Step("Close bonus offer box")
     public void closeOfferBox() {
         try {
-            WebElement closeButton = driver.findElement(closeOffer);
-            closeButton.click();
-            wait.until(ExpectedConditions.invisibilityOfElementLocated(offerBox));
-        } catch (NoSuchElementException e) {
-            System.out.println("bonus offer doesn't close or wasn't present");
+            try {
+                WebElement closeButton = driver.findElement(closeOffer);
+                closeButton.click();
+                wait.until(ExpectedConditions.invisibilityOfElementLocated(offerBox));
+            } catch (StaleElementReferenceException e) {
+                // Если элемент "устарел", пробуем ещё раз
+                WebElement closeButton = driver.findElement(closeOffer);
+                closeButton.click();
+                wait.until(ExpectedConditions.invisibilityOfElementLocated(offerBox));
+            }
+        } catch (NoSuchElementException | TimeoutException e) {
+            System.out.println("bonus offer doesn't close or wasn't present: " + e.getMessage());
         }
     }
 }

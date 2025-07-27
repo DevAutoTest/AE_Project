@@ -37,12 +37,20 @@ public class SignUpOfferBoxShadowRootComponent {
     @Step("Close signUpBox box")
     public void closeSignUpBox() {
         try {
-            final WebElement shadowHost = driver.findElement(shadowHostSignUpBox);
-            final SearchContext shadowRoot = shadowHost.getShadowRoot();
-            shadowRoot.findElement(closeBox).click();
-            wait.until(ExpectedConditions.invisibilityOfElementLocated(shadowHostSignUpBox));
-        } catch (NoSuchElementException e) {
-            System.out.println("sign up box doesn't close");
+            try {
+                final WebElement shadowHost = driver.findElement(shadowHostSignUpBox);
+                final SearchContext shadowRoot = shadowHost.getShadowRoot();
+                shadowRoot.findElement(closeBox).click();
+                wait.until(ExpectedConditions.invisibilityOfElementLocated(shadowHostSignUpBox));
+            } catch (StaleElementReferenceException e) {
+                // Если элемент "устарел", пробуем ещё раз
+                final WebElement shadowHost = driver.findElement(shadowHostSignUpBox);
+                final SearchContext shadowRoot = shadowHost.getShadowRoot();
+                shadowRoot.findElement(closeBox).click();
+                wait.until(ExpectedConditions.invisibilityOfElementLocated(shadowHostSignUpBox));
+            }
+        } catch (NoSuchElementException | TimeoutException e) {
+            System.out.println("sign up box doesn't close: " + e.getMessage());
         }
     }
 }

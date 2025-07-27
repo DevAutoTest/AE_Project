@@ -84,23 +84,12 @@ public class PrepareDriverTest {
             options.addArguments("--disable-dev-shm-usage"); // Use /tmp instead of /dev/shm
             options.addArguments("--window-size=1920,1080"); // Установка явного размера окна, предпочтительнее для CI
             options.addArguments("--user-data-dir=/tmp/chrome_temp"); //без возникала 500 ошибка Could not start a new session. Response code 500. Message: session not created: probably user data directory is already in use, please specify a unique value for --user-data-dir argument, or don't use --user-data-dir
-
-
-            // Обработка параметров из Gradle yaml
-            String browserSize = System.getProperty("browser.size", "1920x1080");
-            boolean startMaximized = Boolean.parseBoolean(System.getProperty("browser.start.maximized", "true"));
-
-            if (startMaximized) {
-                options.addArguments("--start-maximized");
-            } else {
-                options.addArguments("--window-size=" + browserSize);
-            }
-
-
-            // Для Selenium Grid
-            options.setCapability("se:recordVideo", true);
-            options.setCapability("se:screenResolution", "1920x1080");
-            options.setCapability("se:timeZone", "UTC");
+//            // Для Selenium Grid
+//            options.setCapability("se:recordVideo", true);
+//            //Должно совпадать с SE_SCREEN_WIDTH и SE_SCREEN_HEIGHT в docker-compose
+//            options.setCapability("se:screenResolution", "1920x1080");
+//            //Обеспечивает согласованность дат/времени в тестах
+//            options.setCapability("se:timeZone", "UTC");
 
             options.setCapability("goog:loggingPrefs", Map.of("browser", "ALL"));
 

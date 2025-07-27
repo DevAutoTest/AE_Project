@@ -31,7 +31,7 @@ public class FastMenuComponent {
 
 
     @Step("Open fast women menu")
-    public void openWomenMenu() throws InterruptedException {
+    public void openWomenMenu() {
 
         // 1) Ждём, пока элемент появится в DOM
         WebElement link = wait.until(ExpectedConditions.presenceOfElementLocated(womenNew));

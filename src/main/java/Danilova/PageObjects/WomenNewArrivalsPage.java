@@ -20,7 +20,7 @@ public class WomenNewArrivalsPage extends BasePage {
 
     public WomenNewArrivalsPage(WebDriver driver) {
         super(driver);
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(5));
     }
 
     /**
@@ -35,7 +35,7 @@ public class WomenNewArrivalsPage extends BasePage {
                         By.xpath("//div[contains(@class,'product-tile')]")));
 
                 List<WebElement> elements = driver.findElements(
-                        By.xpath("//div[contains(@class,'product-tile')]"));
+                        By.xpath("//div[starts-with(@class,'product-tile _container_') and not(.//*[normalize-space() = 'Coming Soon'])]"));
                 ((JavascriptExecutor) driver)
                         .executeScript("arguments[0].scrollIntoView({block:'center', inline:'center'});", elements.get(0));
                 driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
@@ -66,7 +66,7 @@ public class WomenNewArrivalsPage extends BasePage {
 
         // Попробуем кликнуть, повторяя при StaleElementReference
         int attempts = 0;
-        while (attempts < 2) {
+        while (attempts < 3) {
             try {
                 WebElement tile = tiles.get(idx);
                 System.out.println("попытка = " + attempts);
@@ -77,7 +77,8 @@ public class WomenNewArrivalsPage extends BasePage {
 
                 wait.until(ExpectedConditions.elementToBeClickable(tile)).click();
                 System.out.println("Кликаем по выбранному элементу");
-                driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
+                driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
+                System.out.println(driver.getCurrentUrl());
 
                 return;  // успех — выходим
             } catch (StaleElementReferenceException | ElementClickInterceptedException e) {

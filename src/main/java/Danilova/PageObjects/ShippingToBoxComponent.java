@@ -1,9 +1,7 @@
 package Danilova.PageObjects;
 
 import io.qameta.allure.Step;
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -24,8 +22,7 @@ public class ShippingToBoxComponent {
 
 
     @Step("Does shipping box present?")
-    public boolean shippingBoxIsPresent(){
-
+    public boolean shippingBoxIsPresent() {
         try {
             driver.findElement(shippingBox);
             System.out.println("shippingBox presents");
@@ -38,10 +35,20 @@ public class ShippingToBoxComponent {
     }
 
     @Step("Close shippingBox box")
-    public void closeShippingBox(){
-//        SearchContext shadow = driver.findElement(bonusOfferShadowRootBox).getShadowRoot();
-//        shadow.findElement(closeBonusOfferBox).click();
-        driver.findElement(closeBox).click();
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(shippingBox));
+    public void closeShippingBox() {
+        try {
+            try {
+                WebElement closeButton = wait.until(ExpectedConditions.elementToBeClickable(closeBox));
+                closeButton.click();
+                wait.until(ExpectedConditions.invisibilityOfElementLocated(shippingBox));
+            } catch (StaleElementReferenceException e) {
+                // Если элемент "устарел", пробуем ещё раз
+                WebElement closeButton = wait.until(ExpectedConditions.elementToBeClickable(closeBox));
+                closeButton.click();
+                wait.until(ExpectedConditions.invisibilityOfElementLocated(shippingBox));
+            }
+        } catch (NoSuchElementException | TimeoutException e) {
+            System.out.println("today offer doesn't close: " + e.getMessage());
+        }
     }
 }

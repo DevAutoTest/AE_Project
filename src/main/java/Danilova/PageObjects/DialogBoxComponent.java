@@ -1,9 +1,7 @@
 package Danilova.PageObjects;
 
 import io.qameta.allure.Step;
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -33,10 +31,15 @@ public class DialogBoxComponent {
     @Step("Clos dialog box")
     public void closeDialogBox() {
         try {
-            driver.findElement(closeDialogBox).click();
-            wait.until(ExpectedConditions.invisibilityOfElementLocated(dialogBox));
-        } catch (NoSuchElementException e) {
-            System.out.println("bonus offer doesn't present");
+            try {
+                driver.findElement(closeDialogBox).click();
+                wait.until(ExpectedConditions.invisibilityOfElementLocated(dialogBox));
+            } catch (StaleElementReferenceException e) {
+                driver.findElement(closeDialogBox).click();
+                wait.until(ExpectedConditions.invisibilityOfElementLocated(dialogBox));
+            }
+        } catch (NoSuchElementException | TimeoutException e) {
+            System.out.println("bonus offer doesn't present: " + e.getMessage());
         }
     }
 

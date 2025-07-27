@@ -5,9 +5,11 @@ import lombok.Getter;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
 import java.time.Duration;
 import java.util.List;
 import java.util.Random;
+
 import static Danilova.utils.RandomUtils.randomIntInclusive;
 
 public class FastShopPage extends BasePage {
@@ -35,7 +37,7 @@ public class FastShopPage extends BasePage {
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(5));
     }
 
-    @Step("Checking of presence add to bag button" )
+    @Step("Checking of presence add to bag button")
     public boolean addToBagButtonIsPresent() {
         try {
             // Сначала дожидаемся появления элемента в DOM
@@ -70,7 +72,7 @@ public class FastShopPage extends BasePage {
         }
 
         // генерируем индекс от 0 до count-1
-        int idx = randomIntInclusive(0, count  - 1);
+        int idx = randomIntInclusive(0, count - 1);
         System.out.println("random indx = " + idx);
 
         // Попробуем кликнуть, повторяя при StaleElementReference
@@ -102,14 +104,30 @@ public class FastShopPage extends BasePage {
 
     @Step("Return list of available sizes")
     private List<WebElement> getAllSizes() {
+        WebDriverWait longWait = new WebDriverWait(driver, Duration.ofSeconds(15));
 
-        driver.findElement(By.xpath("//div[@aria-label='Size']")).click();
+        try {
+            // 1. Ожидание и клик на выпадающий список
+            WebElement sizeDropdown = longWait.until(ExpectedConditions.elementToBeClickable(
+                    By.xpath("//div[@aria-label='Size' or contains(@class,'size-selector')]")));
 
-       // wait.until(
-                // ExpectedConditions.visibilityOfAllElementsLocatedBy(PRODUCT_LIST)
-               // ExpectedConditions.visibilityOfAllElementsLocatedBy(  By.xpath("//div[@data-test-select-custom='size']//a[@role='menuitem']")));
-        return driver.findElements(By.xpath("//div[@data-test-select-custom='size']//a[@role='menuitem' and not(.//small)]"));
-         }
+            // 2. Прокрутка и клик через JavaScript для надежности
+            ((JavascriptExecutor) driver).executeScript(
+                    "arguments[0].scrollIntoView({block:'center', inline:'center', behavior:'smooth'});",
+                    sizeDropdown);
+            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", sizeDropdown);
+
+            // 3. Ожидание появления вариантов размеров
+            longWait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(
+                    By.xpath("//div[@data-test-select-custom='size']//a[@role='menuitem']")));
+
+            // 4. Возвращаем только активные размеры
+            return driver.findElements(By.xpath(
+                    "//div[@data-test-select-custom='size']//a[@role='menuitem' and not(.//small) and not(contains(@class,'disabled'))]"));
+        } catch (TimeoutException e) {
+            throw new NoSuchElementException("Size selector not found on the page", e);
+        }
+    }
 
     @Step("Click random size")
     public void clickRandomSizeResult() {
@@ -124,10 +142,9 @@ public class FastShopPage extends BasePage {
         int idx = randomIntInclusive(0, count - 1);
         System.out.println("random indx = " + idx);
 
-
         // Попробуем кликнуть, повторяя при StaleElementReference
         int attempts = 0;
-        while (attempts < 2) {
+        while (attempts < 3) {
             try {
                 WebElement tile = tiles.get(idx);
                 System.out.println("попытка = " + attempts);
@@ -138,8 +155,8 @@ public class FastShopPage extends BasePage {
                 // скроллим к нему, чтобы не было off-screen
                 ((JavascriptExecutor) driver)
                         .executeScript("arguments[0].scrollIntoView({block:'center', inline:'center'});", tile);
-                // ждём, пока станет кликабельным
-                wait.until(ExpectedConditions.elementToBeClickable(tile)).click();
+                driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+                tile.click();
                 driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
                 return;  // успех — выходим
             } catch (StaleElementReferenceException | ElementClickInterceptedException e) {
