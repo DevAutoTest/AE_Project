@@ -3,6 +3,23 @@ plugins {
     id("io.qameta.allure") version "2.12.0"
 }
 
+// Добавьте в самое начало build.gradle (после plugins)
+tasks.register('apiTest', Test) {
+    useJUnitPlatform {
+        include '**/api/**'
+    }
+    systemProperties(System.getProperties())
+    mustRunAfter clean
+}
+
+tasks.register('uiTest', Test) {
+    useJUnitPlatform {
+        include '**/ui/**'
+    }
+    systemProperties(System.getProperties())
+    mustRunAfter clean
+}
+
 group = 'Danilova'
 version = '1.0-SNAPSHOT'
 

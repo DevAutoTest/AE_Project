@@ -62,16 +62,15 @@ jobs:
 
       - name: Run API Tests
         env:
-          BASEURL: ${{ secrets.BASEURL }}
-          GUEST_HEADER_AUTHORIZATION: ${{ secrets.GUEST_AUTHORIZATION }}
-          USERNAME: ${{ secrets.AUTH_USERNAME }}
-          PASSWORD: ${{ secrets.AUTH_PASSWORD }}
+          BASE_URL: ${{ secrets.BASEURL }}
+          GUEST_AUTH: ${{ secrets.GUEST_AUTHORIZATION }}
         run: |
           ./gradlew apiTest \
-          -Dmode=GUEST \
-          -Dselenium.remote.url=http://localhost:4444/wd/hub \
-          -DbaseUrl=$BASEURL \  # Явная передача параметра
-          -Dguest.header.authorization=$GUEST_HEADER_AUTHORIZATION
+            -Dmode=GUEST \
+            -DbaseUrl=$BASE_URL \
+            -Dguest.header.authorization=$GUEST_AUTH \
+            --stacktrace \
+            --info
 
       - name: Run UI Tests
         run: |
