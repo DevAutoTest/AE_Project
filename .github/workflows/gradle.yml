@@ -20,6 +20,9 @@ jobs:
           --shm-size 2g
           -e SE_SCREEN_WIDTH=1920
           -e SE_SCREEN_HEIGHT=1080
+          -e SE_SCREEN_DEPTH=24
+          -e SE_SCREEN_DPI=96
+          
 
     steps:
       - uses: actions/checkout@v4
@@ -44,22 +47,14 @@ jobs:
           echo "baseUrl=${{ secrets.BASE_URL }}"
           echo "guest.header.authorization=${{ secrets.GUEST_AUTHORIZATION }}"
 
-      - name: Prepare Properties Files
-        run: |
-            mkdir -p src/test/resources/properties
-            # Для GUEST-режима
-            echo "mode=GUEST" > src/test/resources/properties/guest.properties
-            echo "baseUrl=${{ secrets.BASE_URL }}" >> src/test/resources/properties/guest.properties
-            echo "guest.header.authorization=${{ secrets.GUEST_AUTHORIZATION }}" >> src/test/resources/properties/guest.properties
-            # Для AUTH-режима
-            echo "mode=AUTH" > src/test/resources/properties/auth.properties
-            echo "baseUrl=${{ secrets.BASE_URL }}" >> src/test/resources/properties/auth.properties
-            echo "auth.username=${{ secrets.AUTH_USERNAME }}" >> src/test/resources/properties/auth.properties
-            echo "auth.password=${{ secrets.AUTH_PASSWORD }}" >> src/test/resources/properties/auth.properties
-
       - name: Run Tests
+        env:
+          BASEURL: ${{ secrets.BASEURL }}
+          GUEST_HEADER_AUTHORIZATION: ${{ secrets.GUEST_AUTHORIZATION }}"
+          AUTH_USERNAME: ${{ secrets.AUTH_USERNAME }}"
+          AUTH_PASSWORD: ${{ secrets.AUTH_PASSWORD }}"
         run: |
-         ./gradlew clean test \
+         ./gradlew test \
          -Dmode=GUEST \
          -Dselenium.remote.url=http://localhost:4444/wd/hub   
 
