@@ -34,10 +34,37 @@ dependencies {
 
 test {
     useJUnitPlatform()
-    // Передаём все системные свойства в тесты
-    systemProperties(System.getProperties())
-    systemProperty "mode", System.getProperty("mode", "GUEST")  // По умолчанию GUEST
-    systemProperty "selenium.remote.url", System.getProperty("selenium.remote.url")
+
+    // Основные параметры
+    systemProperties System.getProperties() // Автоматически передает все -D параметры
+
+    // Контроль параллелизации
+    maxParallelForks = 1
+    forkEvery = 1
+
+    // Явные настройки для JUnit 5 и Selenide
+    systemProperties = [
+            "junit.jupiter.execution.parallel.enabled": "false",
+            "junit.jupiter.execution.parallel.mode.default": "same_thread",
+            "selenide.threads": "1"
+    ]
+
+    // Дополнительные гарантии
+    setIgnoreFailures(false)
+
+    // Логирование для отладки
+    testLogging {
+        events "passed", "skipped", "failed"
+        showStandardStreams = true
+    }
+
+    //Добавьте в любой тест:
+
+    //@Test
+    //void checkThread() {
+    //    System.out.println("Running in thread: " + Thread.currentThread().getId());
+    //}
+    //Все тесты должны выводить один и тот же ID потока
 }
 
 

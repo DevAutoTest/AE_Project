@@ -52,6 +52,11 @@ jobs:
          echo "Browser width: ${{ inputs.browserWidth || '1920' }}"
          echo "Browser height: ${{ inputs.browserHeight || '1080' }}"
 
+      - name: Verify test execution
+        run: |
+         echo "Количество потоков Gradle: $(./gradlew --max-workers=1 --quiet properties | grep 'max-workers')"
+         echo "Параметры тестов: $(./gradlew test --quiet properties | grep 'junit.jupiter')"
+
       - name: Run Tests
         env:
           BASEURL: ${{ secrets.BASEURL }}
@@ -59,11 +64,14 @@ jobs:
           USERNAME: ${{ secrets.AUTH_USERNAME }}"
           PASSWORD: ${{ secrets.AUTH_PASSWORD }}"
         run: |
-         ./gradlew test \
-         -Dmode=GUEST \
-         -Dselenium.remote.url=http://localhost:4444/wd/hub \
-         -Dbrowser.width=1920 \
-         -Dbrowser.height=1080
+          ./gradlew test \
+          --no-parallel \
+          --max-workers=1 \
+          -Dorg.gradle.workers.max=1 \
+          -Dmode=GUEST \
+          -Dselenium.remote.url=http://localhost:4444/wd/hub \
+          -Dbrowser.width=1920 \
+          -Dbrowser.height=1080
 
 
       - name: Copy History
