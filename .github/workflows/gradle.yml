@@ -60,6 +60,12 @@ jobs:
           echo "2. Параметры JUnit:"
           ./gradlew --quiet test -m | grep -i 'junit' || echo "Параметры JUnit не найдены"
 
+      - name: Debug secret
+        run: |
+         echo "AUTH_TOKEN: $AUTH_TOKEN"
+        env:
+         AUTH_TOKEN: ${{ secrets.GUEST_AUTHORIZATION }}
+      
       - name: Run API Tests
         env:
           BASE_URL: ${{ secrets.BASEURL }}
