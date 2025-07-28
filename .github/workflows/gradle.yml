@@ -13,22 +13,13 @@ jobs:
     services:
       selenium:
         image: selenium/standalone-chrome:latest
-        volumes:
-          - ./videos:/opt/selenium/videos
-        env:
-          SE_RECORD_VIDEO: "true"
-          SE_VIDEO_FILE_NAME: "test.mp4"
+        ports:
+          - 4444:4444
+          - 7900:7900
         options: >-
           --shm-size 2g
           -e SE_SCREEN_WIDTH=1920
           -e SE_SCREEN_HEIGHT=1080
-          -e SE_SCREEN_DEPTH=24
-          -e SE_START_XVFB=false
-          -e SE_VNC_NO_PASSWORD=1
-          -e SE_NO_VNC_PORT=7900
-        ports:
-          - 4444:4444
-          - 7900:7900
 
     steps:
       - uses: actions/checkout@v4
@@ -45,55 +36,28 @@ jobs:
         with:
           gradle-version: '8.10'
 
+      - name: Prepare Properties Files
+        run: |
+            mkdir -p src/test/resources/properties
+            # Для GUEST-режима
+            echo "mode=GUEST" > src/test/resources/properties/guest.properties
+            echo "baseUrl=${{ secrets.BASE_URL }}" >> src/test/resources/properties/guest.properties
+            echo "guest.header.authorization=${{ secrets.GUEST_AUTHORIZATION }}" >> src/test/resources/properties/guest.properties
+            # Для AUTH-режима
+            echo "mode=AUTH" > src/test/resources/properties/auth.properties
+            echo "baseUrl=${{ secrets.BASE_URL }}" >> src/test/resources/properties/auth.properties
+            echo "auth.username=${{ secrets.AUTH_USERNAME }}" >> src/test/resources/properties/auth.properties
+            echo "auth.password=${{ secrets.AUTH_PASSWORD }}" >> src/test/resources/properties/auth.properties
+
+      - name: Run Tests
+        run: |
+            ./gradlew clean test \
+            -Dmode=GUEST \  # Или AUTH
+            -Dselenium.remote.url=http://localhost:4444/wd/hub    
+
       - name: Grant execute permission for Gradle
         run: chmod +x gradlew
 
-      # 2. Подготовка тестовых данных
-      - name: Create videos directory
-        run: |
-          mkdir -p ./videos
-          chmod 777 ./videos  # Права нужно дать ДО запуска контейнера
-
-      - name: Configure test properties
-        run: |
-          mkdir -p src/test/resources/properties
-          echo "mode=GUEST" > src/test/resources/properties/guest.properties
-          echo "baseUrl=${{ secrets.BASE_URL }}" >> src/test/resources/properties/guest.properties
-          echo "guest.header.authorization=${{ secrets.GUEST_AUTHORIZATION }}" >> src/test/resources/properties/guest.properties
-
-      # 3. Запуск тестов
-      - name: Run tests
-        env:
-          SELENIUM_REMOTE_URL: http://localhost:4444/wd/hub
-          SECRET_BASE_URL: ${{ secrets.BASE_URL }}
-          SECRET_GUEST_AUTH: ${{ secrets.GUEST_AUTHORIZATION }}
-        run: |
-          echo "Running tests with:"
-          echo "Selenium URL: $SELENIUM_REMOTE_URL"
-          
-          ./gradlew clean test \
-            -Dselenium.remote.url="$SELENIUM_REMOTE_URL" \
-            -Dmode="GUEST" \
-            -DbaseUrl="$SECRET_BASE_URL" \
-            -Dguest.header.authorization="$SECRET_GUEST_AUTH" \
-            -Dheadless=true \
-            -Dbrowser.size=1920x1080 \
-            -Dbrowser.start.maximized=true
-
-      # 4. Пост-обработка
-      - name: Debug videos folder
-        if: always()
-        run: |
-          echo "Videos directory content:"
-          ls -la ./videos
-
-      - name: Upload videos
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: test-videos
-          path: ./videos/*.*
-          # retention-days: 3  # Автоочистка через 3 дня
 
       - name: Copy History
         if: always()

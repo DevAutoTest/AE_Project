@@ -33,6 +33,7 @@ public final class GuestTokenProvider {
         if (cache != null && cache.exp > System.currentTimeMillis()) return cache;
 
         Response resp = given()
+                .baseUri(cfg.getApiBaseUrl())  // Должно быть ПЕРЕД filters()
                 .filter(RestLog.rq())          // ➊
                 .filter(RestLog.rs())
                 .baseUri(cfg.getApiBaseUrl())

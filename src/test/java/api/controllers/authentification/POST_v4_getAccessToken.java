@@ -26,6 +26,8 @@ public final class POST_v4_getAccessToken {
     private POST_v4_getAccessToken() {
     }
 
+
+
     @Step("Get AUTH token (grant_type=password)")
     public static String getAuthToken() {
 

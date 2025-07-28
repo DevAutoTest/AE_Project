@@ -14,9 +14,16 @@ import org.aeonbits.owner.Config;
 //        "classpath:default.properties"
 
        //Порядок получения параметров:
-        "system:properties",  // Чтение из -D параметров
-        "classpath:properties/${mode}.properties",
-        "system:env"
+
+//        "system:properties",  // Чтение из -D параметров
+//        "classpath:properties/${mode}.properties",
+//        "system:env"
+
+ //       @Config.Sources({
+                "classpath:properties/${mode}.properties", //-Dmode= подставляется отсюда; ./gradlew test -Dmode=AUTH  # Запуск в режиме AUTH
+    // ./gradlew test              # Запуск в режиме GUEST (по умолчанию)
+  //              "classpath:default.properties"
+        "system:env"  // Резерв: переменные окружения (для GitHub Actions)
 })
 
 public interface TestPropertiesConfig extends org.aeonbits.owner.Config {

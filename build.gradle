@@ -34,18 +34,8 @@ dependencies {
 
 test {
     useJUnitPlatform()
-    systemProperties System.getProperties()
-    systemProperty("mode", System.getProperty("mode", "GUEST")) // для параметризации тестов
-    systemProperty("selenium.remote.url", System.getProperty("selenium.remote.url"))
-    systemProperty "guest.header.authorization", System.getProperty("guest.header.authorization")
-    systemProperty "baseUrl", System.getProperty("baseUrl")
-
-    // Добавьте вывод для отладки
-    doFirst {
-        println "Using mode: " + System.getProperty("mode")
-        println "Base URL: " + System.getProperty("baseUrl")
-        println "token: " + System.getProperty("guest.header.authorization")
-    }
+    systemProperty "mode", System.getProperty("mode", "GUEST")  // По умолчанию GUEST
+    systemProperty "selenium.remote.url", System.getProperty("selenium.remote.url")
 }
 
 

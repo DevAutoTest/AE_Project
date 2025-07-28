@@ -28,7 +28,6 @@ public class PrepareDriverTest {
     protected WebDriver driver;
     protected static HomePage home;
 
-
     @BeforeEach
     void setup() {
         try {
@@ -78,10 +77,10 @@ public class PrepareDriverTest {
             Для сложных UI-тестов с WebGL/Canvas **/
 
 
-            options.addArguments("--headless");  // Add headless mode
+            options.addArguments("--headless");  // Запуск браузера без GUI (экономит ресурсы в CI). Но: если вам нужны видео/скриншоты, уберите.
             options.addArguments("--disable-gpu"); // Switch off GPU, because we don't need it in headless mode
-            options.addArguments("--no-sandbox"); // Switch off sandbox to prevent access rights issues
-            options.addArguments("--disable-dev-shm-usage"); // Use /tmp instead of /dev/shm
+            options.addArguments("--no-sandbox"); // Отключает sandbox-режим (иначе Chrome в Docker может падать с ошибками).
+            options.addArguments("--disable-dev-shm-usage"); // Использует /tmp вместо /dev/shm (избегает ошибок нехватки памяти в Docker)
             options.addArguments("--window-size=1920,1080"); // Установка явного размера окна, предпочтительнее для CI
             options.addArguments("--user-data-dir=/tmp/chrome_temp"); //без возникала 500 ошибка Could not start a new session. Response code 500. Message: session not created: probably user data directory is already in use, please specify a unique value for --user-data-dir argument, or don't use --user-data-dir
 //            // Для Selenium Grid
