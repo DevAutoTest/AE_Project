@@ -57,17 +57,6 @@ jobs:
          echo "Количество потоков Gradle: $(./gradlew --max-workers=1 --quiet properties | grep 'max-workers')"
          echo "Параметры тестов: $(./gradlew test --quiet properties | grep 'junit.jupiter')"
 
-      - name: Run UI Tests
-        run: |
-         ./gradlew :uiTest  # Обратите внимание на двоеточие
-           --no-parallel \
-           --max-workers=1 \
-           -Dorg.gradle.workers.max=1 \
-           -Dselenium.remote.url=http://localhost:4444/wd/hub \
-           -Dbrowser.width=1920 \
-           -Dbrowser.height=1080 
-        
-
       - name: Run API Tests
         env:
           BASEURL: ${{ secrets.BASEURL }}
@@ -80,6 +69,17 @@ jobs:
           -Dselenium.remote.url=http://localhost:4444/wd/hub \
           -DbaseUrl=$BASEURL \  # Явная передача параметра
           -Dguest.header.authorization=$GUEST_HEADER_AUTHORIZATION
+
+      - name: Run UI Tests
+        run: |
+         ./gradlew :uiTest \
+         --no-parallel \
+         --max-workers=1 \
+         -Dorg.gradle.workers.max=1 \
+         -Dselenium.remote.url=http://localhost:4444/wd/hub \
+         -Dbrowser.width=1920 \
+         -Dbrowser.height=1080
+        
 
       - name: Copy History
         if: always()
