@@ -34,6 +34,12 @@ dependencies {
 
 test {
     useJUnitPlatform()
+    doFirst {
+        println "Актуальные параметры тестов:"
+        println "maxParallelForks: $maxParallelForks"
+        println "junit.parallel.enabled: " +
+                System.getProperty('junit.jupiter.execution.parallel.enabled')
+    }
 
     // Основные параметры
     systemProperties System.getProperties() // Автоматически передает все -D параметры
