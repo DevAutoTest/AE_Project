@@ -90,19 +90,3 @@ test {
     //Все тесты должны выводить один и тот же ID потока
 }
 
-
-//./gradlew uiTest - таски для запуска по отдельности
-// Регистрируем отдельные задачи для UI и API тестов
-tasks.register('uiTest', Test) {
-    useJUnitPlatform {
-        include '**/ui/**'
-    }
-    systemProperties(System.getProperties())
-}
-
-tasks.register('apiTest', Test) {
-    useJUnitPlatform {
-        include '**/api/**'
-    }
-    systemProperties(System.getProperties())
-}
