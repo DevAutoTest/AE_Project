@@ -65,7 +65,7 @@ jobs:
          echo "AUTH_TOKEN: $AUTH_TOKEN"
         env:
          AUTH_TOKEN: ${{ secrets.GUEST_AUTHORIZATION }}
-      
+
       - name: Run API Tests
         env:
           BASE_URL: ${{ secrets.BASEURL }}
@@ -73,8 +73,8 @@ jobs:
         run: |
           ./gradlew apiTest \
             -Dmode=GUEST \
-            -DbaseUrl=$BASE_URL \
-            -Dguest.header.authorization=$GUEST_AUTH \
+            -DbaseUrl="$BASE_URL" \
+            -Dguest.header.authorization="$GUEST_AUTH" \
             --stacktrace \
             --info
 
