@@ -34,6 +34,8 @@ dependencies {
 
 test {
     useJUnitPlatform()
+    // Передаём все системные свойства в тесты
+    systemProperties(System.getProperties())
     systemProperty "mode", System.getProperty("mode", "GUEST")  // По умолчанию GUEST
     systemProperty "selenium.remote.url", System.getProperty("selenium.remote.url")
 }

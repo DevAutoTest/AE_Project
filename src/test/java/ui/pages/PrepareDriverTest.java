@@ -67,22 +67,7 @@ public class PrepareDriverTest {
         // Безопасное добавление вложения в Allure
         safeAddAttachment("Remote URL", remoteUrl != null ? remoteUrl : "Not specified");
         if (remoteUrl != null && !remoteUrl.isEmpty()) {
-            ChromeOptions options = new ChromeOptions();
-            // Основные параметры для CI
-           /* Headless=true (по умолчанию в CI):
-            Быстрее выполнение, Меньше потребление ресурсов,  Не требует GUI
-                 Headless=false:
-            Для отладки через VNC (порт 7900)
-            Когда нужны скриншоты/видео
-            Для сложных UI-тестов с WebGL/Canvas **/
-
-
-            options.addArguments("--headless");  // Запуск браузера без GUI (экономит ресурсы в CI). Но: если вам нужны видео/скриншоты, уберите.
-            options.addArguments("--disable-gpu"); // Switch off GPU, because we don't need it in headless mode
-            options.addArguments("--no-sandbox"); // Отключает sandbox-режим (иначе Chrome в Docker может падать с ошибками).
-            options.addArguments("--disable-dev-shm-usage"); // Использует /tmp вместо /dev/shm (избегает ошибок нехватки памяти в Docker)
-            options.addArguments("--window-size=1920,1080"); // Установка явного размера окна, предпочтительнее для CI
-            options.addArguments("--user-data-dir=/tmp/chrome_temp"); //без возникала 500 ошибка Could not start a new session. Response code 500. Message: session not created: probably user data directory is already in use, please specify a unique value for --user-data-dir argument, or don't use --user-data-dir
+            ChromeOptions options = getChromeOptions();
 //            // Для Selenium Grid
 //            options.setCapability("se:recordVideo", true);
 //            //Должно совпадать с SE_SCREEN_WIDTH и SE_SCREEN_HEIGHT в docker-compose
@@ -101,6 +86,29 @@ public class PrepareDriverTest {
             driver = new ChromeDriver();
         }
 
+    }
+
+    private static ChromeOptions getChromeOptions() {
+        ChromeOptions options = new ChromeOptions();
+        // Чтение размеров из системных свойств (с значениями по умолчанию)
+        int width = Integer.parseInt(System.getProperty("browser.width", "1920"));
+        int height = Integer.parseInt(System.getProperty("browser.height", "1080"));
+        // Основные параметры для CI
+           /* Headless=true (по умолчанию в CI):
+            Быстрее выполнение, Меньше потребление ресурсов,  Не требует GUI
+                 Headless=false:
+            Для отладки через VNC (порт 7900)
+            Когда нужны скриншоты/видео
+            Для сложных UI-тестов с WebGL/Canvas **/
+
+
+        options.addArguments("--headless");  // Запуск браузера без GUI (экономит ресурсы в CI). Но: если вам нужны видео/скриншоты, уберите.
+        options.addArguments("--disable-gpu"); // Switch off GPU, because we don't need it in headless mode
+        options.addArguments("--no-sandbox"); // Отключает sandbox-режим (иначе Chrome в Docker может падать с ошибками).
+        options.addArguments("--disable-dev-shm-usage"); // Использует /tmp вместо /dev/shm (избегает ошибок нехватки памяти в Docker)
+        options.addArguments("--window-size=" + width + "," + height); // Установка явного размера окна, предпочтительнее для CI
+        options.addArguments("--user-data-dir=/tmp/chrome_temp"); //без возникала 500 ошибка Could not start a new session. Response code 500. Message: session not created: probably user data directory is already in use, please specify a unique value for --user-data-dir argument, or don't use --user-data-dir
+        return options;
     }
 
     private void safeAddAttachment(String name, String content) {
