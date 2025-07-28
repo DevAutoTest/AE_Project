@@ -71,7 +71,9 @@ jobs:
           -Dmode=GUEST \
           -Dselenium.remote.url=http://localhost:4444/wd/hub \
           -Dbrowser.width=1920 \
-          -Dbrowser.height=1080
+          -Dbrowser.height=1080 \
+          -DbaseUrl=$BASEURL \  # Явная передача параметра
+          -Dguest.header.authorization=$GUEST_HEADER_AUTHORIZATION
 
 
       - name: Copy History
