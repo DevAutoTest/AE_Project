@@ -51,8 +51,8 @@ jobs:
         env:
           BASEURL: ${{ secrets.BASEURL }}
           GUEST_HEADER_AUTHORIZATION: ${{ secrets.GUEST_AUTHORIZATION }}"
-          AUTH_USERNAME: ${{ secrets.AUTH_USERNAME }}"
-          AUTH_PASSWORD: ${{ secrets.AUTH_PASSWORD }}"
+          USERNAME: ${{ secrets.AUTH_USERNAME }}"
+          PASSWORD: ${{ secrets.AUTH_PASSWORD }}"
         run: |
          ./gradlew test \
          -Dmode=GUEST \
