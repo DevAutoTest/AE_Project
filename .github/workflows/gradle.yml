@@ -44,7 +44,7 @@ jobs:
 
       - name: Debug secrets value
         run: |
-          echo "baseUrl=${{ secrets.BASE_URL }}"
+          echo "baseUrl=${{ secrets.BASEURL }}"
           echo "guest.header.authorization=${{ secrets.GUEST_AUTHORIZATION }}"
 
       - name: Debug browser size
