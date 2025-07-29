@@ -15,8 +15,8 @@ public class FastShopPageTests extends PrepareDriverTest {
     @Test
     @Tag("smoke")
     @Description("Add random item to bag")
-    void addItemToBagWomenNewArrTest() throws InterruptedException {
-        CloseAddBoxes.closeAdds(driver);
+    void addItemToBagWomenNewArrTest(){
+        CloseAddBoxes.closeAdds();
 
         home.fastMenu.openWomenMenu();
 

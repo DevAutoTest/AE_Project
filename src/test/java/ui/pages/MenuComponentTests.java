@@ -17,7 +17,7 @@ public class MenuComponentTests extends PrepareDriverTest {
     @Disabled("takes much time")
     @CsvFileSource(resources = "/testData/MenuCategories.csv", numLinesToSkip = 0)
     public void testWomenMenuLinksAndCategoriesText(String expectedCategory, String expectedUrl) {
-        CloseAddBoxes.closeAdds(driver);
+        CloseAddBoxes.closeAdds();
         //important hoverOver to load menu woman elements!
         home.menu.hoverOverWomen();
         // 1. Получаем актуальные ссылки из меню

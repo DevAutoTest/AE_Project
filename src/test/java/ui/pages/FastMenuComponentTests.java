@@ -20,7 +20,7 @@ public class FastMenuComponentTests extends PrepareDriverTest {
     @Description("Open women new arrivals page")
     void openFastWomenNewMenuTest() throws InterruptedException {
 
-        CloseAddBoxes.closeAdds(driver);
+        CloseAddBoxes.closeAdds();
 
         home.fastMenu.openWomenMenu();
 

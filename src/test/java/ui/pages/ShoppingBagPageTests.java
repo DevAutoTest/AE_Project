@@ -14,9 +14,9 @@ public class ShoppingBagPageTests extends PrepareDriverTest {
     @Test
     @Tag("critical")
     @Description("Check color of random item in bag")
-    void checkItemColorInBagTest() throws InterruptedException {
+    void checkItemColorInBagTest() {
 
-        CloseAddBoxes.closeAdds(driver);
+        CloseAddBoxes.closeAdds();
 
         home.fastMenu.openWomenMenu();
 
@@ -47,7 +47,7 @@ public class ShoppingBagPageTests extends PrepareDriverTest {
         dropPage.clickAddToBagRandomCountOfItems();
         dropPage.addToBagClick();
         AddedToBagSideBar bar = new AddedToBagSideBar(driver);
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         bar.clickViewBag();
 
         wait.until(ExpectedConditions.urlContains("cart"));
@@ -64,9 +64,9 @@ public class ShoppingBagPageTests extends PrepareDriverTest {
     @Test
     @Tag("critical")
     @Description("Check size of random item in bag")
-    void checkItemSizeInBagTest() throws InterruptedException {
+    void checkItemSizeInBagTest(){
 
-        CloseAddBoxes.closeAdds(driver);
+        CloseAddBoxes.closeAdds();
         home.fastMenu.openWomenMenu();
 
         WomenNewArrivalsPage womenNewPage = new WomenNewArrivalsPage(driver);
@@ -116,8 +116,8 @@ public class ShoppingBagPageTests extends PrepareDriverTest {
     @Test
     @Tag("critical")
     @Description("Check quantity of random item in bag")
-    void checkItemQtyInBagTest() throws InterruptedException {
-        CloseAddBoxes.closeAdds(driver);
+    void checkItemQtyInBagTest() {
+        CloseAddBoxes.closeAdds();
 
         home.fastMenu.openWomenMenu();
 
@@ -167,10 +167,10 @@ public class ShoppingBagPageTests extends PrepareDriverTest {
     @Test
     @Tag("critical")
     @Description("Add random count of items to bag")
-    void addRandomCountOfItemsToBagTest() throws InterruptedException {
+    void addRandomCountOfItemsToBagTest()  {
         int iterations = 10;
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
-        CloseAddBoxes.closeAdds(driver);
+        CloseAddBoxes.closeAdds();
         home.fastMenu.openWomenMenu();
 
         WomenNewArrivalsPage womenNewPage = new WomenNewArrivalsPage(driver);

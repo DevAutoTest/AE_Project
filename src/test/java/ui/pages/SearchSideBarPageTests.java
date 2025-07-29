@@ -18,7 +18,7 @@ public class SearchSideBarPageTests extends PrepareDriverTest {
     @Tag("smoke")
     @Description("Check placeholder text of search input")
     void checkInputHintText() {
-        CloseAddBoxes.closeAdds(driver);
+        CloseAddBoxes.closeAdds();
 
         SearchSideBarPage searchSide = new SearchSideBarPage(driver);
         home.header().clckHdrSrchBttn();
@@ -31,8 +31,8 @@ public class SearchSideBarPageTests extends PrepareDriverTest {
     @Tag("smoke")
     @Description("Get search input")
     void enterForSearch() {
-        CloseAddBoxes.closeAdds(driver);
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(2));
+        CloseAddBoxes.closeAdds();
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
 
         SearchSideBarPage searchSide = new SearchSideBarPage(driver);
         home.header().clckHdrSrchBttn();

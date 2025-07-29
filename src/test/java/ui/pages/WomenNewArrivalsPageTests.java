@@ -17,7 +17,7 @@ public class WomenNewArrivalsPageTests extends PrepareDriverTest {
     @Tag("smoke")
     @Description("accessibility add item to bag")
     void clickRandomItem()  {
-        CloseAddBoxes.closeAdds(driver);
+        CloseAddBoxes.closeAdds();
         home.fastMenu.openWomenMenu();
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
         WomenNewArrivalsPage womenNewPage = new WomenNewArrivalsPage(driver);

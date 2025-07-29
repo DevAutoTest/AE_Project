@@ -17,7 +17,7 @@ public class AccountSideBarPageTests extends PrepareDriverTest {
     @Description("Open Create Account page")
     @Tag("smoke")
     void openCreateAccountPageTest() {
-        CloseAddBoxes.closeAdds(driver);
+        CloseAddBoxes.closeAdds();
 
         home.header().clckHdrAcntBttn();
         AccountSideBarPage asb = new AccountSideBarPage(driver);
@@ -35,7 +35,7 @@ public class AccountSideBarPageTests extends PrepareDriverTest {
     @Description("Open SignIn page")
     @Tag("smoke")
     void openSignInPageTest() {
-        CloseAddBoxes.closeAdds(driver);
+        CloseAddBoxes.closeAdds();
         home.header().clckHdrAcntBttn();
         AccountSideBarPage asb = new AccountSideBarPage(driver);
         asb.openSignInPage();

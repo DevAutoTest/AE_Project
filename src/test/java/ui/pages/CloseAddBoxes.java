@@ -8,7 +8,7 @@ import java.util.function.Consumer;
 
 public class CloseAddBoxes extends PrepareDriverTest {
 
-    static void closeAdds(WebDriver driver) {
+    static void closeAdds() {
         // Список проверок и действий в виде Consumer<HomePage>
         List<Consumer<HomePage>> closePopupActions = List.of(
                 home -> {
