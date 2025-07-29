@@ -1,7 +1,6 @@
 package ui.pages;
 
 import Danilova.PageObjects.HomePage;
-import org.openqa.selenium.WebDriver;
 
 import java.util.List;
 import java.util.function.Consumer;
