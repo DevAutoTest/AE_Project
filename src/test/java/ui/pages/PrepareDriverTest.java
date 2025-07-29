@@ -102,7 +102,7 @@ public class PrepareDriverTest {
             Для сложных UI-тестов с WebGL/Canvas **/
 
 
-       // options.addArguments("--headless");  // Запуск браузера без GUI (экономит ресурсы в CI). Но: если вам нужны видео/скриншоты, уберите.
+        // options.addArguments("--headless");  // Запуск браузера без GUI (экономит ресурсы в CI). Но: если вам нужны видео/скриншоты, уберите.
         options.addArguments("--disable-gpu"); // Switch off GPU, because we don't need it in headless mode
         options.addArguments("--no-sandbox"); // Отключает sandbox-режим (иначе Chrome в Docker может падать с ошибками).
         options.addArguments("--disable-dev-shm-usage"); // Использует /tmp вместо /dev/shm (избегает ошибок нехватки памяти в Docker)

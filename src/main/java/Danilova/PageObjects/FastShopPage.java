@@ -3,12 +3,14 @@ package Danilova.PageObjects;
 import io.qameta.allure.Step;
 import lombok.Getter;
 import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 import static Danilova.utils.RandomUtils.randomIntInclusive;
 
@@ -110,15 +112,25 @@ public class FastShopPage extends BasePage {
                     By.xpath("//div[@aria-label='Size' or contains(@class,'size-selector')]")));
 
             // 2. Прокрутка и клик через JavaScript для надежности
-            ((JavascriptExecutor) driver).executeScript(
-                    "arguments[0].scrollIntoView({block:'center', inline:'center', behavior:'smooth'});",
-                    sizeDropdown);
-            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", sizeDropdown);
+//            ((JavascriptExecutor) driver).executeScript(
+//                    "arguments[0].scrollIntoView({block:'center', inline:'center', behavior:'smooth'});",
+//                    sizeDropdown);
+//            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", sizeDropdown);
+            new Actions(driver)
+                    .moveToElement(sizeDropdown)
+                    .pause(Duration.ofMillis(500))
+                    .perform();
+            sizeDropdown.click();
 
-            // 3. Ожидание появления вариантов размеров
-            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(7));
-            longWait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(
-                    By.xpath("//div[@data-test-select-custom='size']//a[@role='menuitem']")));
+            // 3. Ожидание появления нескольких первых вариантов размеров
+            //очень много размеров: https://www.ae.com/us/en/p/women/baggy-wide-leg-jeans/baggy-wide-leg-jeans/ae-dreamy-drapey-stretch-super-high-waisted-baggy-wide-leg-jean/0437_5870_913?menu=cat4840004
+            longWait.until(driver -> {
+                List<WebElement> elements = driver.findElements(By.xpath("//div[@data-test-select-custom='size']//a[@role='menuitem']"));
+                List<WebElement> visible = elements.stream()
+                        .filter(WebElement::isDisplayed)
+                        .collect(Collectors.toList());
+                return visible.size() >= 6 ? visible : null;
+            });
 
             // 4. Возвращаем только активные размеры
             return driver.findElements(By.xpath(
@@ -146,14 +158,19 @@ public class FastShopPage extends BasePage {
         while (attempts < 3) {
             try {
                 WebElement tile = tiles.get(idx);
+//                ((JavascriptExecutor) driver)
+//                        .executeScript("arguments[0].scrollIntoView({block:'center', inline:'center'});", tile);
+
                 System.out.println("попытка = " + attempts);
                 System.out.println("URL=" + getCurrentUrl());
 
                 // Сохраняем выбранный размер
                 this.selectedSize = tile.getText();
-                // скроллим к нему, чтобы не было off-screen
-                ((JavascriptExecutor) driver)
-                        .executeScript("arguments[0].scrollIntoView({block:'center', inline:'center'});", tile);
+                System.out.println(selectedSize);
+
+//                // скроллим к нему, чтобы не было off-screen
+//                ((JavascriptExecutor) driver)
+//                        .executeScript("arguments[0].scrollIntoView({block:'center', inline:'center'});", tile);
                 driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
                 tile.click();
                 driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));

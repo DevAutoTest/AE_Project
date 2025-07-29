@@ -14,7 +14,7 @@ public class ShoppingBagPageTests extends PrepareDriverTest {
     @Test
     @Tag("critical")
     @Description("Check color of random item in bag")
-    void checkItemColorInBag() throws InterruptedException {
+    void checkItemColorInBagTest() throws InterruptedException {
 
         CloseAddBoxes.closeAdds(driver);
 
@@ -23,20 +23,24 @@ public class ShoppingBagPageTests extends PrepareDriverTest {
         WomenNewArrivalsPage womenNewPage = new WomenNewArrivalsPage(driver);
 
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
-        if(home.promotion.specPromIsPresent()){
+        if (home.promotion.specPromIsPresent()) {
             home.promotion.closeSpecialPromBox();
         }
-        if(home.rewardBox.isRealRewardPresent()){
+        if (home.rewardBox.isRealRewardPresent()) {
             home.rewardBox.closeRewardBox();
         }
-        if(home.signUpBox.signUpIsPresent()){
+        if (home.signUpBox.signUpIsPresent()) {
             home.signUpBox.closeSignUpBox();
         }
+        if (home.cookie.cookieBannerIsPresent()) {
+            home.cookie.closeCookieBanner();
+        }
+
         womenNewPage.chooseOneItem();
 
         FastShopPage dropPage = new FastShopPage(driver);
 
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
 
         dropPage.clickRandomColorResult();
         dropPage.clickRandomSizeResult();
@@ -60,7 +64,7 @@ public class ShoppingBagPageTests extends PrepareDriverTest {
     @Test
     @Tag("critical")
     @Description("Check size of random item in bag")
-    void checkItemSizeInBag() throws InterruptedException {
+    void checkItemSizeInBagTest() throws InterruptedException {
 
         CloseAddBoxes.closeAdds(driver);
         home.fastMenu.openWomenMenu();
@@ -69,20 +73,23 @@ public class ShoppingBagPageTests extends PrepareDriverTest {
 
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
 
-        if(home.promotion.specPromIsPresent()){
+        if (home.promotion.specPromIsPresent()) {
             home.promotion.closeSpecialPromBox();
         }
-        if(home.rewardBox.isRealRewardPresent()){
+        if (home.rewardBox.isRealRewardPresent()) {
             home.rewardBox.closeRewardBox();
         }
-        if(home.signUpBox.signUpIsPresent()){
+        if (home.signUpBox.signUpIsPresent()) {
             home.signUpBox.closeSignUpBox();
+        }
+        if (home.cookie.cookieBannerIsPresent()) {
+            home.cookie.closeCookieBanner();
         }
         womenNewPage.chooseOneItem();
 
         FastShopPage dropPage = new FastShopPage(driver);
 
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
 
         dropPage.clickRandomColorResult();
         dropPage.clickRandomSizeResult();
@@ -109,27 +116,30 @@ public class ShoppingBagPageTests extends PrepareDriverTest {
     @Test
     @Tag("critical")
     @Description("Check quantity of random item in bag")
-    void checkItemQtyInBag() throws InterruptedException {
-       CloseAddBoxes.closeAdds(driver);
+    void checkItemQtyInBagTest() throws InterruptedException {
+        CloseAddBoxes.closeAdds(driver);
 
         home.fastMenu.openWomenMenu();
 
         WomenNewArrivalsPage womenNewPage = new WomenNewArrivalsPage(driver);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
-        if(home.promotion.specPromIsPresent()){
+        if (home.promotion.specPromIsPresent()) {
             home.promotion.closeSpecialPromBox();
         }
-        if(home.rewardBox.isRealRewardPresent()){
+        if (home.rewardBox.isRealRewardPresent()) {
             home.rewardBox.closeRewardBox();
         }
-        if(home.signUpBox.signUpIsPresent()){
+        if (home.signUpBox.signUpIsPresent()) {
             home.signUpBox.closeSignUpBox();
+        }
+        if (home.cookie.cookieBannerIsPresent()) {
+            home.cookie.closeCookieBanner();
         }
         womenNewPage.chooseOneItem();
 
         FastShopPage dropPage = new FastShopPage(driver);
 
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
 
         dropPage.clickRandomColorResult();
         dropPage.clickRandomSizeResult();
@@ -157,8 +167,9 @@ public class ShoppingBagPageTests extends PrepareDriverTest {
     @Test
     @Tag("critical")
     @Description("Add random count of items to bag")
-    void addRandomCountOfItemsToBag() throws InterruptedException {
-        int iterations = 4;
+    void addRandomCountOfItemsToBagTest() throws InterruptedException {
+        int iterations = 10;
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
         CloseAddBoxes.closeAdds(driver);
         home.fastMenu.openWomenMenu();
 
@@ -169,28 +180,32 @@ public class ShoppingBagPageTests extends PrepareDriverTest {
             System.out.println("Adding item #" + (i + 1));
             driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
 
-            if(home.promotion.specPromIsPresent()){
+            if (home.promotion.specPromIsPresent()) {
                 home.promotion.closeSpecialPromBox();
             }
-            if(home.rewardBox.isRealRewardPresent()){
+            if (home.rewardBox.isRealRewardPresent()) {
                 home.rewardBox.closeRewardBox();
             }
-            if(home.signUpBox.signUpIsPresent()){
+            if (home.signUpBox.signUpIsPresent()) {
                 home.signUpBox.closeSignUpBox();
             }
-            if(home.promotion.specPromIsPresent()){
+            if (home.promotion.specPromIsPresent()) {
                 home.promotion.closeSpecialPromBox();
             }
-            if(home.rewardBox.isRealRewardPresent()){
+            if (home.rewardBox.isRealRewardPresent()) {
                 home.rewardBox.closeRewardBox();
             }
-            if(home.signUpBox.signUpIsPresent()){
+            if (home.signUpBox.signUpIsPresent()) {
                 home.signUpBox.closeSignUpBox();
+            }
+            if (home.cookie.cookieBannerIsPresent()) {
+                home.cookie.closeCookieBanner();
             }
 
             womenNewPage.chooseOneItem();
 
             FastShopPage dropPage = new FastShopPage(driver);
+
 
             dropPage.clickRandomColorResult();
             dropPage.clickRandomSizeResult();
@@ -211,9 +226,8 @@ public class ShoppingBagPageTests extends PrepareDriverTest {
 //        String currentText = bar.getText();
 //
 //        Assertions.assertEquals(expectedText, currentText);
-
+        wait.until(ExpectedConditions.presenceOfElementLocated(bar.viewBagButton));
         bar.clickViewBag();
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
         wait.until(ExpectedConditions.urlContains("cart"));
 
         ShoppingBagPage bag = new ShoppingBagPage(driver);

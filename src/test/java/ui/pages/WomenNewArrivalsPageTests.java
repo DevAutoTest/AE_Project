@@ -16,32 +16,32 @@ public class WomenNewArrivalsPageTests extends PrepareDriverTest {
     @Test
     @Tag("smoke")
     @Description("accessibility add item to bag")
-    void clickRandomItem() throws InterruptedException {
+    void clickRandomItem()  {
         CloseAddBoxes.closeAdds(driver);
         home.fastMenu.openWomenMenu();
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
         WomenNewArrivalsPage womenNewPage = new WomenNewArrivalsPage(driver);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
 
-        if(home.promotion.specPromIsPresent()){
+        if (home.promotion.specPromIsPresent()) {
             home.promotion.closeSpecialPromBox();
         }
-        if(home.rewardBox.isRealRewardPresent()){
+        if (home.rewardBox.isRealRewardPresent()) {
             home.rewardBox.closeRewardBox();
         }
-        if(home.signUpBox.signUpIsPresent()){
+        if (home.signUpBox.signUpIsPresent()) {
             home.signUpBox.closeSignUpBox();
         }
 
         womenNewPage.chooseOneItem();
 
-        if(home.promotion.specPromIsPresent()){
+        if (home.promotion.specPromIsPresent()) {
             home.promotion.closeSpecialPromBox();
         }
-        if(home.rewardBox.isRealRewardPresent()){
+        if (home.rewardBox.isRealRewardPresent()) {
             home.rewardBox.closeRewardBox();
         }
-        if(home.signUpBox.signUpIsPresent()){
+        if (home.signUpBox.signUpIsPresent()) {
             home.signUpBox.closeSignUpBox();
         }
 

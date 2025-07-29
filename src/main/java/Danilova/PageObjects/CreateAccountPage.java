@@ -34,38 +34,38 @@ public class CreateAccountPage extends BasePage {
         super(driver);
     }
 
-    @Step ("Check is Create Account URL page")
-    public boolean isCreateAccountPage(String url){
+    @Step("Check is Create Account URL page")
+    public boolean isCreateAccountPage(String url) {
         return CREATE_ACCOUNT_PAGE_URL.equals(url);
     }
 
-    @Step ("Get Create Account Title page")
-    public String createAcntPgTitle(){
+    @Step("Get Create Account Title page")
+    public String createAcntPgTitle() {
         return driver.findElement(pageTitle).getText();
     }
 
-    @Step ("Get email input locator")
-    public By getEmailInput(){
+    @Step("Get email input locator")
+    public By getEmailInput() {
         return emailInput;
     }
 
     @Step("input email input")
-    public void sentEmail(String s){
+    public void sentEmail(String s) {
         driver.findElement(getEmailInput()).sendKeys(s);
     }
 
     @Step("Get first name input locator")
-    public By getFirstNameInput(){
+    public By getFirstNameInput() {
         return firstNameInput;
     }
 
     @Step("sent first name")
-    public void sentFirstName(String s){
+    public void sentFirstName(String s) {
         driver.findElement(getFirstNameInput()).sendKeys(s);
     }
 
     @Step("Get last name input locator")
-    public By getLastNameInput(){
+    public By getLastNameInput() {
         return lastNameInput;
     }
 
@@ -75,7 +75,7 @@ public class CreateAccountPage extends BasePage {
     }
 
     @Step("Get mobile number input")
-    public By getMobileNumberInput(){
+    public By getMobileNumberInput() {
         return mobileNumberInput;
     }
 
@@ -85,7 +85,7 @@ public class CreateAccountPage extends BasePage {
     }
 
     @Step("Get password input locator")
-    public By getPasswordInput(){
+    public By getPasswordInput() {
         return passwordInput;
     }
 
@@ -93,8 +93,9 @@ public class CreateAccountPage extends BasePage {
     public void sentPassword(String s) {
         driver.findElement(getPasswordInput()).sendKeys(s);
     }
+
     @Step("Get confirm password input locator")
-    public By getConfirmPasswordInputInput(){
+    public By getConfirmPasswordInputInput() {
         return confirmPasswordInput;
     }
 
@@ -104,7 +105,7 @@ public class CreateAccountPage extends BasePage {
     }
 
     @Step("Get zip code input locator")
-    public By getZipCodeInput(){
+    public By getZipCodeInput() {
         return zipCodeInput;
     }
 
@@ -115,7 +116,7 @@ public class CreateAccountPage extends BasePage {
 
 
     @Step("Get month input locator")
-    public By getMonthInput(){
+    public By getMonthInput() {
         return monthInput;
     }
 
@@ -126,7 +127,7 @@ public class CreateAccountPage extends BasePage {
     }
 
     @Step("Get day input locator")
-    public By getDayInput(){
+    public By getDayInput() {
         return dayInput;
     }
 
@@ -137,22 +138,24 @@ public class CreateAccountPage extends BasePage {
     }
 
     @Step("click accept check box")
-    public void clkAcceptCheckBox(){
+    public void clkAcceptCheckBox() {
         driver.findElement(acceptCheckBox).click();
     }
+
     @Step("accaunt created page is open")
-    public boolean isAccountSuccsPage(){
-       return Objects.equals(driver.getCurrentUrl(), ACCOUNT_CREATED_URL);
+    public boolean isAccountSuccsPage() {
+        return Objects.equals(driver.getCurrentUrl(), ACCOUNT_CREATED_URL);
     }
 
 
     @Step("user created successfully message")
-    public boolean isSucMessage(){
+    public boolean isSucMessage() {
         return driver.findElement(accountCreated).getText().equals(ACCOUNT_CREATED_MESSAGE);
     }
+
     @Step("submit form")
-    public void submitForm(){
-        if(driver.findElement(createAccountButton).isEnabled()) {
+    public void submitForm() {
+        if (driver.findElement(createAccountButton).isEnabled()) {
             System.out.println("Create button is enabled");
             WebElement submitBtn = driver.findElement(createAccountButton);
             new Actions(driver)

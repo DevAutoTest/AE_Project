@@ -21,6 +21,7 @@ public class RealRewardBannerComponent {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(2));
     }
+
     @Step("Does reward box present?")
     public boolean isRealRewardPresent() {
         try {

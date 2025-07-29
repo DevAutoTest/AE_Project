@@ -23,15 +23,16 @@ public class FastShopPageTests extends PrepareDriverTest {
         WomenNewArrivalsPage womenNewPage = new WomenNewArrivalsPage(driver);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
 
-        if(home.promotion.specPromIsPresent()){
+        if (home.promotion.specPromIsPresent()) {
             home.promotion.closeSpecialPromBox();
         }
-        if(home.rewardBox.isRealRewardPresent()){
+        if (home.rewardBox.isRealRewardPresent()) {
             home.rewardBox.closeRewardBox();
         }
-        if(home.signUpBox.signUpIsPresent()){
+        if (home.signUpBox.signUpIsPresent()) {
             home.signUpBox.closeSignUpBox();
         }
+
 
         womenNewPage.chooseOneItem();
 
@@ -45,6 +46,7 @@ public class FastShopPageTests extends PrepareDriverTest {
         dropPage.addToBagClick();
 
         AddedToBagSideBar bar = new AddedToBagSideBar(driver);
+        wait.until(ExpectedConditions.presenceOfElementLocated(bar.viewBagButton));
 
         String expectedText = AddedToBagSideBar.ADDED_SUCCESS;
         String currentText = bar.getText();

@@ -3,7 +3,9 @@ package Danilova.PageObjects;
 import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 
-/** Сюда пишем методы общие для всего сайта **/
+/**
+ * Сюда пишем методы общие для всего сайта
+ **/
 
 public class BasePage {
     WebDriver driver;
@@ -19,7 +21,7 @@ public class BasePage {
     }
 
     @Step("Go back button")
-        public void goBack() {
+    public void goBack() {
         driver.navigate().back();
 
     }

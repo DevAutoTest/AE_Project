@@ -14,7 +14,7 @@ public class UsersAccountSideBarPage extends BasePage {
     }
 
     @Step("click online order history link")
-    public void clickOrderHistoryLink(){
+    public void clickOrderHistoryLink() {
         driver.findElement(onlineOrderHistory).click();
     }
 }

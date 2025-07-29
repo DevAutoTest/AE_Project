@@ -8,7 +8,9 @@ import org.junit.jupiter.api.Test;
 import Danilova.models.UsersFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
 import java.time.Duration;
+
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Feature("Create account module tests")

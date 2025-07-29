@@ -6,7 +6,7 @@ import org.openqa.selenium.WebDriver;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class CloseAddBoxes extends PrepareDriverTest{
+public class CloseAddBoxes extends PrepareDriverTest {
 
     static void closeAdds(WebDriver driver) {
         // Список проверок и действий в виде Consumer<HomePage>
@@ -30,7 +30,7 @@ public class CloseAddBoxes extends PrepareDriverTest{
                     if (home.rewardBox.isRealRewardPresent()) home.rewardBox.closeRewardBox();
                 },
                 home -> {
-                    if (home.rewardBox.isRealRewardPresent()) home.rewardBox.closeRewardBox();
+                    if (home.promotion.specPromIsPresent()) home.promotion.closeSpecialPromBox();
                 }
         );
         closePopupActions.forEach(action -> action.accept(home));

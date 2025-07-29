@@ -1,7 +1,6 @@
 package Danilova.PageObjects;
 
 import Danilova.models.UserAcnt;
-import com.fasterxml.jackson.databind.ser.Serializers;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -22,18 +21,18 @@ public class SignInPage extends BasePage {
     }
 
     @Step("Sent user Email")
-    public void sentEmail(String s){
+    public void sentEmail(String s) {
         driver.findElement(emailInput).sendKeys(s);
     }
 
     @Step("Sent user password")
-    public void sentPassword(String s){
+    public void sentPassword(String s) {
         driver.findElement(passwordInput).sendKeys(s);
     }
 
     @Step("SClick sign in button")
-    public void clickSignIn(){
-       WebElement signButton = driver.findElement(signInButton);
+    public void clickSignIn() {
+        WebElement signButton = driver.findElement(signInButton);
 
         new Actions(driver)
                 .moveToElement(signButton)
@@ -49,7 +48,7 @@ public class SignInPage extends BasePage {
     }
 
     @Step("Get signIn success page title")
-    public String getTitle(){
+    public String getTitle() {
         //Elenochka's Account
         return driver.findElement(successTitle).getText();
     }

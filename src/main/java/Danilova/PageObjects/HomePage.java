@@ -5,13 +5,14 @@ import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 
 
-
-/** Сюда пишем методы общие для сайта
- *  + метод открытия главной страницы
- *  + методы получения локаторов этой страницы
- *  + редиректы с главной страницы куда то**/
+/**
+ * Сюда пишем методы общие для сайта
+ * + метод открытия главной страницы
+ * + методы получения локаторов этой страницы
+ * + редиректы с главной страницы куда то
+ **/
 @Getter
-public class HomePage  extends BasePage {
+public class HomePage extends BasePage {
     public static final String HOME_PAGE_URL = "https://www.ae.com/us/en";
     public static final String AERIE_URL = "https://www.ae.com/us/en/c/aerie/cat4840006?pagetype=clp";
 
@@ -25,6 +26,7 @@ public class HomePage  extends BasePage {
     public final RealRewardBannerComponent rewardBox;
     public final SignUpOfferBoxShadowRootComponent signUpBox;
     public final SpecialPromotionBoxShadowRootComponent promotion;
+    public final CookieBannerComponent cookie;
 
 
     public HomePage(WebDriver driver) {
@@ -39,6 +41,7 @@ public class HomePage  extends BasePage {
         this.todayOffer = new TodayOffersComponent(driver);
         this.shippingBox = new ShippingToBoxComponent(driver);
         this.promotion = new SpecialPromotionBoxShadowRootComponent(driver);
+        this.cookie = new CookieBannerComponent(driver);
         open();
     }
 
