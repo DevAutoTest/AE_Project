@@ -32,6 +32,7 @@ public class PrepareDriverTest {
     void setup() {
         try {
             initDriver();
+
             if (driver != null) {
                 driver.manage().window().maximize();
                 driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
@@ -39,6 +40,9 @@ public class PrepareDriverTest {
                 //important hoverOver to load menu woman elements!
                // home.menu.hoverOverWomen();
                 driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
+                // Логируем размер и позицию окна
+                safeAddAttachment("Actual window size", driver.manage().window().getSize().toString());
+                safeAddAttachment("Window position", driver.manage().window().getPosition().toString());
             } else {
                 safeAddAttachment("Driver initialization", "Driver initialization failed");
             }

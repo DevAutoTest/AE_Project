@@ -16,12 +16,12 @@ jobs:
         ports:
           - 4444:4444
           - 7900:7900
-        options: >-
-          --shm-size 2g
-          -e SE_SCREEN_WIDTH=1920
-          -e SE_SCREEN_HEIGHT=1080
-          -e SE_SCREEN_DEPTH=24
-          -e SE_SCREEN_DPI=96
+        options: --shm-size=2g
+        env:
+          SE_SCREEN_WIDTH: 1920
+          SE_SCREEN_HEIGHT: 1080
+          SE_SCREEN_DEPTH: 24
+          SE_SCREEN_DPI: 96
           
 
     steps:
