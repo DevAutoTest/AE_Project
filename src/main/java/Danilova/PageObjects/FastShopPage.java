@@ -21,13 +21,11 @@ public class FastShopPage extends BasePage {
     private String selectedSize;
     @Getter
     private int selectedQuantity;
-
-
-//    String firstPrice = driver.findElement(By.xpath("//div[@data-testid='list-price']")).getText();
-//
-//    String currentPrice = driver.findElement(By.xpath("//div[@data-testid='sale-price']")).getText();
-//
-//    String discount = driver.findElement(By.xpath("//div[contains(@class,'_sale-tag')]")).getText();
+    //    String firstPrice = driver.findElement(By.xpath("//div[@data-testid='list-price']")).getText();
+    //
+    //    String currentPrice = driver.findElement(By.xpath("//div[@data-testid='sale-price']")).getText();
+    //
+    //    String discount = driver.findElement(By.xpath("//div[contains(@class,'_sale-tag')]")).getText();
 
     By addToBagButton = By.xpath("//button[@data-test-btn='addToBag']");
     By increaseCountButton = By.xpath("//button[@aria-label='increase']");
@@ -118,6 +116,7 @@ public class FastShopPage extends BasePage {
             ((JavascriptExecutor) driver).executeScript("arguments[0].click();", sizeDropdown);
 
             // 3. Ожидание появления вариантов размеров
+            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(7));
             longWait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(
                     By.xpath("//div[@data-test-select-custom='size']//a[@role='menuitem']")));
 

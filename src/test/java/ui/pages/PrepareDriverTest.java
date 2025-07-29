@@ -38,7 +38,7 @@ public class PrepareDriverTest {
                 driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
                 home = new HomePage(driver); // Инициализируем только после создания драйвера
                 //important hoverOver to load menu woman elements!
-               // home.menu.hoverOverWomen();
+                // home.menu.hoverOverWomen();
                 driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
                 // Логируем размер и позицию окна
                 safeAddAttachment("Actual window size", driver.manage().window().getSize().toString());
@@ -59,6 +59,7 @@ public class PrepareDriverTest {
                 driver.quit();
                 driver = null;
                 safeAddAttachment("Driver closed", "Driver successfully closed");
+                safeAddAttachment("Window size", driver.manage().window().getSize().toString());
             }
         } catch (Exception e) {
             safeAddAttachment("Teardown error", "Error during teardown: " + e.getMessage());
@@ -71,14 +72,9 @@ public class PrepareDriverTest {
         // Безопасное добавление вложения в Allure
         safeAddAttachment("Remote URL", remoteUrl != null ? remoteUrl : "Not specified");
         if (remoteUrl != null && !remoteUrl.isEmpty()) {
+            //options: применяется к флагам Docker CLI
+            //CLI = Command-Line Interface — это способ взаимодействия с программой через командную строку (терминал), а не через графический интерфейс (GUI).
             ChromeOptions options = getChromeOptions();
-//            // Для Selenium Grid
-//            options.setCapability("se:recordVideo", true);
-//            //Должно совпадать с SE_SCREEN_WIDTH и SE_SCREEN_HEIGHT в docker-compose
-//            options.setCapability("se:screenResolution", "1920x1080");
-//            //Обеспечивает согласованность дат/времени в тестах
-//            options.setCapability("se:timeZone", "UTC");
-
             options.setCapability("goog:loggingPrefs", Map.of("browser", "ALL"));
 
             try {
@@ -106,7 +102,7 @@ public class PrepareDriverTest {
             Для сложных UI-тестов с WebGL/Canvas **/
 
 
-        options.addArguments("--headless");  // Запуск браузера без GUI (экономит ресурсы в CI). Но: если вам нужны видео/скриншоты, уберите.
+       // options.addArguments("--headless");  // Запуск браузера без GUI (экономит ресурсы в CI). Но: если вам нужны видео/скриншоты, уберите.
         options.addArguments("--disable-gpu"); // Switch off GPU, because we don't need it in headless mode
         options.addArguments("--no-sandbox"); // Отключает sandbox-режим (иначе Chrome в Docker может падать с ошибками).
         options.addArguments("--disable-dev-shm-usage"); // Использует /tmp вместо /dev/shm (избегает ошибок нехватки памяти в Docker)

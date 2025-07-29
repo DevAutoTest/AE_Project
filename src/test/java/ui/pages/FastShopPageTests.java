@@ -23,6 +23,12 @@ public class FastShopPageTests extends PrepareDriverTest {
         WomenNewArrivalsPage womenNewPage = new WomenNewArrivalsPage(driver);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
 
+        if(home.promotion.specPromIsPresent()){
+            home.promotion.closeSpecialPromBox();
+        }
+        if(home.rewardBox.isRealRewardPresent()){
+            home.rewardBox.closeRewardBox();
+        }
         if(home.signUpBox.signUpIsPresent()){
             home.signUpBox.closeSignUpBox();
         }

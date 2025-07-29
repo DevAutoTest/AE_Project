@@ -28,6 +28,9 @@ public class CloseAddBoxes extends PrepareDriverTest{
                 },
                 home -> {
                     if (home.rewardBox.isRealRewardPresent()) home.rewardBox.closeRewardBox();
+                },
+                home -> {
+                    if (home.rewardBox.isRealRewardPresent()) home.rewardBox.closeRewardBox();
                 }
         );
         closePopupActions.forEach(action -> action.accept(home));

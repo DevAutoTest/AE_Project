@@ -24,6 +24,7 @@ public class HomePage  extends BasePage {
     public final BonusOfferShadowRootComponent offerBox;
     public final RealRewardBannerComponent rewardBox;
     public final SignUpOfferBoxShadowRootComponent signUpBox;
+    public final SpecialPromotionBoxShadowRootComponent promotion;
 
 
     public HomePage(WebDriver driver) {
@@ -37,6 +38,7 @@ public class HomePage  extends BasePage {
         this.signUpBox = new SignUpOfferBoxShadowRootComponent(driver);
         this.todayOffer = new TodayOffersComponent(driver);
         this.shippingBox = new ShippingToBoxComponent(driver);
+        this.promotion = new SpecialPromotionBoxShadowRootComponent(driver);
         open();
     }
 

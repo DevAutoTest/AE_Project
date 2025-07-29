@@ -23,6 +23,9 @@ public class ShoppingBagPageTests extends PrepareDriverTest {
         WomenNewArrivalsPage womenNewPage = new WomenNewArrivalsPage(driver);
 
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
+        if(home.promotion.specPromIsPresent()){
+            home.promotion.closeSpecialPromBox();
+        }
         if(home.rewardBox.isRealRewardPresent()){
             home.rewardBox.closeRewardBox();
         }
@@ -64,7 +67,11 @@ public class ShoppingBagPageTests extends PrepareDriverTest {
 
         WomenNewArrivalsPage womenNewPage = new WomenNewArrivalsPage(driver);
 
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+
+        if(home.promotion.specPromIsPresent()){
+            home.promotion.closeSpecialPromBox();
+        }
         if(home.rewardBox.isRealRewardPresent()){
             home.rewardBox.closeRewardBox();
         }
@@ -109,6 +116,9 @@ public class ShoppingBagPageTests extends PrepareDriverTest {
 
         WomenNewArrivalsPage womenNewPage = new WomenNewArrivalsPage(driver);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
+        if(home.promotion.specPromIsPresent()){
+            home.promotion.closeSpecialPromBox();
+        }
         if(home.rewardBox.isRealRewardPresent()){
             home.rewardBox.closeRewardBox();
         }
@@ -158,16 +168,22 @@ public class ShoppingBagPageTests extends PrepareDriverTest {
         for (int i = 0; i < iterations; i++) {
             System.out.println("Adding item #" + (i + 1));
             driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
+
+            if(home.promotion.specPromIsPresent()){
+                home.promotion.closeSpecialPromBox();
+            }
             if(home.rewardBox.isRealRewardPresent()){
                 home.rewardBox.closeRewardBox();
             }
             if(home.signUpBox.signUpIsPresent()){
                 home.signUpBox.closeSignUpBox();
             }
+            if(home.promotion.specPromIsPresent()){
+                home.promotion.closeSpecialPromBox();
+            }
             if(home.rewardBox.isRealRewardPresent()){
                 home.rewardBox.closeRewardBox();
             }
-
             if(home.signUpBox.signUpIsPresent()){
                 home.signUpBox.closeSignUpBox();
             }
