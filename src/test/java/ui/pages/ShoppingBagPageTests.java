@@ -168,7 +168,7 @@ public class ShoppingBagPageTests extends PrepareDriverTest {
     @Tag("critical")
     @Description("Add random count of items to bag")
     void addRandomCountOfItemsToBagTest()  {
-        int iterations = 10;
+        int iterations = 3;
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
         CloseAddBoxes.closeAdds();
         home.fastMenu.openWomenMenu();

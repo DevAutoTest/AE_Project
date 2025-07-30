@@ -36,7 +36,7 @@ public class WomenNewArrivalsPage extends BasePage {
                         By.xpath("//div[contains(@class,'product-tile')]")));
 
                 List<WebElement> elements = driver.findElements(
-                        By.xpath("//div[starts-with(@class,'product-tile _container_') and not(.//*[normalize-space() = 'Coming Soon'])]"));
+                        By.xpath("//div[starts-with(@class,'product-tile _container_') and not(.//*[normalize-space() = 'Coming Soon']) and not(.//*[normalize-space() = 'Sold Out'])]"));
 
 //                ((JavascriptExecutor) driver)
 //                        .executeScript("arguments[0].scrollIntoView({block:'center', inline:'center'});", elements.get(0));
