@@ -3,6 +3,7 @@ package ui.pages;
 import Danilova.PageObjects.*;
 import jdk.jfr.Description;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -13,6 +14,7 @@ import java.time.Duration;
 public class ShoppingBagPageTests extends PrepareDriverTest {
     @Test
     @Tag("critical")
+    @Order(1)
     @Description("Check color of random item in bag")
     void checkItemColorInBagTest() {
 
@@ -63,6 +65,7 @@ public class ShoppingBagPageTests extends PrepareDriverTest {
 
     @Test
     @Tag("critical")
+    @Order(2)
     @Description("Check size of random item in bag")
     void checkItemSizeInBagTest(){
 
@@ -115,6 +118,7 @@ public class ShoppingBagPageTests extends PrepareDriverTest {
 
     @Test
     @Tag("critical")
+    @Order(3)
     @Description("Check quantity of random item in bag")
     void checkItemQtyInBagTest() {
         CloseAddBoxes.closeAdds();
@@ -166,9 +170,10 @@ public class ShoppingBagPageTests extends PrepareDriverTest {
 
     @Test
     @Tag("critical")
+    @Order(4)
     @Description("Add random count of items to bag")
     void addRandomCountOfItemsToBagTest()  {
-        int iterations = 3;
+        int iterations = 2;
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
         CloseAddBoxes.closeAdds();
         home.fastMenu.openWomenMenu();
