@@ -2,15 +2,13 @@ package ui.pages;
 
 import Danilova.PageObjects.*;
 import jdk.jfr.Description;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class ShoppingBagPageTests extends PrepareDriverTest {
     @Test
     @Tag("critical")
