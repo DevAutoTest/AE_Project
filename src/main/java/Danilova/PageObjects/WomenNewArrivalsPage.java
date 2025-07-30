@@ -3,6 +3,7 @@ package Danilova.PageObjects;
 import io.qameta.allure.Step;
 import org.junit.jupiter.api.Disabled;
 import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -36,8 +37,15 @@ public class WomenNewArrivalsPage extends BasePage {
 
                 List<WebElement> elements = driver.findElements(
                         By.xpath("//div[starts-with(@class,'product-tile _container_') and not(.//*[normalize-space() = 'Coming Soon'])]"));
-                ((JavascriptExecutor) driver)
-                        .executeScript("arguments[0].scrollIntoView({block:'center', inline:'center'});", elements.get(0));
+
+//                ((JavascriptExecutor) driver)
+//                        .executeScript("arguments[0].scrollIntoView({block:'center', inline:'center'});", elements.get(0));
+
+                new Actions(driver)
+                        .moveToElement(elements.get(0))
+                        .pause(Duration.ofMillis(500))
+                        .perform();
+
                 driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
                 // Проверяем, что элементы действительно доступны
                 if (!elements.isEmpty() && elements.get(0).isDisplayed()) {
@@ -71,8 +79,15 @@ public class WomenNewArrivalsPage extends BasePage {
                 WebElement tile = tiles.get(idx);
                 System.out.println("попытка = " + attempts);
                 // скроллим к нему, чтобы не было off-screen
-                ((JavascriptExecutor) driver)
-                        .executeScript("arguments[0].scrollIntoView({block:'center', inline:'center'});", tile);
+
+
+//                ((JavascriptExecutor) driver)
+//                        .executeScript("arguments[0].scrollIntoView({block:'center', inline:'center'});", tile);
+
+                new Actions(driver)
+                        .moveToElement(tile)
+                        .pause(Duration.ofMillis(500))
+                        .perform();
                 // ждём, пока станет кликабельным
                 System.out.println("Кликаем по выбранному элементу");
                 wait.until(ExpectedConditions.elementToBeClickable(tile)).click();
