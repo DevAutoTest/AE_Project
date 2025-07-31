@@ -20,7 +20,7 @@ public class HeaderComponentTests extends PrepareDriverTest {
     @Description("Check AE logo")
     @Tag("smoke")
     void checkLogoAEHeaderTest() {
-        CloseAddBoxes.closeAdds();
+        new CloseAddBoxesTest().closeAdds(home);
         WebElement logo = driver.findElement(home.getHeader().getLogoAE_Header());
 
         assertNotNull(logo, "Logo \"American Eagle\" not found ");
@@ -33,7 +33,7 @@ public class HeaderComponentTests extends PrepareDriverTest {
     @Tag("smoke")
     @Description("Opening search icon is present in header component, clickable and closable")
     void openHdrSrchSideBar() {
-        CloseAddBoxes.closeAdds();
+        new CloseAddBoxesTest().closeAdds(home);
         driver.findElement(home.header().getHeaderSearchButton()).click();
         SearchSideBarPage searchSide = new SearchSideBarPage(driver);
         String actualTitle = searchSide.getSearchTitle();
@@ -52,10 +52,11 @@ public class HeaderComponentTests extends PrepareDriverTest {
     @Tag("smoke")
     @Description("Open Account icon is present in header component, clickable and closable")
     void openHdrAcntBttnTest() {
-        CloseAddBoxes.closeAdds();
+        new CloseAddBoxesTest().closeAdds(home);
+
         AccountSideBarPage asbp = new AccountSideBarPage(driver);
         driver.findElement(home.header.getHeaderAccountButton()).click();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(7));
 
         String actualTitle = asbp.getTitleAcntSideBar();
         String expectedTitle = "Account";
@@ -74,7 +75,7 @@ public class HeaderComponentTests extends PrepareDriverTest {
     @Tag("smoke")
     @Description("Open Cart icon is present in header component, clickable and go home page")
     void openHdrCartBttnTest() {
-        CloseAddBoxes.closeAdds();
+        new CloseAddBoxesTest().closeAdds(home);
 
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         home.header().clckHdrCartBttn();

@@ -24,12 +24,11 @@ public class BonusOfferShadowRootComponent {
 
     public BonusOfferShadowRootComponent(WebDriver driver) {
         this.driver = driver;
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(2));
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(1));
     }
 
     @Step("Does bonus offer box present?")
     public boolean isPresent() {
-
         try {
             // First check if the host element exists
             WebElement shadowHost = driver.findElement(offerBox);

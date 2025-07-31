@@ -16,7 +16,7 @@ public class CookieBannerComponent {
 
     public CookieBannerComponent(WebDriver driver) {
         this.driver = driver;
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(1));
     }
 
     @Step("Does cookie banner present?")
@@ -41,6 +41,4 @@ public class CookieBannerComponent {
             System.out.println("cookie banner doesn't close: " + e.getMessage());
         }
     }
-
-
 }

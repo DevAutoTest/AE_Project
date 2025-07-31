@@ -15,7 +15,7 @@ public class SignInPageTests extends PrepareDriverTest {
     @Tag("critical")
     @Disabled("antibot Akamai is working")
     void signInTest() {
-        CloseAddBoxes.closeAdds();
+        new CloseAddBoxesTest().closeAdds(home);
 
         home.header().clckHdrAcntBttn();
         AccountSideBarPage asbp = new AccountSideBarPage(driver);

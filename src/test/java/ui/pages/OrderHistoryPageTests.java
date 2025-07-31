@@ -13,7 +13,7 @@ public class OrderHistoryPageTests extends PrepareDriverTest {
     @Tag("critical")
     @Disabled("antibot Akamai is working")
     void checkOrdersOfNewUserTest() {
-        CloseAddBoxes.closeAdds();
+        new CloseAddBoxesTest().closeAdds(home);
 
         home.header().clckHdrAcntBttn();
         AccountSideBarPage asbp = new AccountSideBarPage(driver);
@@ -23,12 +23,10 @@ public class OrderHistoryPageTests extends PrepareDriverTest {
         page.fillSignInForm(UsersFactory.CREATED_WITHOUT_ORDERS_USER);
         page.clickSignIn();
 
-
         UsersAccountSideBarPage sideBar = new UsersAccountSideBarPage(driver);
         sideBar.clickOrderHistoryLink();
 
         OrderHistoryPage historyPage = new OrderHistoryPage(driver);
-
 
         String expectedCount = "0";
         String actualCount = historyPage.getCountByYear("2025").substring(0, 0);

@@ -18,9 +18,8 @@ public class FastMenuComponentTests extends PrepareDriverTest {
 
     @Test
     @Description("Open women new arrivals page")
-    void openFastWomenNewMenuTest()  {
-
-        CloseAddBoxes.closeAdds();
+    void openFastWomenNewMenuTest() {
+        new CloseAddBoxesTest().closeAdds(home);
 
         home.fastMenu.openWomenMenu();
 

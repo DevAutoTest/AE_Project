@@ -15,7 +15,7 @@ public class DialogBoxComponent {
 
     public DialogBoxComponent(WebDriver driver) {
         this.driver = driver;
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(2));
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(1));
     }
 
     @Step("Does Dialog box present?")
@@ -42,6 +42,4 @@ public class DialogBoxComponent {
             System.out.println("bonus offer doesn't present: " + e.getMessage());
         }
     }
-
-
 }

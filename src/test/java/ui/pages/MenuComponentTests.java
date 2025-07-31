@@ -12,11 +12,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class MenuComponentTests extends PrepareDriverTest {
 
-
     @ParameterizedTest
     @CsvFileSource(resources = "/testData/MenuCategories.csv", numLinesToSkip = 0)
     public void testWomenMenuLinksAndCategoriesText(String expectedCategory, String expectedUrl) {
-        CloseAddBoxes.closeAdds();
+        new CloseAddBoxesTest().closeAdds(home);
         //important hoverOver to load menu woman elements!
         home.menu.hoverOverWomen();
         // 1. Получаем актуальные ссылки из меню
@@ -29,7 +28,6 @@ public class MenuComponentTests extends PrepareDriverTest {
         List<String> actualCategory = home.menu.getWomenMenuTexts();
         assertTrue(actualCategory.contains(expectedCategory),
                 "Категория '" + expectedCategory + "' не найдена в меню. Доступные категории: " + actualCategory);
-
     }
 
     @ParameterizedTest

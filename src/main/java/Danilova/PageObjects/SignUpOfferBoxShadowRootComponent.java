@@ -17,7 +17,7 @@ public class SignUpOfferBoxShadowRootComponent {
 
     public SignUpOfferBoxShadowRootComponent(WebDriver driver) {
         this.driver = driver;
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(1));
     }
 
     @Step("Does signUp box present?")

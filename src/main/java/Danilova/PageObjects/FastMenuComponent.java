@@ -26,9 +26,8 @@ public class FastMenuComponent {
 
     public FastMenuComponent(WebDriver driver) {
         this.driver = driver;
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(2));
     }
-
 
     @Step("Open fast women menu")
     public void openWomenMenu() {

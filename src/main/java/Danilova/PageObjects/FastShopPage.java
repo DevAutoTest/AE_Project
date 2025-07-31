@@ -42,8 +42,10 @@ public class FastShopPage extends BasePage {
         try {
             // Сначала дожидаемся появления элемента в DOM
             WebElement button = wait.until(ExpectedConditions.presenceOfElementLocated(addToBagButton));
-            ((JavascriptExecutor) driver)
-                    .executeScript("arguments[0].scrollIntoView({block:'center', inline:'center'});", button);
+            new Actions(driver)
+                    .moveToElement(button)
+                    .pause(Duration.ofMillis(500))
+                    .perform();
 
             // Проверяем видимость элемента
             return wait.until(ExpectedConditions.visibilityOf(button)).isDisplayed();
@@ -86,8 +88,11 @@ public class FastShopPage extends BasePage {
                 this.selectedColor = tile.getAttribute("alt");
 
                 // скроллим к нему, чтобы не было off-screen
-                ((JavascriptExecutor) driver)
-                        .executeScript("arguments[0].scrollIntoView({block:'center', inline:'center'});", tile);
+                new Actions(driver)
+                        .moveToElement(tile)
+                        .pause(Duration.ofMillis(500))
+                        .perform();
+
                 // ждём, пока станет кликабельным
                 wait.until(ExpectedConditions.elementToBeClickable(tile)).click();
                 driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
@@ -112,10 +117,6 @@ public class FastShopPage extends BasePage {
                     By.xpath("//div[@aria-label='Size' or contains(@class,'size-selector')]")));
 
             // 2. Прокрутка и клик через JavaScript для надежности
-//            ((JavascriptExecutor) driver).executeScript(
-//                    "arguments[0].scrollIntoView({block:'center', inline:'center', behavior:'smooth'});",
-//                    sizeDropdown);
-//            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", sizeDropdown);
             new Actions(driver)
                     .moveToElement(sizeDropdown)
                     .pause(Duration.ofMillis(500))
@@ -158,8 +159,6 @@ public class FastShopPage extends BasePage {
         while (attempts < 3) {
             try {
                 WebElement tile = tiles.get(idx);
-//                ((JavascriptExecutor) driver)
-//                        .executeScript("arguments[0].scrollIntoView({block:'center', inline:'center'});", tile);
 
                 System.out.println("попытка = " + attempts);
                 System.out.println("URL=" + getCurrentUrl());
@@ -168,9 +167,7 @@ public class FastShopPage extends BasePage {
                 this.selectedSize = tile.getText();
                 System.out.println(selectedSize);
 
-//                // скроллим к нему, чтобы не было off-screen
-//                ((JavascriptExecutor) driver)
-//                        .executeScript("arguments[0].scrollIntoView({block:'center', inline:'center'});", tile);
+                // скроллим к нему, чтобы не было off-screen
                 driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
                 tile.click();
                 driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));

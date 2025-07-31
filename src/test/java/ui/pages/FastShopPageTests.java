@@ -5,36 +5,32 @@ import jdk.jfr.Description;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.List;
 
 public class FastShopPageTests extends PrepareDriverTest {
 
     @Test
     @Tag("smoke")
     @Description("Add random item to bag")
-    void addItemToBagWomenNewArrTest(){
-        CloseAddBoxes.closeAdds();
+    void addItemToBagWomenNewArrTest() {
+        new CloseAddBoxesTest().closeAdds(home);
 
         home.fastMenu.openWomenMenu();
 
         WomenNewArrivalsPage womenNewPage = new WomenNewArrivalsPage(driver);
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
 
-        if (home.promotion.specPromIsPresent()) {
-            home.promotion.closeSpecialPromBox();
-        }
-        if (home.rewardBox.isRealRewardPresent()) {
-            home.rewardBox.closeRewardBox();
-        }
-        if (home.signUpBox.signUpIsPresent()) {
-            home.signUpBox.closeSignUpBox();
-        }
+        List<WebElement> tiles = womenNewPage.getAllNewArrivals();
 
+        new CloseAddBoxesTest().closeAdds(home);
 
-        womenNewPage.chooseOneItem();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(6));
+
+        womenNewPage.chooseOneItem(tiles);
 
         FastShopPage dropPage = new FastShopPage(driver);
 

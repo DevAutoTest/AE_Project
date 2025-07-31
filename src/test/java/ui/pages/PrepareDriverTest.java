@@ -26,7 +26,9 @@ import java.util.Map;
 public class PrepareDriverTest {
 
     protected WebDriver driver;
-    protected static HomePage home;
+    //Должно быть не статическое, чтобы сбрасывалась сессия браузера и корзины перед новыми тестами
+    protected HomePage home;
+
 
     @BeforeEach
     void setup() {
@@ -39,6 +41,7 @@ public class PrepareDriverTest {
                 home = new HomePage(driver); // Инициализируем только после создания драйвера
                 //important hoverOver to load menu woman elements!
                 // home.menu.hoverOverWomen();
+
                 driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
                 // Логируем размер и позицию окна
                 safeAddAttachment("Actual window size", driver.manage().window().getSize().toString());

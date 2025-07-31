@@ -84,6 +84,7 @@ jobs:
          --no-parallel \
          --max-workers=1 \
          -Dorg.gradle.workers.max=1 \
+         -DitemsCount=10 \
          -Dselenium.remote.url=http://localhost:4444/wd/hub \
          -Dbrowser.width=1920 \
          -Dbrowser.height=1080

@@ -21,13 +21,13 @@ public class WomenNewArrivalsPage extends BasePage {
 
     public WomenNewArrivalsPage(WebDriver driver) {
         super(driver);
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(3));
     }
 
     /**
      * Возвращает список актуальных плиток на странице
      */
-    private List<WebElement> getAllNewArrivals() {
+    public List<WebElement> getAllNewArrivals() {
         int attempts = 0;
         while (attempts < 3) {
             try {
@@ -37,16 +37,11 @@ public class WomenNewArrivalsPage extends BasePage {
 
                 List<WebElement> elements = driver.findElements(
                         By.xpath("//div[starts-with(@class,'product-tile _container_') and not(.//*[normalize-space() = 'Coming Soon']) and not(.//*[normalize-space() = 'Sold Out'])]"));
-
-//                ((JavascriptExecutor) driver)
-//                        .executeScript("arguments[0].scrollIntoView({block:'center', inline:'center'});", elements.get(0));
-
                 new Actions(driver)
                         .moveToElement(elements.get(0))
-                        .pause(Duration.ofMillis(500))
+                        .pause(Duration.ofMillis(200))
                         .perform();
 
-                driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
                 // Проверяем, что элементы действительно доступны
                 if (!elements.isEmpty() && elements.get(0).isDisplayed()) {
                     return elements;
@@ -60,8 +55,8 @@ public class WomenNewArrivalsPage extends BasePage {
     }
 
     @Step("Add to bag one random result from New Arrivals")
-    public void chooseOneItem() {
-        List<WebElement> tiles = getAllNewArrivals();
+    public void chooseOneItem(List<WebElement> tiles) {
+        // List<WebElement> tiles = getAllNewArrivals();
         int count = tiles.size();
         System.out.println("count = " + count);
         if (count == 0) {
@@ -79,20 +74,16 @@ public class WomenNewArrivalsPage extends BasePage {
                 WebElement tile = tiles.get(idx);
                 System.out.println("попытка = " + attempts);
                 // скроллим к нему, чтобы не было off-screen
-
-
-//                ((JavascriptExecutor) driver)
-//                        .executeScript("arguments[0].scrollIntoView({block:'center', inline:'center'});", tile);
-
                 new Actions(driver)
                         .moveToElement(tile)
-                        .pause(Duration.ofMillis(500))
+                        .pause(Duration.ofMillis(200))
                         .perform();
                 // ждём, пока станет кликабельным
                 System.out.println("Кликаем по выбранному элементу");
+
                 wait.until(ExpectedConditions.elementToBeClickable(tile)).click();
 
-                driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(8));
+                driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
                 System.out.println(driver.getCurrentUrl());
 
                 return;  // успех — выходим
@@ -133,23 +124,20 @@ public class WomenNewArrivalsPage extends BasePage {
                     System.out.println("Adding item #" + (i + 1) + " with index: " + idx);
 
                     // Скроллим к элементу
-                    ((JavascriptExecutor) driver)
-                            .executeScript("arguments[0].scrollIntoView({block:'center', inline:'center'});", tile);
-
+                    new Actions(driver)
+                            .moveToElement(tile)
+                            .pause(Duration.ofMillis(200))
+                            .perform();
                     // Кликаем на товар
                     wait.until(ExpectedConditions.elementToBeClickable(tile)).click();
-
-
-                    //    success = true;
 
                 } catch (StaleElementReferenceException e) {
                     attempts++;
                     System.out.println("Stale element, refreshing list. Attempt: " + attempts);
-                    //  tiles = getAllNewArrivals();
+
                 } catch (ElementClickInterceptedException e) {
                     attempts++;
                     System.out.println("Click intercepted, retrying. Attempt: " + attempts);
-                    //  ((JavascriptExecutor) driver).executeScript("window.scrollBy(0, -100);");
                 } catch (TimeoutException e) {
                     attempts++;
                     System.out.println("Timeout, retrying. Attempt: " + attempts);
