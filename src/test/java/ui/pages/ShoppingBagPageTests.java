@@ -108,6 +108,7 @@ public class ShoppingBagPageTests extends PrepareDriverTest {
         home.fastMenu.openWomenMenu();
 
         WomenNewArrivalsPage womenNewPage = new WomenNewArrivalsPage(driver);
+        new CloseAddBoxesTest().closeAdds(home);
 
         List<WebElement> tiles = womenNewPage.getAllNewArrivals();
         new CloseAddBoxesTest().closeAdds(home);
@@ -116,13 +117,13 @@ public class ShoppingBagPageTests extends PrepareDriverTest {
 
         FastShopPage dropPage = new FastShopPage(driver);
 
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
 
         dropPage.clickRandomColorResult();
         dropPage.clickRandomSizeResult();
         dropPage.clickAddToBagRandomCountOfItems();
         dropPage.addToBagClick();
-
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         AddedToBagSideBar bar = new AddedToBagSideBar(driver);
 
         bar.clickViewBag();
@@ -149,7 +150,7 @@ public class ShoppingBagPageTests extends PrepareDriverTest {
         int defaultCount = 2;
         int iterations = Integer.parseInt(System.getProperty("itemsCount", String.valueOf(defaultCount)));
 
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
 
         new CloseAddBoxesTest().closeAdds(home);
         home.fastMenu.openWomenMenu();

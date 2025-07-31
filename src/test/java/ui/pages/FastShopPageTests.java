@@ -23,7 +23,7 @@ public class FastShopPageTests extends PrepareDriverTest {
         home.fastMenu.openWomenMenu();
 
         WomenNewArrivalsPage womenNewPage = new WomenNewArrivalsPage(driver);
-
+        new CloseAddBoxesTest().closeAdds(home);
         List<WebElement> tiles = womenNewPage.getAllNewArrivals();
 
         new CloseAddBoxesTest().closeAdds(home);

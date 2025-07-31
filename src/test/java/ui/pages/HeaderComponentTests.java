@@ -56,7 +56,7 @@ public class HeaderComponentTests extends PrepareDriverTest {
 
         AccountSideBarPage asbp = new AccountSideBarPage(driver);
         driver.findElement(home.header.getHeaderAccountButton()).click();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(7));
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
 
         String actualTitle = asbp.getTitleAcntSideBar();
         String expectedTitle = "Account";

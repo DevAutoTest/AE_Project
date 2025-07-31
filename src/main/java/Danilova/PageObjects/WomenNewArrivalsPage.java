@@ -27,6 +27,8 @@ public class WomenNewArrivalsPage extends BasePage {
     /**
      * Возвращает список актуальных плиток на странице
      */
+
+    @Step("Getting of all New Arrivals List")
     public List<WebElement> getAllNewArrivals() {
         int attempts = 0;
         while (attempts < 3) {

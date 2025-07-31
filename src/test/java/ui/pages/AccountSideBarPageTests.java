@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
+import java.time.Duration;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static Danilova.PageObjects.CreateAccountPage.CREATE_ACCOUNT_PAGE_TITLE;
 
@@ -25,6 +27,7 @@ public class AccountSideBarPageTests extends PrepareDriverTest {
 
         CreateAccountPage crAcPg = new CreateAccountPage(driver);
         crAcPg.isCreateAccountPage(driver.getCurrentUrl());
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(7));
 
         String actualTitle = crAcPg.createAcntPgTitle();
 
