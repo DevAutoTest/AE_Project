@@ -148,7 +148,7 @@ public class ShoppingBagPageTests extends PrepareDriverTest {
     void addRandomCountOfItemsToBagTest() {
         int defaultCount = 2;
         int iterations = Integer.parseInt(System.getProperty("itemsCount", String.valueOf(defaultCount)));
-        ;
+
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
 
         new CloseAddBoxesTest().closeAdds(home);
