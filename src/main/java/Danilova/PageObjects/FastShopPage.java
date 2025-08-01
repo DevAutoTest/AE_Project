@@ -112,14 +112,13 @@ public class FastShopPage extends BasePage {
         WebDriverWait longWait = new WebDriverWait(driver, Duration.ofSeconds(15));
 
         try {
-            // 1. Ожидание и клик на выпадающий список
+
             WebElement sizeDropdown = longWait.until(ExpectedConditions.elementToBeClickable(
                     By.xpath("//div[@aria-label='Size' or contains(@class,'size-selector')]")));
 
-            // 2. Прокрутка и клик через JavaScript для надежности
             new Actions(driver)
                     .moveToElement(sizeDropdown)
-                    .pause(Duration.ofMillis(500))
+                    .pause(Duration.ofMillis(700))
                     .perform();
             sizeDropdown.click();
 
@@ -130,7 +129,7 @@ public class FastShopPage extends BasePage {
                 List<WebElement> visible = elements.stream()
                         .filter(WebElement::isDisplayed)
                         .collect(Collectors.toList());
-                return visible.size() >= 6 ? visible : null;
+                return visible.size() >= 2 ? visible : null;
             });
 
             // 4. Возвращаем только активные размеры
@@ -169,7 +168,13 @@ public class FastShopPage extends BasePage {
 
                 // скроллим к нему, чтобы не было off-screen
                 driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+
+                new Actions(driver)
+                        .moveToElement(tile)
+                        .pause(Duration.ofMillis(700))
+                        .perform();
                 tile.click();
+
                 driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
                 return;  // успех — выходим
             } catch (StaleElementReferenceException | ElementClickInterceptedException e) {
