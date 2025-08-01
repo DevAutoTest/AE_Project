@@ -17,7 +17,7 @@ public class ShoppingBagPage extends BasePage {
     List<WebElement> listOfItemsColors = driver.findElements(By.xpath("//div[contains(@class,'cart-item-color')]"));
     List<WebElement> listOfItemsSizes = driver.findElements(By.xpath("//div[contains(@class,'cart-item-size qa-cart-item-size')]"));
     List<WebElement> listOfItemsQty = driver.findElements(By.xpath("//div[contains(@class,'cart-item-quantity')]"));
-
+    List<WebElement> listRemoveButtons;
 
     String globalQty = driver.findElement(By.xpath("//h2[contains(@class,'text-capitalize _items')]")).getText();
 
@@ -86,5 +86,19 @@ public class ShoppingBagPage extends BasePage {
             resultCount += Integer.parseInt(result);
         }
         return resultCount;
+    }
+
+    @Step("Remove all bag items")
+    public void removeAllBagItems(){
+        driver.get("https://www.ae.com/us/en/cart");
+        try {
+            listRemoveButtons = driver.findElements(By.xpath("//button[@data-test-btn='removeCommerceItem']"));
+            for (WebElement btn : listRemoveButtons) {
+                btn.click();
+                driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+            }
+        } catch (Exception e) {
+            System.out.println("Nothing to remove in cart.");
+        }
     }
 }

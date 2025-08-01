@@ -31,6 +31,7 @@ public class FastShopPage extends BasePage {
 
     By addToBagButton = By.xpath("//button[@data-test-btn='addToBag']");
     By increaseCountButton = By.xpath("//button[@aria-label='increase']");
+    By saveToFavoritesButton = By.xpath("//button[@name='toggleFavorites']");
 
     public FastShopPage(WebDriver driver) {
         super(driver);
@@ -117,8 +118,11 @@ public class FastShopPage extends BasePage {
                     By.xpath("//div[@aria-label='Size' or contains(@class,'size-selector')]")));
 
             Actions actions = new Actions(driver);
-            actions.moveToElement(sizeDropdown).click().perform();
+            actions.moveToElement(driver.findElement(saveToFavoritesButton)).perform();
 
+            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+
+            sizeDropdown.click();
 
             // 3. Ожидание появления нескольких первых вариантов размеров
             //очень много размеров: https://www.ae.com/us/en/p/women/baggy-wide-leg-jeans/baggy-wide-leg-jeans/ae-dreamy-drapey-stretch-super-high-waisted-baggy-wide-leg-jean/0437_5870_913?menu=cat4840004
@@ -194,7 +198,7 @@ public class FastShopPage extends BasePage {
      * Кликает по кнопке Add To Bag случайное количество раз (от 1 до 10)
      * без необходимости передавать какие-либо параметры
      */
-    @Step("Click Add To Bag button random times (1-10)")
+    @Step("Click Add To Bag button random count of itimes (1-10)")
     public void clickAddToBagRandomCountOfItems() {
         int clickCount = random.nextInt(9); // Случайное число от 0 до 9
         System.out.println("Will perform " + clickCount + " clicks on Add To Bag button");
