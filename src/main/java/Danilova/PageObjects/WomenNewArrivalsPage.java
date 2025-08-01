@@ -39,10 +39,8 @@ public class WomenNewArrivalsPage extends BasePage {
 
                 List<WebElement> elements = driver.findElements(
                         By.xpath("//div[starts-with(@class,'product-tile _container_') and not(.//*[normalize-space() = 'Coming Soon']) and not(.//*[normalize-space() = 'Sold Out'])]"));
-                new Actions(driver)
-                        .moveToElement(elements.get(0))
-                        .pause(Duration.ofMillis(200))
-                        .perform();
+                Actions actions = new Actions(driver);
+                actions.moveToElement(elements.get(0)).perform();
 
                 // Проверяем, что элементы действительно доступны
                 if (!elements.isEmpty() && elements.get(0).isDisplayed()) {
@@ -71,7 +69,7 @@ public class WomenNewArrivalsPage extends BasePage {
 
         // Попробуем кликнуть, повторяя при StaleElementReference
         int attempts = 0;
-        while (attempts < 3) {
+        while (attempts < 5 ) {
             try {
                 WebElement tile = tiles.get(idx);
                 System.out.println("попытка = " + attempts);
@@ -85,8 +83,19 @@ public class WomenNewArrivalsPage extends BasePage {
 
                 wait.until(ExpectedConditions.elementToBeClickable(tile)).click();
 
-                driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
+                driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(8));
                 System.out.println(driver.getCurrentUrl());
+
+                //Проверка на Unavailable price на странице товара:
+                List<WebElement> unavailable = driver.findElements(By.xpath("//div[text()='Unavailable']"));
+
+                if (!unavailable.isEmpty() && unavailable.get(0).isDisplayed()) {
+                    System.out.println("Unavailable");
+                    driver.navigate().back();
+                    attempts++;
+                    idx = randomIntInclusive(0, count - 1);
+                    continue;
+                }
 
                 return;  // успех — выходим
             } catch (StaleElementReferenceException | ElementClickInterceptedException e) {

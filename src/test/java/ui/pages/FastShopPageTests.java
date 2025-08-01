@@ -37,7 +37,8 @@ public class FastShopPageTests extends PrepareDriverTest {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
 
         dropPage.clickRandomColorResult();
-        dropPage.clickRandomSizeResult();
+        List<WebElement> sizes = dropPage.getAllSizes();
+        dropPage.clickRandomSizeResult(sizes);
         dropPage.clickAddToBagRandomCountOfItems();
         dropPage.addToBagClick();
 

@@ -37,7 +37,8 @@ public class ShoppingBagPageTests extends PrepareDriverTest {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
 
         dropPage.clickRandomColorResult();
-        dropPage.clickRandomSizeResult();
+        List<WebElement> sizes = dropPage.getAllSizes();
+        dropPage.clickRandomSizeResult(sizes);
         dropPage.clickAddToBagRandomCountOfItems();
         dropPage.addToBagClick();
         AddedToBagSideBar bar = new AddedToBagSideBar(driver);
@@ -78,7 +79,8 @@ public class ShoppingBagPageTests extends PrepareDriverTest {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
 
         dropPage.clickRandomColorResult();
-        dropPage.clickRandomSizeResult();
+        List<WebElement> sizes = dropPage.getAllSizes();
+        dropPage.clickRandomSizeResult(sizes);
         dropPage.clickAddToBagRandomCountOfItems();
         dropPage.addToBagClick();
 
@@ -120,7 +122,8 @@ public class ShoppingBagPageTests extends PrepareDriverTest {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
 
         dropPage.clickRandomColorResult();
-        dropPage.clickRandomSizeResult();
+        List<WebElement> sizes = dropPage.getAllSizes();
+        dropPage.clickRandomSizeResult(sizes);
         dropPage.clickAddToBagRandomCountOfItems();
         dropPage.addToBagClick();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
