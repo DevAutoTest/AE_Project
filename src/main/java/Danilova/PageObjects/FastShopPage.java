@@ -108,7 +108,7 @@ public class FastShopPage extends BasePage {
     }
 
     @Step("Return list of available sizes")
-    private List<WebElement> getAllSizes() {
+    public List<WebElement> getAllSizes() {
         WebDriverWait longWait = new WebDriverWait(driver, Duration.ofSeconds(15));
 
         try {
@@ -116,11 +116,9 @@ public class FastShopPage extends BasePage {
             WebElement sizeDropdown = longWait.until(ExpectedConditions.elementToBeClickable(
                     By.xpath("//div[@aria-label='Size' or contains(@class,'size-selector')]")));
 
-            new Actions(driver)
-                    .moveToElement(sizeDropdown)
-                    .pause(Duration.ofMillis(700))
-                    .perform();
-            sizeDropdown.click();
+            Actions actions = new Actions(driver);
+            actions.moveToElement(sizeDropdown).click().perform();
+
 
             // 3. Ожидание появления нескольких первых вариантов размеров
             //очень много размеров: https://www.ae.com/us/en/p/women/baggy-wide-leg-jeans/baggy-wide-leg-jeans/ae-dreamy-drapey-stretch-super-high-waisted-baggy-wide-leg-jean/0437_5870_913?menu=cat4840004
@@ -141,8 +139,8 @@ public class FastShopPage extends BasePage {
     }
 
     @Step("Click random size")
-    public void clickRandomSizeResult() {
-        List<WebElement> tiles = getAllSizes();
+    public void clickRandomSizeResult(List<WebElement> tiles) {
+
         int count = tiles.size();
         System.out.println("count of sizes = " + count);
         if (count == 0) {

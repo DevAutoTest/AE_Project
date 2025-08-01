@@ -173,7 +173,8 @@ public class ShoppingBagPageTests extends PrepareDriverTest {
 
 
             dropPage.clickRandomColorResult();
-            dropPage.clickRandomSizeResult();
+            List<WebElement> sizes = dropPage.getAllSizes();
+            dropPage.clickRandomSizeResult(sizes);
             dropPage.clickAddToBagRandomCountOfItems();
             dropPage.addToBagClick();
 
