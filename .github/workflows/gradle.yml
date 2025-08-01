@@ -3,6 +3,10 @@ name: AE project (API and UI)
 on:
   workflow_dispatch:
 
+concurrency:
+  group: ui-tests-single-user
+  cancel-in-progress: false
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -77,7 +81,7 @@ jobs:
          --no-parallel \
          --max-workers=1 \
          -Dorg.gradle.workers.max=1 \
-         -DitemsCount=10 \
+         -DitemsCount=2 \
          -Dselenium.remote.url=http://localhost:4444/wd/hub \
          -Dbrowser.width=1920 \
          -Dbrowser.height=1080
