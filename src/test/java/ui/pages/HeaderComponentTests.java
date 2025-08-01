@@ -65,7 +65,7 @@ public class HeaderComponentTests extends PrepareDriverTest {
         assertEquals(expectedTitle, actualTitle);
 
         asbp.clcCloseBttn();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(7));
         String actualHomeUrl = driver.getCurrentUrl();
         String expectedHomeUrl = HomePage.HOME_PAGE_URL;
 

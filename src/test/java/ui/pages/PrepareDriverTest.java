@@ -22,6 +22,7 @@ import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @Getter
 @Feature("preparing driver")
@@ -63,6 +64,7 @@ public class PrepareDriverTest {
     void tearDown() {
         try {
             if (driver != null) {
+
                 driver.quit();
                 driver = null;
                 safeAddAttachment("Driver closed", "Driver successfully closed");
@@ -86,7 +88,7 @@ public class PrepareDriverTest {
 
             try {
                 driver = new RemoteWebDriver(new URL(remoteUrl), options);
-                clearShoppingBag();
+                cleanShoppingBag();
             } catch (MalformedURLException e) {
                 throw new RuntimeException("Malformed URL for Selenium Remote WebDriver", e);
             }
@@ -115,12 +117,14 @@ public class PrepareDriverTest {
         options.addArguments("--no-sandbox"); // Отключает sandbox-режим (иначе Chrome в Docker может падать с ошибками).
         options.addArguments("--disable-dev-shm-usage"); // Использует /tmp вместо /dev/shm (избегает ошибок нехватки памяти в Docker)
         options.addArguments("--window-size=" + width + "," + height); // Установка явного размера окна, предпочтительнее для CI
-        options.addArguments("--user-data-dir=/tmp/chrome_temp"); //без возникала 500 ошибка Could not start a new session. Response code 500. Message: session not created: probably user data directory is already in use, please specify a unique value for --user-data-dir argument, or don't use --user-data-dir
+       // options.addArguments("--user-data-dir=/tmp/chrome_temp"); //без возникала 500 ошибка Could not start a new session. Response code 500. Message: session not created: probably user data directory is already in use, please specify a unique value for --user-data-dir argument, or don't use --user-data-dir
+        options.addArguments("--user-data-dir=/tmp/chrome_" + UUID.randomUUID());
         return options;
     }
 
-    public void clearShoppingBag() {
+    public void cleanShoppingBag() {
         driver.get("https://www.ae.com/us/en/cart");
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         try {
             List<WebElement> removeButtons = driver.findElements(By.xpath("//button[contains(@aria-label,'Remove')]"));
             for (WebElement btn : removeButtons) {
