@@ -5,19 +5,21 @@ plugins {
 
 // Добавьте в самое начало build.gradle (после plugins)
 tasks.register('apiTest', Test) {
-    useJUnitPlatform {
-        include '**/api/**'
-    }
+    useJUnitPlatform()
     systemProperties(System.getProperties())
     mustRunAfter clean
+    filter {
+        includeTestsMatching("api.**.*")
+    }
 }
 
 tasks.register('uiTest', Test) {
-    useJUnitPlatform {
-        include '**/ui/**'
-    }
+    useJUnitPlatform()
     systemProperties(System.getProperties())
     mustRunAfter clean
+    filter {
+        includeTestsMatching("ui.**.*")
+    }
 }
 
 group = 'Danilova'
