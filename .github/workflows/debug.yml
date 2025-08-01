@@ -71,7 +71,7 @@ jobs:
           BASE_URL: ${{ secrets.BASEURL }}
           GUEST_AUTH: ${{ secrets.GUEST_AUTHORIZATION }}
         run: |
-          ./gradlew apiTest --tests "ui.pages.FastShopPageTests"\
+          ./gradlew apiTest \
             -Dmode=GUEST \
             -DbaseUrl="$BASE_URL" \
             -Dguest.header.authorization="$GUEST_AUTH" \
@@ -80,7 +80,7 @@ jobs:
 
       - name: Run UI Tests
         run: |
-         ./gradlew uiTest \
+         ./gradlew uiTest --tests "ui.pages.FastShopPageTests"\
          --no-parallel \
          --max-workers=1 \
          -Dorg.gradle.workers.max=1 \
