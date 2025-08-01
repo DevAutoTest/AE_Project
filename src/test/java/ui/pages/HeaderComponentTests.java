@@ -76,6 +76,7 @@ public class HeaderComponentTests extends PrepareDriverTest {
     @Tag("smoke")
     @Description("Open Cart icon is present in header component, clickable and go home page")
     void openHdrCartBttnTest() {
+
         new CloseAddBoxesTest().closeAdds(home);
 
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
