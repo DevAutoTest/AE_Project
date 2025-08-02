@@ -169,12 +169,13 @@ public class FastShopPage extends BasePage {
                 System.out.println(selectedSize);
 
                 // скроллим к нему, чтобы не было off-screen
-                driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+                //driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
 
                 new Actions(driver)
                         .moveToElement(tile)
-                        .pause(Duration.ofMillis(700))
+                        .pause(Duration.ofMillis(7000))
                         .perform();
+
                 tile.click();
 
                 driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));

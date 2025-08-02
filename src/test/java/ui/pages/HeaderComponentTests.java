@@ -6,6 +6,7 @@ import io.qameta.allure.Feature;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Tag;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -15,6 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @Feature("Header module tests")
 public class HeaderComponentTests extends PrepareDriverTest {
+    WebDriverWait wait ;
 
     @Test
     @Description("Check AE logo")
@@ -55,9 +57,16 @@ public class HeaderComponentTests extends PrepareDriverTest {
         new CloseAddBoxesTest().closeAdds(home);
 
         AccountSideBarPage asbp = new AccountSideBarPage(driver);
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
-        driver.findElement(home.header.getHeaderAccountButton()).click();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+      //  driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+
+        new Actions(driver)
+                .moveToElement(driver.findElement(home.header.getHeaderAccountButton()))
+                .pause(Duration.ofMillis(7000))
+                .click()
+                .perform();
+
+        wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(asbp.acSideBarTitle));
 
         String actualTitle = asbp.getTitleAcntSideBar();
         String expectedTitle = "Account";

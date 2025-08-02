@@ -15,7 +15,7 @@ import java.time.Duration;
 public class HeaderComponent {
     final WebDriver driver;
     By bagCount = By.xpath("//a[@class='ember-view bag-button underline-on-hover qa-tnav-bag-icon']//span/span");
-    WebDriverWait wait;
+   public  WebDriverWait wait;
 
     public HeaderComponent(WebDriver driver) {
         this.driver = driver;
