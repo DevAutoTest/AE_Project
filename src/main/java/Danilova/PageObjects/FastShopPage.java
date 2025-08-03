@@ -2,7 +2,6 @@ package Danilova.PageObjects;
 
 import io.qameta.allure.Step;
 import lombok.Getter;
-import org.junit.jupiter.api.Tag;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
