@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
+import ui.utils.CsvUtils;
 
 import java.time.Duration;
 import java.util.List;
@@ -14,20 +15,24 @@ public class MenuComponentTests extends PrepareDriverTest {
 
     @ParameterizedTest
     @CsvFileSource(resources = "/testData/MenuCategories.csv", numLinesToSkip = 0)
-    public void testWomenMenuLinksAndCategoriesText(String expectedCategory, String expectedUrl) {
+    public void testWomenMenuLinksAndCategoriesText(String expectedCategoryCsv, String expectedUrlCsv) {
         new CloseAddBoxesTest().closeAdds(home);
-        //important hoverOver to load menu woman elements!
+
         home.menu.hoverOverWomen();
-        // 1. Получаем актуальные ссылки из меню
+
         List<String> actualLinks = home.menu.getWomenMenuLinks();
 
-        // 2. Проверяем, что ожидаемая ссылка есть в меню
-        assertTrue(actualLinks.contains(expectedUrl),
-                "Ссылка '" + expectedUrl + "' не найдена в меню. Доступные ссылки: " + actualLinks);
+        int uiLinksCount = actualLinks.size();
+        int csvLinksCount = new CsvUtils().getCsvRowCount("/testData/MenuCategories.csv");
+
+        assertTrue(actualLinks.contains(expectedUrlCsv),
+                "Link '" + expectedUrlCsv + "' not found in menu. Accessible links: " + actualLinks);
+
+        Assertions.assertEquals(csvLinksCount, uiLinksCount, "Check menu Categories and Links count!");
 
         List<String> actualCategory = home.menu.getWomenMenuTexts();
-        assertTrue(actualCategory.contains(expectedCategory),
-                "Категория '" + expectedCategory + "' не найдена в меню. Доступные категории: " + actualCategory);
+        assertTrue(actualCategory.contains(expectedCategoryCsv),
+                "Category '" + expectedCategoryCsv + "' not found in menu. Accessible categories: " + actualCategory);
     }
 
     @ParameterizedTest
@@ -35,7 +40,6 @@ public class MenuComponentTests extends PrepareDriverTest {
     @CsvFileSource(resources = "/testData/MenuCategories.csv", numLinesToSkip = 0)
     public void testOpenWomenMenuLinks(String expectedCategory, String expectedUrl) {
 
-        // 1. Получаем актуальные ссылки из меню
         List<String> actualLinks = home.menu.getWomenMenuLinks();
 
         for (String actualLink : actualLinks) {

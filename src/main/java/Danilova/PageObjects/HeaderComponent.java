@@ -8,14 +8,10 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
-/**
- * компонент, у которого есть внутри только WebDriver и локаторы.
- */
-
 public class HeaderComponent {
     final WebDriver driver;
-    By bagCount = By.xpath("//a[@class='ember-view bag-button underline-on-hover qa-tnav-bag-icon']//span/span");
-   public  WebDriverWait wait;
+    By headerBagCount = By.xpath("//a[@href='/us/en/cart']//span[contains(@class, 'bag-indicator-content')]");
+    public WebDriverWait wait;
 
     public HeaderComponent(WebDriver driver) {
         this.driver = driver;
@@ -33,7 +29,6 @@ public class HeaderComponent {
     By headerAccountButton = By.xpath("//a[@class='clickable qa-show-sidetray-account sidetray-account']");
     @Getter
     By headerCartButton = By.xpath("//a[@href='/us/en/cart']");
-
 
     @Step("Click logo AE_Header")
     public void clickLogoAE_Header() {
@@ -62,9 +57,7 @@ public class HeaderComponent {
     }
 
     @Step("Get header bag icon count items added to bag")
-    public int getBagCount() {
-        return Integer.parseInt(driver.findElement(bagCount).getText());
+    public int getHeaderBagCount() {
+        return Integer.parseInt(driver.findElement(headerBagCount).getText());
     }
-
-
 }

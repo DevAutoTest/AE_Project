@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.function.Consumer;
 
 public class CloseAddBoxesTest {
-    void closeAdds(HomePage home) {
+    public void closeAdds(HomePage home) {
 
         // Список проверок и действий в виде Consumer<HomePage>
         List<Consumer<HomePage>> closePopupActions = List.of(

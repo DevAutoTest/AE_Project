@@ -5,44 +5,23 @@ import jdk.jfr.Description;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import ui.steps.AddItemsToBagSteps;
 
 import java.time.Duration;
-import java.util.List;
 
 public class FastShopPageTests extends PrepareDriverTest {
 
     @Test
     @Tag("smoke")
-    @Description("Add random item to bag")
-    void addItemToBagWomenNewArrTest() {
-        new CloseAddBoxesTest().closeAdds(home);
-
-        home.fastMenu.openWomenMenu();
-
-        WomenNewArrivalsPage womenNewPage = new WomenNewArrivalsPage(driver);
-        new CloseAddBoxesTest().closeAdds(home);
-        List<WebElement> tiles = womenNewPage.getAllNewArrivals();
-
-        new CloseAddBoxesTest().closeAdds(home);
-
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(6));
-
-        womenNewPage.chooseOneItem(tiles);
-
-        FastShopPage dropPage = new FastShopPage(driver);
-
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
-
-        dropPage.clickRandomColorResult();
-        List<WebElement> sizes = dropPage.getAllSizes();
-        dropPage.clickRandomSizeResult(sizes);
-        dropPage.clickAddToBagRandomCountOfItems();
-        dropPage.addToBagClick();
+    @Description("Add random 1 item to bag")
+    void addOneRandomItemToBagWomenNewArrTest() {
+        AddItemsToBagSteps addItemStep = new AddItemsToBagSteps(driver);
+        addItemStep.addRandomOneItemToBagStep(home);
 
         AddedToBagSideBar bar = new AddedToBagSideBar(driver);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
         wait.until(ExpectedConditions.presenceOfElementLocated(bar.viewBagButton));
 
         String expectedText = AddedToBagSideBar.ADDED_SUCCESS;

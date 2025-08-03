@@ -47,6 +47,4 @@ public class AccountSideBarPage extends BasePage {
     public void clcSignOut() {
         driver.findElement(signOutBttn).click();
     }
-
-
 }

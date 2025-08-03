@@ -57,7 +57,6 @@ public class HeaderComponentTests extends PrepareDriverTest {
         new CloseAddBoxesTest().closeAdds(home);
 
         AccountSideBarPage asbp = new AccountSideBarPage(driver);
-      //  driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
 
         new Actions(driver)
                 .moveToElement(driver.findElement(home.header.getHeaderAccountButton()))

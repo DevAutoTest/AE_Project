@@ -14,12 +14,10 @@ public class ShippingToBoxComponent {
     By shippingBox = By.xpath("//div[@role='dialog' and @data-test-flyout='onboarding']");
     By closeBox = By.xpath("//button[@data-test-btn='close' and @name='close' and @data-track-event='click']");
 
-
     public ShippingToBoxComponent(WebDriver driver) {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(7));
     }
-
 
     @Step("Does shipping box present?")
     public boolean shippingBoxIsPresent() {
@@ -31,7 +29,6 @@ public class ShippingToBoxComponent {
             System.out.println("shippingBox doesn't present");
             return false;
         }
-
     }
 
     @Step("Close shippingBox box")
@@ -42,7 +39,7 @@ public class ShippingToBoxComponent {
                 closeButton.click();
                 wait.until(ExpectedConditions.invisibilityOfElementLocated(shippingBox));
             } catch (StaleElementReferenceException e) {
-                // Если элемент "устарел", пробуем ещё раз
+
                 WebElement closeButton = wait.until(ExpectedConditions.elementToBeClickable(closeBox));
                 closeButton.click();
                 wait.until(ExpectedConditions.invisibilityOfElementLocated(shippingBox));

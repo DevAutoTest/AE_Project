@@ -23,9 +23,17 @@ public class SpecialPromotionBoxShadowRootComponent {
         try {
             final WebElement shadowHost = driver.findElement(shadowHostSpecialPromBox);
             final SearchContext shadowRoot = shadowHost.getShadowRoot();
-            shadowRoot.findElement(shadowHostSpecialPromBox);
-            System.out.println("special prom box presents");
-            return true;
+
+            boolean isPresent = !shadowRoot
+                    .findElements(closeBox)
+                    .isEmpty();
+
+            if (isPresent) {
+                return true;
+            } else {
+                System.out.println("This isn't Promotion box");
+                return false;
+            }
         } catch (NoSuchElementException e) {
             System.out.println("special prom box doesn't present");
             return false;
@@ -41,7 +49,7 @@ public class SpecialPromotionBoxShadowRootComponent {
                 shadowRoot.findElement(closeBox).click();
                 wait.until(ExpectedConditions.invisibilityOfElementLocated(shadowHostSpecialPromBox));
             } catch (StaleElementReferenceException e) {
-                // Если элемент "устарел", пробуем ещё раз
+
                 final WebElement shadowHost = driver.findElement(shadowHostSpecialPromBox);
                 final SearchContext shadowRoot = shadowHost.getShadowRoot();
                 shadowRoot.findElement(closeBox).click();

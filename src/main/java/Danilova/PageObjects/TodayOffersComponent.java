@@ -41,7 +41,7 @@ public class TodayOffersComponent {
                 closeButton.click();
                 wait.until(ExpectedConditions.invisibilityOfElementLocated(todayBox));
             } catch (StaleElementReferenceException e) {
-                // Если элемент "устарел", пробуем ещё раз
+
                 WebElement closeButton = wait.until(ExpectedConditions.elementToBeClickable(closeBox));
                 closeButton.click();
                 wait.until(ExpectedConditions.invisibilityOfElementLocated(todayBox));

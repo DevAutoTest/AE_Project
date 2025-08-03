@@ -25,14 +25,23 @@ public class SignUpOfferBoxShadowRootComponent {
         try {
             final WebElement shadowHost = driver.findElement(shadowHostSignUpBox);
             final SearchContext shadowRoot = shadowHost.getShadowRoot();
-            shadowRoot.findElement(shadowHostSignUpBox);
-            System.out.println("signUpBox presents");
-            return true;
+
+            boolean isPresent = !shadowRoot
+                    .findElements(By.cssSelector("div.modal-body.email-form.active"))
+                    .isEmpty();
+
+            if (isPresent) {
+                return true;
+            } else {
+                System.out.println("This isn't SignIn box");
+                return false;
+            }
         } catch (NoSuchElementException e) {
             System.out.println("signUpBox doesn't present");
             return false;
         }
     }
+
 
     @Step("Close signUpBox box")
     public void closeSignUpBox() {
@@ -43,7 +52,7 @@ public class SignUpOfferBoxShadowRootComponent {
                 shadowRoot.findElement(closeBox).click();
                 wait.until(ExpectedConditions.invisibilityOfElementLocated(shadowHostSignUpBox));
             } catch (StaleElementReferenceException e) {
-                // Если элемент "устарел", пробуем ещё раз
+
                 final WebElement shadowHost = driver.findElement(shadowHostSignUpBox);
                 final SearchContext shadowRoot = shadowHost.getShadowRoot();
                 shadowRoot.findElement(closeBox).click();

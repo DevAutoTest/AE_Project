@@ -15,7 +15,6 @@ public class SignInPage extends BasePage {
     By signInButton = By.xpath("//button[@data-test-btn='submit']");
     By successTitle = By.xpath("//h2[@class ='modal-title']");
 
-
     public SignInPage(WebDriver driver) {
         super(driver);
     }
@@ -49,7 +48,6 @@ public class SignInPage extends BasePage {
 
     @Step("Get signIn success page title")
     public String getTitle() {
-        //Elenochka's Account
         return driver.findElement(successTitle).getText();
     }
 

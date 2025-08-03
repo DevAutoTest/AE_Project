@@ -24,10 +24,6 @@ public class WomenNewArrivalsPage extends BasePage {
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(3));
     }
 
-    /**
-     * Возвращает список актуальных плиток на странице
-     */
-
     @Step("Getting of all New Arrivals List")
     public List<WebElement> getAllNewArrivals() {
         int attempts = 0;
@@ -42,7 +38,6 @@ public class WomenNewArrivalsPage extends BasePage {
                 Actions actions = new Actions(driver);
                 actions.moveToElement(elements.get(0)).perform();
 
-                // Проверяем, что элементы действительно доступны
                 if (!elements.isEmpty() && elements.get(0).isDisplayed()) {
                     return elements;
                 }
@@ -56,37 +51,32 @@ public class WomenNewArrivalsPage extends BasePage {
 
     @Step("Add to bag one random result from New Arrivals")
     public void chooseOneItem(List<WebElement> tiles) {
-        // List<WebElement> tiles = getAllNewArrivals();
+
         int count = tiles.size();
         System.out.println("count = " + count);
         if (count == 0) {
             throw new NoSuchElementException("No product tiles found on New Arrivals page");
         }
 
-        // генерируем индекс от 0 до count-1
         int idx = randomIntInclusive(0, count - 1);
         System.out.println("random indx = " + idx);
 
-        // Попробуем кликнуть, повторяя при StaleElementReference
         int attempts = 0;
-        while (attempts < 5 ) {
+        while (attempts < 5) {
             try {
                 WebElement tile = tiles.get(idx);
                 System.out.println("попытка = " + attempts);
-                // скроллим к нему, чтобы не было off-screen
+                System.out.println("Кликаем по выбранному элементу");
+
                 new Actions(driver)
                         .moveToElement(tile)
                         .pause(Duration.ofMillis(200))
+                        .click()
                         .perform();
-                // ждём, пока станет кликабельным
-                System.out.println("Кликаем по выбранному элементу");
 
-                wait.until(ExpectedConditions.elementToBeClickable(tile)).click();
-
-                driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(8));
+                driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
                 System.out.println(driver.getCurrentUrl());
 
-                //Проверка на Unavailable price на странице товара:
                 List<WebElement> unavailable = driver.findElements(By.xpath("//div[text()='Unavailable']"));
 
                 if (!unavailable.isEmpty() && unavailable.get(0).isDisplayed()) {
@@ -97,64 +87,12 @@ public class WomenNewArrivalsPage extends BasePage {
                     continue;
                 }
 
-                return;  // успех — выходим
+                return;
             } catch (StaleElementReferenceException | ElementClickInterceptedException e) {
                 attempts++;
-                // перечитываем актуальные элементы
                 tiles = getAllNewArrivals();
             }
         }
-        // если после retry всё ещё не получилось
         throw new WebDriverException("Failed to click random New Arrival product after retries");
     }
-
-    @Step("Add random items to bag from New Arrivals (1 to max available)")
-    @Disabled("Need time to improve")
-    public void addRandomItemsToBagWithPossibleDuplicates() {
-        List<WebElement> tiles = getAllNewArrivals();
-        int totalItems = tiles.size();
-
-        if (totalItems == 0) {
-            throw new NoSuchElementException("No product tiles found on New Arrivals page");
-        }
-
-        // Генерируем случайное количество товаров для добавления (от 1 до общего количества)
-        int itemsToAdd = randomIntInclusive(1, totalItems);
-        System.out.println("Adding " + itemsToAdd + " random items to bag (possibly duplicates)");
-
-        for (int i = 0; i < itemsToAdd; i++) {
-            int attempts = 0;
-            boolean success = false;
-
-            while (attempts < 3 && !success) {
-                try {
-                    // Выбираем случайный индекс (может повторяться)
-                    int idx = randomIntInclusive(0, totalItems - 1);
-
-                    WebElement tile = tiles.get(idx);
-                    System.out.println("Adding item #" + (i + 1) + " with index: " + idx);
-
-                    // Скроллим к элементу
-                    new Actions(driver)
-                            .moveToElement(tile)
-                            .pause(Duration.ofMillis(200))
-                            .perform();
-                    // Кликаем на товар
-                    wait.until(ExpectedConditions.elementToBeClickable(tile)).click();
-
-                } catch (StaleElementReferenceException e) {
-                    attempts++;
-                    System.out.println("Stale element, refreshing list. Attempt: " + attempts);
-
-                } catch (ElementClickInterceptedException e) {
-                    attempts++;
-                    System.out.println("Click intercepted, retrying. Attempt: " + attempts);
-                } catch (TimeoutException e) {
-                    attempts++;
-                    System.out.println("Timeout, retrying. Attempt: " + attempts);
-                }
-            }
-        }
-    }
-
 }

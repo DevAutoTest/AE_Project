@@ -4,13 +4,6 @@ import io.qameta.allure.Step;
 import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 
-
-/**
- * Сюда пишем методы общие для сайта
- * + метод открытия главной страницы
- * + методы получения локаторов этой страницы
- * + редиректы с главной страницы куда то
- **/
 @Getter
 public class HomePage extends BasePage {
     public static final String HOME_PAGE_URL = "https://www.ae.com/us/en";
@@ -22,8 +15,8 @@ public class HomePage extends BasePage {
     public final TodayOffersComponent todayOffer;
     public final ShippingToBoxComponent shippingBox;
     public final DialogBoxComponent dialogBox;
-    public final BonusOfferShadowRootComponent offerBox;
-    public final RealRewardBannerComponent rewardBox;
+    public final BonusOfferComponent offerBox;
+    public final RealRewardBannerShadowRootComponent rewardBox;
     public final SignUpOfferBoxShadowRootComponent signUpBox;
     public final SpecialPromotionBoxShadowRootComponent promotion;
     public final CookieBannerComponent cookie;
@@ -35,8 +28,8 @@ public class HomePage extends BasePage {
         this.menu = new MenuComponent(driver);
         this.fastMenu = new FastMenuComponent(driver);
         this.dialogBox = new DialogBoxComponent(driver);
-        this.offerBox = new BonusOfferShadowRootComponent(driver);
-        this.rewardBox = new RealRewardBannerComponent(driver);
+        this.offerBox = new BonusOfferComponent(driver);
+        this.rewardBox = new RealRewardBannerShadowRootComponent(driver);
         this.signUpBox = new SignUpOfferBoxShadowRootComponent(driver);
         this.todayOffer = new TodayOffersComponent(driver);
         this.shippingBox = new ShippingToBoxComponent(driver);

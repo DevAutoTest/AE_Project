@@ -45,17 +45,14 @@ public class MenuComponent {
     public void clickWomenMenuLink(String url) {
         hoverOverWomen();
 
-        // Ждём не просто появления, но и видимости элементов
         List<WebElement> categoryElements = driver.findElements(categories);
         WebElement targetElement = categoryElements.stream()
                 .filter(element -> url.equals(element.getAttribute("href")))
                 .findFirst()
                 .orElseThrow(() -> new NoSuchElementException("Категория с URL '" + url + "' не найдена"));
 
-        // Прокручиваем к элементу (если нужно)
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", targetElement);
 
-        // Кликаем через JS (если обычный клик не работает)
         ((JavascriptExecutor) driver).executeScript("arguments[0].click();", targetElement);
 
         wait.until(ExpectedConditions.urlToBe(url));

@@ -32,10 +32,8 @@ public class FastMenuComponent {
     @Step("Open fast women menu")
     public void openWomenMenu() {
 
-        // 1) Ждём, пока элемент появится в DOM
         WebElement link = wait.until(ExpectedConditions.presenceOfElementLocated(womenNew));
 
-        // 2) Скроллим его в центр по горизонтали и вертикали
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block:'center'});", link);
 
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));

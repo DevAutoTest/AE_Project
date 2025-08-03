@@ -1,6 +1,5 @@
 package Danilova.PageObjects;
 
-
 import io.qameta.allure.Step;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -8,7 +7,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
-public class RealRewardBannerComponent {
+public class RealRewardBannerShadowRootComponent {
 
     WebDriver driver;
     private final WebDriverWait wait;
@@ -17,7 +16,7 @@ public class RealRewardBannerComponent {
     By closeBox = By.cssSelector(".close");
 
 
-    public RealRewardBannerComponent(WebDriver driver) {
+    public RealRewardBannerShadowRootComponent(WebDriver driver) {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(1));
     }
@@ -27,9 +26,16 @@ public class RealRewardBannerComponent {
         try {
             final WebElement shadowHost = driver.findElement(shadowHostRewardBox);
             final SearchContext shadowRoot = shadowHost.getShadowRoot();
-            shadowRoot.findElement(shadowHostRewardBox);
-            System.out.println("reward box presents");
-            return true;
+            boolean isPresent = !shadowRoot
+                    .findElements(closeBox)
+                    .isEmpty();
+
+            if (isPresent) {
+                return true;
+            } else {
+                System.out.println("This isn't Reward box");
+                return false;
+            }
         } catch (NoSuchElementException e) {
             System.out.println("reward box doesn't present");
             return false;
@@ -45,7 +51,7 @@ public class RealRewardBannerComponent {
                 shadowRoot.findElement(closeBox).click();
                 wait.until(ExpectedConditions.invisibilityOfElementLocated(shadowHostRewardBox));
             } catch (StaleElementReferenceException e) {
-                // Если элемент "устарел", пробуем ещё раз
+
                 final WebElement shadowHost = driver.findElement(shadowHostRewardBox);
                 final SearchContext shadowRoot = shadowHost.getShadowRoot();
                 shadowRoot.findElement(closeBox).click();
