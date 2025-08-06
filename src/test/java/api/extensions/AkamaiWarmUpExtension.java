@@ -13,8 +13,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- * Открывает ae.com в два этапа real-browser’ом,
- * ждёт, пока Akamai JS-сенсор положит cookie, и сохраняет их в {@link AkamaiCookieHolder}.
+ * Opens ae.com in two steps by real-browser,
+ * wait until Akamai JS-sensor put cookie and save them in {@link AkamaiCookieHolder}.
  */
 public final class AkamaiWarmUpExtension implements BeforeAllCallback {
 
@@ -36,19 +36,18 @@ public final class AkamaiWarmUpExtension implements BeforeAllCallback {
         );
         opt.setPageLoadTimeout(Duration.ofSeconds(60));
 
-        // 2) запускаем и руками закрываем в finally
         ChromeDriver drv = new ChromeDriver(opt);
         try {
-            // 1. первый GET на STOREFRONT: получаем _abck + bm_sz
+            // 1. GET STOREFRONT:_abck + bm_sz
             drv.get(STOREFRONT);
 
-            // 2. повторный GET на тот же STOREFRONT — здесь Akamai JS-сенсор допишет ak_bmsc + bm_mi
+            // 2. return GET on the same STOREFRONT — Akamai JS-sensor will add ak_bmsc + bm_mi
             drv.get(STOREFRONT);
 
             Map<String, String> akamai = waitForCookies(drv);
             if (akamai.size() < 4) {
                 System.err.printf(
-                        "⚠ За %d мс получили только %d из 4 Akamai-cookie: %s%n",
+                        "⚠ %d ms get %d of 4 Akamai-cookie: %s%n",
                         MAX_MS, akamai.size(), akamai);
             }
 
@@ -60,7 +59,7 @@ public final class AkamaiWarmUpExtension implements BeforeAllCallback {
     }
 
     /**
-     * Ждём появления нужных Akamai-cookie, опрашивая каждые STEP_MS, но не более MAX_MS.
+     *Waiting displaying  Akamai-cookie, ask every STEP_MS, but not max MAX_MS.
      */
     private static Map<String, String> waitForCookies(ChromeDriver drv)
             throws InterruptedException {

@@ -6,7 +6,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import ui.pages.CloseAddBoxesTest;
+import ui.pages.CloseAdsBoxesTests;
 import ui.pages.PrepareDriverTest;
 
 import java.time.Duration;
@@ -21,15 +21,15 @@ public class AddItemsToBagSteps extends PrepareDriverTest {
 
     @Step("Choose random Item (random color, size and count) STEP")
     public void chooseRandomItemStep(HomePage home) {
-        new CloseAddBoxesTest().closeAdds(home);
+        new CloseAdsBoxesTests().closeAdsTest(home);
 
         home.fastMenu.openWomenMenu();
 
         WomenNewArrivalsPage womenNewPage = new WomenNewArrivalsPage(driver);
-        new CloseAddBoxesTest().closeAdds(home);
+        new CloseAdsBoxesTests().closeAdsTest(home);
         List<WebElement> tiles = womenNewPage.getAllNewArrivals();
 
-        new CloseAddBoxesTest().closeAdds(home);
+        new CloseAdsBoxesTests().closeAdsTest(home);
 
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(6));
 
@@ -45,15 +45,15 @@ public class AddItemsToBagSteps extends PrepareDriverTest {
 
     @Step("Add random 1 item to Bag STEP")
     public void addRandomOneItemToBagStep(HomePage home) {
-        new CloseAddBoxesTest().closeAdds(home);
+        new CloseAdsBoxesTests().closeAdsTest(home);
 
         home.fastMenu.openWomenMenu();
 
         WomenNewArrivalsPage womenNewPage = new WomenNewArrivalsPage(driver);
-        new CloseAddBoxesTest().closeAdds(home);
+        new CloseAdsBoxesTests().closeAdsTest(home);
         List<WebElement> tiles = womenNewPage.getAllNewArrivals();
 
-        new CloseAddBoxesTest().closeAdds(home);
+        new CloseAdsBoxesTests().closeAdsTest(home);
 
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(6));
 
@@ -71,12 +71,12 @@ public class AddItemsToBagSteps extends PrepareDriverTest {
 
     @Step("Check Bag Color with 1 Item STEP")
     public String checkColorInBagWithOneItemStep(HomePage home) {
-        new CloseAddBoxesTest().closeAdds(home);
+        new CloseAdsBoxesTests().closeAdsTest(home);
 
         home.fastMenu.openWomenMenu();
 
         WomenNewArrivalsPage womenNewPage = new WomenNewArrivalsPage(driver);
-        new CloseAddBoxesTest().closeAdds(home);
+        new CloseAdsBoxesTests().closeAdsTest(home);
         List<WebElement> tiles = womenNewPage.getAllNewArrivals();
 
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(6));
@@ -105,15 +105,15 @@ public class AddItemsToBagSteps extends PrepareDriverTest {
     @Step("Check Bag Size with 1 Item STEP")
     public String checkSizeInBagWithOneItemStep(HomePage home) {
 
-        new CloseAddBoxesTest().closeAdds(home);
+        new CloseAdsBoxesTests().closeAdsTest(home);
         home.fastMenu.openWomenMenu();
 
         WomenNewArrivalsPage womenNewPage = new WomenNewArrivalsPage(driver);
-        new CloseAddBoxesTest().closeAdds(home);
+        new CloseAdsBoxesTests().closeAdsTest(home);
 
         List<WebElement> tiles = womenNewPage.getAllNewArrivals();
 
-        new CloseAddBoxesTest().closeAdds(home);
+        new CloseAdsBoxesTests().closeAdsTest(home);
 
         womenNewPage.chooseOneItem(tiles);
 
@@ -141,15 +141,15 @@ public class AddItemsToBagSteps extends PrepareDriverTest {
 
     @Step("Check Bag Qty with 1 Item STEP")
     public int checkQtyInBagWithOneItemStep(HomePage home) {
-        new CloseAddBoxesTest().closeAdds(home);
+        new CloseAdsBoxesTests().closeAdsTest(home);
 
         home.fastMenu.openWomenMenu();
 
         WomenNewArrivalsPage womenNewPage = new WomenNewArrivalsPage(driver);
-        new CloseAddBoxesTest().closeAdds(home);
+        new CloseAdsBoxesTests().closeAdsTest(home);
 
         List<WebElement> tiles = womenNewPage.getAllNewArrivals();
-        new CloseAddBoxesTest().closeAdds(home);
+        new CloseAdsBoxesTests().closeAdsTest(home);
 
         womenNewPage.chooseOneItem(tiles);
 

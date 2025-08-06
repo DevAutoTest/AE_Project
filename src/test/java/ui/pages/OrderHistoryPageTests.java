@@ -11,9 +11,9 @@ public class OrderHistoryPageTests extends PrepareDriverTest {
 
     @Test
     @Tag("critical")
-    @Disabled("antibot Akamai is working")
+    @Disabled("Antibot Akamai is working")
     void checkOrdersOfNewUserTest() {
-        new CloseAddBoxesTest().closeAdds(home);
+        new CloseAdsBoxesTests().closeAdsTest(home);
 
         home.header().clckHdrAcntBttn();
         AccountSideBarPage asbp = new AccountSideBarPage(driver);

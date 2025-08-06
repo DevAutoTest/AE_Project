@@ -14,10 +14,7 @@ public final class GuestTokenProvider {
     private static final String ENDPOINT = "/ugp-api/auth/oauth/v5/token";
     private static final TestPropertiesConfig cfg =
             ConfigFactory.create(TestPropertiesConfig.class);
-    /* ---------- вот сюда! ---------- */
-    /**
-     * Единый User-Agent — им пользуемся в *любых* запросах к AEO-API.
-     */
+
     public static final String UA =
             "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
                     + "AppleWebKit/537.36 (KHTML, like Gecko) "
@@ -33,8 +30,8 @@ public final class GuestTokenProvider {
         if (cache != null && cache.exp > System.currentTimeMillis()) return cache;
 
         Response resp = given()
-                .baseUri(cfg.getApiBaseUrl())  // Должно быть ПЕРЕД filters()
-                .filter(RestLog.rq())          // ➊
+                .baseUri(cfg.getApiBaseUrl())
+                .filter(RestLog.rq())
                 .filter(RestLog.rs())
                 .baseUri(cfg.getApiBaseUrl())
                 .contentType("application/x-www-form-urlencoded")
@@ -54,7 +51,7 @@ public final class GuestTokenProvider {
                         .map(e -> e.getKey() + '=' + e.getValue())
                         .toList());
 
-        long expMs = JwtUtils.expirationMillis(jwt);     // см. утилиту ниже
-        return cache = new Box(jwt, cookie, expMs - 5_000);   // 5 сек. зазор
+        long expMs = JwtUtils.expirationMillis(jwt);
+        return cache = new Box(jwt, cookie, expMs - 5_000);
     }
 }

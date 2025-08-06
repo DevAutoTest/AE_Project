@@ -5,7 +5,7 @@ import org.junit.jupiter.api.extension.BeforeAllCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 
 /**
- * Общий Extension, который сначала греет Akamai, потом получает guest-token.
+ * Common Extension, in first step warms Akamai, than gets guest-token.
  */
 public final class BeforeAll implements BeforeAllCallback {
 
@@ -13,7 +13,7 @@ public final class BeforeAll implements BeforeAllCallback {
 
     @Override
     public void beforeAll(ExtensionContext ctx) throws Exception {
-        warmUp.beforeAll(ctx);      // ① прогрев
-        GetUserToken.token();       // ② lazy-кеш guest-token
+        warmUp.beforeAll(ctx);
+        GetUserToken.token();
     }
 }

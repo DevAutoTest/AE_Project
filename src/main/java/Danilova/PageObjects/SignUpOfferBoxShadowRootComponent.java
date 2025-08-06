@@ -42,7 +42,6 @@ public class SignUpOfferBoxShadowRootComponent {
         }
     }
 
-
     @Step("Close signUpBox box")
     public void closeSignUpBox() {
         try {

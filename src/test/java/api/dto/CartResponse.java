@@ -62,5 +62,4 @@ public class CartResponse {
         public float creditSavingsAmount;
         public float netTotal;
     }
-
 }

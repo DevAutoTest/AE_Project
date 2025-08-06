@@ -32,7 +32,6 @@ public class PrepareDriverTest {
     protected WebDriver driver;
     protected HomePage home;
 
-
     @BeforeEach
     void setup() {
         try {
@@ -41,12 +40,9 @@ public class PrepareDriverTest {
             if (driver != null) {
                 driver.manage().window().maximize();
                 driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
-                home = new HomePage(driver); // Инициализируем только после создания драйвера
+                home = new HomePage(driver);
 
                 driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
-                // Логируем размер и позицию окна
-                safeAddAttachment("Actual window size", driver.manage().window().getSize().toString());
-                safeAddAttachment("Window position", driver.manage().window().getPosition().toString());
             } else {
                 safeAddAttachment("Driver initialization", "Driver initialization failed");
             }
@@ -63,11 +59,9 @@ public class PrepareDriverTest {
 
                 driver.quit();
                 driver = null;
-                safeAddAttachment("Driver closed", "Driver successfully closed");
-                safeAddAttachment("Window size", driver.manage().window().getSize().toString());
             }
         } catch (Exception e) {
-            safeAddAttachment("Teardown error", "Error during teardown: " + e.getMessage());
+            safeAddAttachment("Tear down error", "Error during tear down: " + e.getMessage());
         }
     }
 
@@ -77,8 +71,6 @@ public class PrepareDriverTest {
 
         safeAddAttachment("Remote URL", remoteUrl != null ? remoteUrl : "Not specified");
         if (remoteUrl != null && !remoteUrl.isEmpty()) {
-            //options: for Docker CLI flags
-            //CLI = Command-Line Interface — это способ взаимодействия с программой через командную строку (терминал), а не через графический интерфейс (GUI).
             ChromeOptions options = getChromeOptions();
             options.setCapability("goog:loggingPrefs", Map.of("browser", "ALL"));
 
@@ -99,9 +91,9 @@ public class PrepareDriverTest {
         int width = Integer.parseInt(System.getProperty("browser.width", "1920"));
         int height = Integer.parseInt(System.getProperty("browser.height", "1080"));
         options.addArguments("--disable-gpu"); // Switch off GPU, because we don't need it in headless mode
-        options.addArguments("--no-sandbox"); // Отключает sandbox-режим (иначе Chrome в Docker может падать с ошибками).
-        options.addArguments("--disable-dev-shm-usage"); // Использует /tmp вместо /dev/shm (избегает ошибок нехватки памяти в Docker)
-        options.addArguments("--window-size=" + width + "," + height); // Установка явного размера окна, предпочтительнее для CI
+        options.addArguments("--no-sandbox"); // off sandbox-mode (need for Chrome).
+        options.addArguments("--disable-dev-shm-usage"); // Use /tmp instead /dev/shm (avoid errors lack of memory in Docker)
+        options.addArguments("--window-size=" + width + "," + height); // for CI
         options.addArguments("--user-data-dir=/tmp/chrome_" + UUID.randomUUID());
         return options;
     }

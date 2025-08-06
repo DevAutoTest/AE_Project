@@ -10,7 +10,7 @@ public class AllureExtension implements AfterTestExecutionCallback {
     @Override
     public void afterTestExecution(ExtensionContext context) {
         if (context.getExecutionException().isPresent()) {
-            // Получаем экземпляр тестового класса
+
             Object testInstance = context.getRequiredTestInstance();
             if (testInstance instanceof PrepareDriverTest) {
                 WebDriver driver = ((PrepareDriverTest) testInstance).getDriver();

@@ -22,20 +22,18 @@ public class HeaderComponentTests extends PrepareDriverTest {
     @Description("Check AE logo")
     @Tag("smoke")
     void checkLogoAEHeaderTest() {
-        new CloseAddBoxesTest().closeAdds(home);
+        new CloseAdsBoxesTests().closeAdsTest(home);
         WebElement logo = driver.findElement(home.getHeader().getLogoAE_Header());
 
         assertNotNull(logo, "Logo \"American Eagle\" not found ");
         assertTrue(logo.isDisplayed(), "logo AE not displayed");
     }
 
-    /*Добавить тесты для aerie logo*/
-
     @Test
     @Tag("smoke")
     @Description("Opening search icon is present in header component, clickable and closable")
-    void openHdrSrchSideBar() {
-        new CloseAddBoxesTest().closeAdds(home);
+    void openHdrSrchSideBarTest() {
+        new CloseAdsBoxesTests().closeAdsTest(home);
         driver.findElement(home.header().getHeaderSearchButton()).click();
         SearchSideBarPage searchSide = new SearchSideBarPage(driver);
         String actualTitle = searchSide.getSearchTitle();
@@ -52,9 +50,9 @@ public class HeaderComponentTests extends PrepareDriverTest {
 
     @Test
     @Tag("smoke")
-    @Description("Open Account icon is present in header component, clickable and closable")
+    @Description("Open Account icon - presents in header component, clickable and closable")
     void openHdrAcntBttnTest() {
-        new CloseAddBoxesTest().closeAdds(home);
+        new CloseAdsBoxesTests().closeAdsTest(home);
 
         AccountSideBarPage asbp = new AccountSideBarPage(driver);
 
@@ -82,10 +80,10 @@ public class HeaderComponentTests extends PrepareDriverTest {
 
     @Test
     @Tag("smoke")
-    @Description("Open Cart icon is present in header component, clickable and go home page")
+    @Description("Open Cart icon  - presents in header component, clickable and clickable for go home page")
     void openHdrCartBttnTest() {
 
-        new CloseAddBoxesTest().closeAdds(home);
+        new CloseAdsBoxesTests().closeAdsTest(home);
 
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         home.header().clckHdrCartBttn();

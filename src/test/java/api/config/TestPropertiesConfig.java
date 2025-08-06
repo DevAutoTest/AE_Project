@@ -2,17 +2,15 @@ package api.config;
 
 import org.aeonbits.owner.Config;
 
-
-/* Для локального запуска:
-./gradlew test -Dmode=GUEST
-./gradlew test -Dmode=AUTH
+/** For local lounch:
+./gradlew apiTest -Dmode=GUEST
+./gradlew apiTest -Dmode=AUTH - !!! not implemented !!! AKAMAI BOT iS WORKING ON THE SITE SIDE
 **/
 
 @Config.Sources({
-        "classpath:properties/${mode}.properties", //./gradlew test -Dmode=AUTH  # Запуск в режиме AUTH
-    // ./gradlew test # Запуск в режиме GUEST (по умолчанию)
+        "classpath:properties/${mode}.properties",  // "GUEST" mode by default
         "system:properties",
-        "system:env"  // Резерв: переменные окружения (для GitHub Actions)
+        "system:env"
 })
 
 public interface TestPropertiesConfig extends org.aeonbits.owner.Config {

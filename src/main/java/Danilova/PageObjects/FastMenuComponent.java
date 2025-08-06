@@ -23,7 +23,6 @@ public class FastMenuComponent {
     By menJeans = By.xpath("//a[@href='/us/en/c/ae/men/bottoms/jeans/cat6430041?pagetype=plp']");
     By menAE = By.xpath("//a[@href='/us/en/c/men/activewear/cat1100008?pagetype=plp']");
 
-
     public FastMenuComponent(WebDriver driver) {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(2));

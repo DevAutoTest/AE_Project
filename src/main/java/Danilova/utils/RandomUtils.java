@@ -4,22 +4,22 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public final class RandomUtils {
     private RandomUtils() {
-        // приватный конструктор, чтобы класс нельзя было инстанцировать
+        // a private constructor so that the class cannot be instantiated
     }
 
     /**
-     * Возвращает случайное целое число от min до max включительно.
+     * Returns a random integer from min to max inclusive.
      *
-     * @param min нижняя граница (включительно)
-     * @param max верхняя граница (включительно), должен быть >= min
-     * @return случайное число в диапазоне [min, max]
-     * @throws IllegalArgumentException если max < min
+     * @param min lower bound (inclusive)
+     * @param max upper bound (inclusive), must be >= min
+     * @return a random number in the range [min, max]
+     * @throws IllegalArgumentException if max < min
      */
     public static int randomIntInclusive(int min, int max) {
         if (max < min) {
-            throw new IllegalArgumentException("max должен быть не меньше min");
+            throw new IllegalArgumentException("max must be not less then min is");
         }
-        // nextInt(bound) даёт [0, bound), поэтому прибавляем 1
+        // nextInt(bound) return [0, bound), so plus +1
         return ThreadLocalRandom.current().nextInt(min, max + 1);
     }
 }

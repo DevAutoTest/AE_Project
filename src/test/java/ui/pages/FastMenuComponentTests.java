@@ -3,6 +3,7 @@ package ui.pages;
 import Danilova.PageObjects.WomenNewArrivalsPage;
 import jdk.jfr.Description;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -15,11 +16,11 @@ import static Danilova.PageObjects.WomenNewArrivalsPage.WOMEN_NEW_ARRIVALS_URL;
 
 public class FastMenuComponentTests extends PrepareDriverTest {
 
-
     @Test
     @Description("Open women new arrivals page")
+    @Tag("smoke")
     void openFastWomenNewMenuTest() {
-        new CloseAddBoxesTest().closeAdds(home);
+        new CloseAdsBoxesTests().closeAdsTest(home);
 
         home.fastMenu.openWomenMenu();
 

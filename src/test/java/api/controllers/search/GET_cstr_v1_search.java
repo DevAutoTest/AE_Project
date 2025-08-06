@@ -18,7 +18,7 @@ public class GET_cstr_v1_search {
     private static final TestPropertiesConfig cfg =
             ConfigFactory.create(TestPropertiesConfig.class);
 
-    /* ---------- общий spec ---------- */
+    /* ---------- common spec ---------- */
     private RequestSpecification spec() {
 
         GuestTokenProvider.Box antiBot = GuestTokenProvider.current();
@@ -51,7 +51,6 @@ public class GET_cstr_v1_search {
     public SearchResponse.Example getResponseFilteredByBrand() {
         SearchResponse.Example example;
         return example =
-
                 given()
                         .spec(spec())
                         .queryParam("query", "colorful socks")
@@ -104,6 +103,4 @@ public class GET_cstr_v1_search {
                 .statusCode(200)
                 .extract().as(SearchResponse.class);
     }
-
-
 }

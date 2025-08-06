@@ -164,14 +164,10 @@ public class CreateAccountPage extends BasePage {
                     .click()
                     .perform();
         } else System.out.println("Create button is disabled");
-
-
     }
 
     @Step("Fill form user success data {user}")
     public void fillForm(UserAcnt user) {
-
-
         sentEmail(user.getEmail());
         sentFirstName(user.getFirstName());
         sentLastName(user.getLastName());
@@ -184,5 +180,4 @@ public class CreateAccountPage extends BasePage {
         selectMonth(user.getMonth());
         selectDay(user.getDay());
     }
-
 }

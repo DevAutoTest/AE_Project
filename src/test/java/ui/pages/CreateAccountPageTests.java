@@ -18,9 +18,9 @@ public class CreateAccountPageTests extends PrepareDriverTest {
 
     @Test
     @Tag("critical")
-    @Disabled("antibot Akamai is working")
-    void createAccountSuccess() {
-        new CloseAddBoxesTest().closeAdds(home);
+    @Disabled("Antibot Akamai is working")
+    void createAccountSuccessTest() {
+        new CloseAdsBoxesTests().closeAdsTest(home);
 
         home.header().clckHdrAcntBttn();
         AccountSideBarPage asbp = new AccountSideBarPage(driver);
@@ -30,7 +30,7 @@ public class CreateAccountPageTests extends PrepareDriverTest {
 
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
-        new CloseAddBoxesTest().closeAdds(home);
+        new CloseAdsBoxesTests().closeAdsTest(home);
 
         wait.until(ExpectedConditions.elementToBeClickable(page.getEmailInput()));
 

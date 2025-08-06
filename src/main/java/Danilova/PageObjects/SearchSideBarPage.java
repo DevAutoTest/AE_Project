@@ -43,6 +43,4 @@ public class SearchSideBarPage extends BasePage {
     public void enterSearchInput(String text) {
         driver.findElement(searchInput).sendKeys(text);
     }
-
-
 }

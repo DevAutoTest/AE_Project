@@ -50,5 +50,4 @@ public class SignInPage extends BasePage {
     public String getTitle() {
         return driver.findElement(successTitle).getText();
     }
-
 }

@@ -15,7 +15,7 @@ import java.util.stream.Stream;
 import static io.restassured.RestAssured.given;
 
 /**
- * Получает AUTH-token (grant_type=password) для зарегистрированного пользователя.
+ * AUTH-token (grant_type=password) for registered user.
  */
 public final class POST_v4_getAccessToken {
 
@@ -26,15 +26,13 @@ public final class POST_v4_getAccessToken {
     private POST_v4_getAccessToken() {
     }
 
-
-
     @Step("Get AUTH token (grant_type=password)")
     public static String getAuthToken() {
 
         GuestTokenProvider.Box antiBot = GuestTokenProvider.current();
-        Map<String, String> warm = api.utils.AkamaiCookieHolder.get();   // ← уже готовы
+        Map<String, String> warm = api.utils.AkamaiCookieHolder.get();
 
-        /* 1) Akamai + 2) guest → одна строка */
+       // AKAMAI anti bot:
         Stream<Map.Entry<String, String>> akamai = warm.entrySet().stream();
         Stream<Map.Entry<String, String>> guest =
                 Arrays.stream(antiBot.cookie().split(";"))

@@ -22,10 +22,6 @@ public class SearchResponse {
         public Relationships relationships;
         @Getter
         public Map<String, Object> additionalProperties = new LinkedHashMap<String, Object>();
-
-        public void setAdditionalProperty(String name, Object value) {
-            this.additionalProperties.put(name, value);
-        }
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -35,11 +31,6 @@ public class SearchResponse {
         public List<Included> included;
         @Getter
         public Map<String, Object> additionalProperties = new LinkedHashMap<String, Object>();
-
-        public void setAdditionalProperty(String name, Object value) {
-            this.additionalProperties.put(name, value);
-        }
-
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -60,11 +51,6 @@ public class SearchResponse {
         public String queryItems;
         @Getter
         public Map<String, Object> additionalProperties = new LinkedHashMap<String, Object>();
-
-        public void setAdditionalProperty(String name, Object value) {
-            this.additionalProperties.put(name, value);
-        }
-
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -85,11 +71,6 @@ public class SearchResponse {
         public boolean queryItems;
         @Getter
         public Map<String, Object> additionalProperties = new LinkedHashMap<String, Object>();
-
-        public void setAdditionalProperty(String name, Object value) {
-            this.additionalProperties.put(name, value);
-        }
-
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -102,11 +83,6 @@ public class SearchResponse {
         public List<Option> options;
         @Getter
         public Map<String, Object> additionalProperties = new LinkedHashMap<String, Object>();
-
-        public void setAdditionalProperty(String name, Object value) {
-            this.additionalProperties.put(name, value);
-        }
-
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -120,11 +96,6 @@ public class SearchResponse {
         public List<String> enabledSites;
         @Getter
         public Map<String, Object> additionalProperties = new LinkedHashMap<String, Object>();
-
-        public void setAdditionalProperty(String name, Object value) {
-            this.additionalProperties.put(name, value);
-        }
-
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -140,11 +111,6 @@ public class SearchResponse {
         public List<String> hiddenFields;
         @Getter
         public Map<String, Object> additionalProperties = new LinkedHashMap<String, Object>();
-
-        public void setAdditionalProperty(String name, Object value) {
-            this.additionalProperties.put(name, value);
-        }
-
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -156,11 +122,6 @@ public class SearchResponse {
         public Attributes__1 attributes;
         @Getter
         public Map<String, Object> additionalProperties = new LinkedHashMap<String, Object>();
-
-        public void setAdditionalProperty(String name, Object value) {
-            this.additionalProperties.put(name, value);
-        }
-
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -173,11 +134,6 @@ public class SearchResponse {
         public int count;
         @Getter
         public Map<String, Object> additionalProperties = new LinkedHashMap<String, Object>();
-
-        public void setAdditionalProperty(String name, Object value) {
-            this.additionalProperties.put(name, value);
-        }
-
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -190,11 +146,6 @@ public class SearchResponse {
         public float maxSalePrice;
         @Getter
         public Map<String, Object> additionalProperties = new LinkedHashMap<String, Object>();
-
-        public void setAdditionalProperty(String name, Object value) {
-            this.additionalProperties.put(name, value);
-        }
-
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -204,11 +155,6 @@ public class SearchResponse {
         public List<Datum> data;
         @Getter
         public Map<String, Object> additionalProperties = new LinkedHashMap<String, Object>();
-
-        public void setAdditionalProperty(String name, Object value) {
-            this.additionalProperties.put(name, value);
-        }
-
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -218,11 +164,6 @@ public class SearchResponse {
         public Products products;
         @Getter
         public Map<String, Object> additionalProperties = new LinkedHashMap<String, Object>();
-
-        public void setAdditionalProperty(String name, Object value) {
-            this.additionalProperties.put(name, value);
-        }
-
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -244,11 +185,6 @@ public class SearchResponse {
         public List<String> us;
         @Getter
         private Map<String, Object> additionalProperties = new LinkedHashMap<String, Object>();
-
-        public void setAdditionalProperty(String name, Object value) {
-            this.additionalProperties.put(name, value);
-        }
-
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -259,11 +195,6 @@ public class SearchResponse {
         public String type;
         @Getter
         public Map<String, Object> additionalProperties = new LinkedHashMap<String, Object>();
-
-        public void setAdditionalProperty(String name, Object value) {
-            this.additionalProperties.put(name, value);
-        }
-
     }
 
     @Getter
@@ -272,11 +203,6 @@ public class SearchResponse {
     public static class SearchandizedItems {
 
         private Map<String, Object> additionalProperties = new LinkedHashMap<String, Object>();
-
-        public void setAdditionalProperty(String name, Object value) {
-            this.additionalProperties.put(name, value);
-        }
-
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -289,11 +215,6 @@ public class SearchResponse {
         public String status;
         @Getter
         public Map<String, Object> additionalProperties = new LinkedHashMap<String, Object>();
-
-        public void setAdditionalProperty(String name, Object value) {
-            this.additionalProperties.put(name, value);
-        }
-
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -310,11 +231,6 @@ public class SearchResponse {
         public List<Sort> sorts;
         @Getter
         public Map<String, Object> additionalProperties = new LinkedHashMap<String, Object>();
-
-        public void setAdditionalProperty(String name, Object value) {
-            this.additionalProperties.put(name, value);
-        }
-
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -334,11 +250,6 @@ public class SearchResponse {
         public String plpMarketingMessage;
         @Getter
         public Map<String, Object> additionalProperties = new LinkedHashMap<String, Object>();
-
-        public void setAdditionalProperty(String name, Object value) {
-            this.additionalProperties.put(name, value);
-        }
-
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -351,11 +262,6 @@ public class SearchResponse {
         public String enabledSites;
         @Getter
         public Map<String, Object> additionalProperties = new LinkedHashMap<String, Object>();
-
-        public void setAdditionalProperty(String name, Object value) {
-            this.additionalProperties.put(name, value);
-        }
-
     }
 
 

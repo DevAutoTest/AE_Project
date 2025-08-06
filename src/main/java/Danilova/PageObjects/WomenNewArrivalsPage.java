@@ -64,8 +64,8 @@ public class WomenNewArrivalsPage extends BasePage {
         while (attempts < 5) {
             try {
                 WebElement tile = tiles.get(idx);
-                System.out.println("попытка = " + attempts);
-                System.out.println("Кликаем по выбранному элементу");
+                System.out.println("attempt = " + attempts);
+                System.out.println("Click element");
 
                 new Actions(driver)
                         .moveToElement(tile)

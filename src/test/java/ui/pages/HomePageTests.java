@@ -15,7 +15,7 @@ public class HomePageTests extends PrepareDriverTest {
     @Description("Open home page")
     @Tag("smoke")
     void openHomePageTest() {
-        new CloseAddBoxesTest().closeAdds(home);
+        new CloseAdsBoxesTests().closeAdsTest(home);
         String currentUrl = home.getCurrentUrl();
         assertEquals(HOME_PAGE_URL, currentUrl);
     }

@@ -13,8 +13,9 @@ public class WomenNewArrivalsPageTests extends PrepareDriverTest {
     @Test
     @Tag("smoke")
     @Description("check choosing of 1 random item and accessibility Add item to bag")
-    void chooseOneRandomItem() {
+    void chooseOneRandomItemTest() {
         AddItemsToBagSteps addItemStep = new AddItemsToBagSteps(driver);
+
         addItemStep.chooseRandomItemStep(home);
 
         FastShopPage dropPage = new FastShopPage(driver);

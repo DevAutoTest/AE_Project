@@ -5,10 +5,9 @@ import Danilova.PageObjects.HomePage;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class CloseAddBoxesTest {
-    public void closeAdds(HomePage home) {
+public class CloseAdsBoxesTests {
+    public void closeAdsTest(HomePage home) {
 
-        // Список проверок и действий в виде Consumer<HomePage>
         List<Consumer<HomePage>> closePopupActions = List.of(
                 h -> {
                     if (h.todayOffer.todayBoxIsPresent()) h.todayOffer.closeTodayBox();

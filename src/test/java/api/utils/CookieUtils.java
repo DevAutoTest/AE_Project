@@ -10,7 +10,7 @@ public final class CookieUtils {
     }
 
     /**
-     * Склеивает 4 Akamai + «гостевые» куки в одну строку.
+     * Concat 4 Akamai + «guest» cookie in uone line
      */
     public static String buildCookies(String guestRawCookies) {
 

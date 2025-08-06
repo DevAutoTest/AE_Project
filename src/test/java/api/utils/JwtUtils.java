@@ -9,7 +9,7 @@ public final class JwtUtils {
 
     private JwtUtils() { }   // util-class
 
-    /** UNIX-time (ms) из поля exp; 0 – если не удалось распарсить. */
+    /** UNIX-time (ms) from field exp; 0 – in case if it wasn't parsed. */
     public static long expirationMillis(String jwt) {
         try {
             String payloadJson = new String(
@@ -26,7 +26,7 @@ public final class JwtUtils {
         }
     }
 
-    /** true – если токен уже истёк. */
+    /** true – if token expired */
     public static boolean isExpired(String jwt) {
         return expirationMillis(jwt) <= System.currentTimeMillis();
     }

@@ -36,13 +36,11 @@ public class HeaderComponent {
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
     }
 
-
     @Step("click search header button")
     public void clckHdrSrchBttn() {
         driver.findElement(headerSearchButton).click();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
     }
-
 
     @Step("click account header button")
     public void clckHdrAcntBttn() {

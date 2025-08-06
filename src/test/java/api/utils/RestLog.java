@@ -8,7 +8,7 @@ import io.restassured.filter.log.ResponseLoggingFilter;
 public final class RestLog {
     private RestLog() {}
 
-    /** Полный лог запроса + ответа (headers, body, cookies). */
+    /** response and request (headers, body, cookies) logs. */
     public static RequestLoggingFilter rq() {
         return new RequestLoggingFilter(LogDetail.ALL, System.out);
     }

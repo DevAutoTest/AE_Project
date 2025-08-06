@@ -11,9 +11,6 @@ public class BonusOfferComponent {
     final WebDriver driver;
     private final WebDriverWait wait;
 
-//    By offerBox = By.cssSelector(".text-center ");
-//    By closeOffer = By.cssSelector(".close-button");
-
     By offerBox = By.xpath("//div[@class='text-center '][.//button[@class='close-button']]");
     By closeOffer = By.cssSelector(".close-button");
 

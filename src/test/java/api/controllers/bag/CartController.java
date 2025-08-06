@@ -24,13 +24,13 @@ import static org.hamcrest.Matchers.notNullValue;
 
 public class CartController {
 
-    private static final String BAG_ENDPOINT = "/ugp-api/bag/v1";
+   // private static final String BAG_ENDPOINT = "/ugp-api/bag/v1";
     private static final String ITEMS_ENDPOINT = "/ugp-api/bag/v1/items";
 
     private static final TestPropertiesConfig cfg =
             ConfigFactory.create(TestPropertiesConfig.class);
 
-    /* ---------- общий spec ---------- */
+    /* ----------common spec ---------- */
     private RequestSpecification spec() {
 
         GuestTokenProvider.Box antiBot = GuestTokenProvider.current();
@@ -43,7 +43,6 @@ public class CartController {
                 .header("authorization", "Bearer " + antiBot.token())
                 .header("x-access-token", antiBot.token())
                 .header("aesite", "AEO_US");
-        // .header("cookie",        allCookies);
     }
 
     /* --------------- API --------------- */

@@ -12,11 +12,9 @@ import java.time.Duration;
 import java.util.List;
 import java.util.Random;
 
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class ShoppingBagPageTests extends PrepareDriverTest {
     @Test
     @Tag("critical")
-    @Order(1)
     @Description("Check color of random item in bag")
     void checkItemColorInBagTest() {
 
@@ -34,7 +32,6 @@ public class ShoppingBagPageTests extends PrepareDriverTest {
 
     @Test
     @Tag("critical")
-    @Order(2)
     @Description("Check size of random item in bag")
     void checkItemSizeInBagTest() {
         AddItemsToBagSteps addToBag = new AddItemsToBagSteps(driver);
@@ -53,7 +50,6 @@ public class ShoppingBagPageTests extends PrepareDriverTest {
 
     @Test
     @Tag("critical")
-    @Order(3)
     @Description("Check quantity of random item in bag")
     void checkItemQtyInBagTest() {
 
@@ -73,7 +69,6 @@ public class ShoppingBagPageTests extends PrepareDriverTest {
 
     @Test
     @Tag("critical")
-    @Order(4)
     @Description("Add random count of items to bag")
     void addRandomCountOfItemsToBagTest() {
         int defaultCount = 2;
@@ -81,7 +76,7 @@ public class ShoppingBagPageTests extends PrepareDriverTest {
 
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
 
-        new CloseAddBoxesTest().closeAdds(home);
+        new CloseAdsBoxesTests().closeAdsTest(home);
         home.fastMenu.openWomenMenu();
 
         WomenNewArrivalsPage womenNewPage = new WomenNewArrivalsPage(driver);
@@ -89,11 +84,11 @@ public class ShoppingBagPageTests extends PrepareDriverTest {
         for (int i = 0; i < iterations; i++) {
             System.out.println("Adding item #" + (i + 1));
 
-            new CloseAddBoxesTest().closeAdds(home);
+            new CloseAdsBoxesTests().closeAdsTest(home);
 
             List<WebElement> tiles = womenNewPage.getAllNewArrivals();
 
-            new CloseAddBoxesTest().closeAdds(home);
+            new CloseAdsBoxesTests().closeAdsTest(home);
 
             womenNewPage.chooseOneItem(tiles);
 
@@ -131,17 +126,16 @@ public class ShoppingBagPageTests extends PrepareDriverTest {
 
     @Test
     @Tag("extended")
-    @Order(5)
     @Description("Add 50 count of items to bag")
     void add50ItemsToBagTest() {
-        new CloseAddBoxesTest().closeAdds(home);
+        new CloseAdsBoxesTests().closeAdsTest(home);
 
         int startCount = 0;
         int targetCount = 50;
 
         WomenNewArrivalsPage womenNewPage = new WomenNewArrivalsPage(driver);
 
-        new CloseAddBoxesTest().closeAdds(home);
+        new CloseAdsBoxesTests().closeAdsTest(home);
         home.fastMenu.openWomenMenu();
 
         while (startCount <= targetCount) {
@@ -190,14 +184,14 @@ public class ShoppingBagPageTests extends PrepareDriverTest {
     @Order(6)
     @Description("Adding 51 count of items to bag is prohibited")
     void add51ItemsToBagTest() {
-        new CloseAddBoxesTest().closeAdds(home);
+        new CloseAdsBoxesTests().closeAdsTest(home);
 
         int startCount = 0;
         int targetCount = 51;
 
         WomenNewArrivalsPage womenNewPage = new WomenNewArrivalsPage(driver);
 
-        new CloseAddBoxesTest().closeAdds(home);
+        new CloseAdsBoxesTests().closeAdsTest(home);
         home.fastMenu.openWomenMenu();
         FastShopPage dropPage = new FastShopPage(driver);
 
@@ -207,7 +201,9 @@ public class ShoppingBagPageTests extends PrepareDriverTest {
             womenNewPage.chooseOneItem(tiles);
 
             dropPage.clickRandomColorResult();
+
             List<WebElement> sizes = dropPage.getAllSizes();
+            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(8));
             dropPage.clickRandomSizeResult(sizes);
 
             int remaining = targetCount - startCount;

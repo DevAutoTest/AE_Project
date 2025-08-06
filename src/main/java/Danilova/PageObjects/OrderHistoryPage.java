@@ -69,5 +69,4 @@ public class OrderHistoryPage extends BasePage {
         }
         return "Uooops!";
     }
-
 }

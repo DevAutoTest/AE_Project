@@ -15,7 +15,6 @@ public class RealRewardBannerShadowRootComponent {
     public By shadowHostRewardBox = By.cssSelector(".bloomreach-weblayer");
     By closeBox = By.cssSelector(".close");
 
-
     public RealRewardBannerShadowRootComponent(WebDriver driver) {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(1));

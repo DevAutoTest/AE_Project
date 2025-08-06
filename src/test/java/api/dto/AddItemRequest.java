@@ -14,7 +14,6 @@ import java.util.List;
 public class AddItemRequest {
     private List<Item> items;
 
-
     @Data
     @AllArgsConstructor
     @NoArgsConstructor

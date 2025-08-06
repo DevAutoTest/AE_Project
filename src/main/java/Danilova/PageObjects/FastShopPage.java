@@ -85,7 +85,7 @@ public class FastShopPage extends BasePage {
         while (attempts < 2) {
             try {
                 WebElement tile = tiles.get(idx);
-                System.out.println("попытка = " + attempts);
+                System.out.println("attempt: = " + attempts);
 
                 this.selectedColor = tile.getAttribute("alt");
 
@@ -157,7 +157,7 @@ public class FastShopPage extends BasePage {
             try {
                 WebElement tile = tiles.get(idx);
 
-                System.out.println("попытка = " + attempts);
+                System.out.println("attempt = " + attempts);
                 System.out.println("URL=" + getCurrentUrl());
 
                 this.selectedSize = tile.getText();

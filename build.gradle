@@ -3,7 +3,6 @@ plugins {
     id("io.qameta.allure") version "2.12.0"
 }
 
-// Добавьте в самое начало build.gradle (после plugins)
 tasks.register('apiTest', Test) {
     useJUnitPlatform()
     systemProperties(System.getProperties())
@@ -42,11 +41,10 @@ dependencies {
     implementation("com.fasterxml.jackson.core:jackson-databind:2.19.1")
     implementation("com.opencsv:opencsv:5.11.2")
     implementation("com.aayushatharva.brotli4j:brotli4j:1.18.0")
-    implementation("org.aeonbits.owner:owner:1.0.12") //загружает параметры из проперти файла
+    implementation("org.aeonbits.owner:owner:1.0.12") //property file
     implementation("io.qameta.allure:allure-rest-assured:2.29.1")
-    //интеграционный фильтр из библиотеки Allure, который добавляет логирование HTTP-запросов и ответов в отчёт Allure при использовании Rest Assured.
     implementation("org.assertj:assertj-core:4.0.0-M1") //assertThat
-    implementation("io.github.bonigarcia:webdrivermanager:6.1.0") //для получения куки с сайта для тестов на API
+    implementation("io.github.bonigarcia:webdrivermanager:6.1.0") //API tests get cookie
     implementation("org.seleniumhq.selenium:selenium-java:4.34.0")
     implementation("io.qameta.allure:allure-junit5:2.29.1")
 }
@@ -54,41 +52,25 @@ dependencies {
 test {
     useJUnitPlatform()
     doFirst {
-        println "Актуальные параметры тестов:"
+        println "logs:"
         println "maxParallelForks: $maxParallelForks"
         println "junit.parallel.enabled: " +
                 System.getProperty('junit.jupiter.execution.parallel.enabled')
     }
 
-    // Основные параметры
-    systemProperties System.getProperties() // Автоматически передает все -D параметры
+    systemProperties System.getProperties() // all -D parameters
 
-    // Контроль параллелизации
+    // parallel
     maxParallelForks = 1
     forkEvery = 1
 
-    // Явные настройки для JUnit 5 и Selenide
+    // settings for JUnit 5
     systemProperties = [
             "junit.jupiter.execution.parallel.enabled": "false",
-            "junit.jupiter.execution.parallel.mode.default": "same_thread",
-            "selenide.threads": "1"
+            "junit.jupiter.execution.parallel.mode.default": "same_thread"
     ]
 
-    // Дополнительные гарантии
+    // additional settings
     setIgnoreFailures(false)
-
-    // Логирование для отладки
-    testLogging {
-        events "passed", "skipped", "failed"
-        showStandardStreams = true
-    }
-
-    //Добавьте в любой тест:
-
-    //@Test
-    //void checkThread() {
-    //    System.out.println("Running in thread: " + Thread.currentThread().getId());
-    //}
-    //Все тесты должны выводить один и тот же ID потока
 }
 

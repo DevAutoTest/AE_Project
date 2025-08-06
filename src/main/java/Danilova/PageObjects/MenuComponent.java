@@ -22,7 +22,6 @@ public class MenuComponent {
 
     By womenMenu = By.xpath("//li[@data-test='top-link-wrapper']/a[@href='/us/en/c/women/womens?pagetype=clp']");
     By categories = By.xpath("//li[a[contains(@href,'/us/en/c/women')]][@data-test='top-link-wrapper']//div/div/div/ul/li[contains(@class,'list-element')]/a[contains(@href,'/us/en/c/') or contains(@href,'/us/en/x') and text()[normalize-space()]]");
-    //  By womenMenuLinks = By.xpath("//li[a[contains(@href,'/us/en/c/women')]][@data-test='top-link-wrapper']//div/div/div/ul/li[contains(@class,'list-element')]/a[contains(@href,'/us/en/c/') or contains(@href,'/us/en/x') and text()[normalize-space()]]");
 
     @Step("Get list of women menu categories as String")
     public List<String> getWomenMenuTexts() {
@@ -42,14 +41,14 @@ public class MenuComponent {
     }
 
     @Step("Click women menu links")
-    public void clickWomenMenuLink(String url) {
+    public void clickWomenMenuLinks(String url) {
         hoverOverWomen();
 
         List<WebElement> categoryElements = driver.findElements(categories);
         WebElement targetElement = categoryElements.stream()
                 .filter(element -> url.equals(element.getAttribute("href")))
                 .findFirst()
-                .orElseThrow(() -> new NoSuchElementException("Категория с URL '" + url + "' не найдена"));
+                .orElseThrow(() -> new NoSuchElementException("Category with URL '" + url + "' didn't found"));
 
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", targetElement);
 

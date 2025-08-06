@@ -4,11 +4,12 @@ import api.controllers.bag.CartController;
 import api.dto.CartResponse;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-// JUnit создаст один экземпляр класса и не будет его перезатирать в каждом тесте
+// JUnit create one instance for all tests
 @ExtendWith(api.extensions.BeforeAll.class)
 class CartApiSuitSmokeTests {
 
@@ -44,7 +45,6 @@ class CartApiSuitSmokeTests {
                 .then()
                 .statusCode(202);
 
-
         cartResponse = cart.getCart();
         assertThat(cartResponse.getData().getItemCount())
                 .isEqualTo(qty);
@@ -57,7 +57,6 @@ class CartApiSuitSmokeTests {
         assertThat(cartResponse.getData().id).isEqualTo(cartId);
         System.out.println("ItemId is " + cartResponse.getData().items.get(0).getItemId());
     }
-
 
     @Order(3)
     @Test
@@ -72,7 +71,6 @@ class CartApiSuitSmokeTests {
         assertThat(cart.getCart().getData().items.get(0).getQuantity()).isEqualTo(newQty);
     }
 
-
     @Order(4)
     @Test
     @Tag("smoke")
@@ -84,7 +82,6 @@ class CartApiSuitSmokeTests {
 
         assertThat(cart.getCart().getData().getItemCount()).isZero();
     }
-
 }
 
 
