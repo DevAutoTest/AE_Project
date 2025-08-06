@@ -204,7 +204,7 @@ public class FastShopPage extends BasePage {
                 System.out.println("Click #" + (i + 1) + " performed");
 
                 if (i < clickCount - 1) {
-                    Thread.sleep(500);
+                    driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
                 }
             } catch (Exception e) {
                 System.out.println("Error on click #" + (i + 1) + ": " + e.getMessage());
