@@ -6,7 +6,6 @@ import api.config.TestPropertiesConfig;
 import api.dto.DeleteItemRequest;
 import api.dto.UpdateItemRequest;
 import api.support.GuestTokenProvider;
-import api.utils.CookieUtils;
 import api.utils.CsvReader;
 import api.utils.RestLog;
 import io.qameta.allure.Description;

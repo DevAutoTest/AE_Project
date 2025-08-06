@@ -2,7 +2,6 @@ package ui.pages;
 
 import Danilova.PageObjects.HomePage;
 import io.qameta.allure.Description;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;

@@ -20,8 +20,6 @@ public class SearchResponse {
         public String id;
         public Attributes attributes;
         public Relationships relationships;
-        @Getter
-        public Map<String, Object> additionalProperties = new LinkedHashMap<String, Object>();
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -29,8 +27,6 @@ public class SearchResponse {
     public static class Example {
         public SearchData data;
         public List<Included> included;
-        @Getter
-        public Map<String, Object> additionalProperties = new LinkedHashMap<String, Object>();
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -49,8 +45,6 @@ public class SearchResponse {
         public Object aATest;
         public Object disableTestOnlyGlobalRulesSearch;
         public String queryItems;
-        @Getter
-        public Map<String, Object> additionalProperties = new LinkedHashMap<String, Object>();
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -69,8 +63,6 @@ public class SearchResponse {
         public boolean aATest;
         public boolean disableTestOnlyGlobalRulesSearch;
         public boolean queryItems;
-        @Getter
-        public Map<String, Object> additionalProperties = new LinkedHashMap<String, Object>();
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -81,8 +73,6 @@ public class SearchResponse {
         public String displayName;
         public String type;
         public List<Option> options;
-        @Getter
-        public Map<String, Object> additionalProperties = new LinkedHashMap<String, Object>();
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -94,8 +84,6 @@ public class SearchResponse {
         public List<String> availAeoUs;
         public List<String> displayPriceAEOUS;
         public List<String> enabledSites;
-        @Getter
-        public Map<String, Object> additionalProperties = new LinkedHashMap<String, Object>();
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -109,8 +97,6 @@ public class SearchResponse {
         public float groupsMaxDepth;
         public boolean showProtectedFacets;
         public List<String> hiddenFields;
-        @Getter
-        public Map<String, Object> additionalProperties = new LinkedHashMap<String, Object>();
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -120,8 +106,6 @@ public class SearchResponse {
         public String id;
         public String type;
         public Attributes__1 attributes;
-        @Getter
-        public Map<String, Object> additionalProperties = new LinkedHashMap<String, Object>();
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -132,8 +116,6 @@ public class SearchResponse {
         public String value;
         public String displayName;
         public int count;
-        @Getter
-        public Map<String, Object> additionalProperties = new LinkedHashMap<String, Object>();
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -144,8 +126,6 @@ public class SearchResponse {
         public float minSalePrice;
         public float minListPrice;
         public float maxSalePrice;
-        @Getter
-        public Map<String, Object> additionalProperties = new LinkedHashMap<String, Object>();
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -153,8 +133,6 @@ public class SearchResponse {
     public static class Products {
 
         public List<Datum> data;
-        @Getter
-        public Map<String, Object> additionalProperties = new LinkedHashMap<String, Object>();
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -162,8 +140,6 @@ public class SearchResponse {
     public static class Relationships {
 
         public Products products;
-        @Getter
-        public Map<String, Object> additionalProperties = new LinkedHashMap<String, Object>();
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -183,8 +159,6 @@ public class SearchResponse {
         public float page;
         public String sortOrder;
         public List<String> us;
-        @Getter
-        private Map<String, Object> additionalProperties = new LinkedHashMap<String, Object>();
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -193,8 +167,6 @@ public class SearchResponse {
 
         public String id;
         public String type;
-        @Getter
-        public Map<String, Object> additionalProperties = new LinkedHashMap<String, Object>();
     }
 
     @Getter
@@ -213,8 +185,6 @@ public class SearchResponse {
         public String displayName;
         public String sortOrder;
         public String status;
-        @Getter
-        public Map<String, Object> additionalProperties = new LinkedHashMap<String, Object>();
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -229,8 +199,6 @@ public class SearchResponse {
         public String matchedTerm;
         public List<Filter> filters;
         public List<Sort> sorts;
-        @Getter
-        public Map<String, Object> additionalProperties = new LinkedHashMap<String, Object>();
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -248,8 +216,6 @@ public class SearchResponse {
         public List<String> plpSortMediaArray;
         public List<String> plpPromotionalMessage;
         public String plpMarketingMessage;
-        @Getter
-        public Map<String, Object> additionalProperties = new LinkedHashMap<String, Object>();
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -260,9 +226,5 @@ public class SearchResponse {
         public String gender;
         public String availAeoUs;
         public String enabledSites;
-        @Getter
-        public Map<String, Object> additionalProperties = new LinkedHashMap<String, Object>();
     }
-
-
 }
