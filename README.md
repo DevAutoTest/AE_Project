@@ -32,6 +32,7 @@ An automated project for UI and API testing of the American Eagle online store (
 
 <div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center;"> <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" height="40" alt="Java" /> <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/gradle/gradle-plain.svg" height="40" alt="Gradle" /> <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/selenium/selenium-original.svg" height="40" alt="Selenium" /> <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" height="40" alt="GitHub" /> <img src="https://img.shields.io/badge/JUnit5-red?style=for-the-badge&logo=JUnit5&logoColor=white" alt="JUnit5" height="28" /> <img src="https://img.shields.io/badge/Rest%20Assured-339933?style=for-the-badge&logo=rest-assured&logoColor=white" alt="Rest Assured" height="28" /> <img src="https://img.shields.io/badge/Allure-FF69B4?style=for-the-badge&logo=allure&logoColor=white" alt="Allure" height="28" /> </div>
 
+
 | Category               | Technology     | Description                                                        |
 |------------------------|----------------|--------------------------------------------------------------------|
 | Programming Language   | Java 18        | The main language used to write tests                              |
